@@ -103,18 +103,18 @@ namespace RealCity
             Setting s = new Setting(this);
             setting = s;
 
-            // Register locales.
+            // Register locales
             AddLocaleSource("en-US", new LocaleEN(s));
 
             // Ready for future locales
-            // AddLocaleSource("de-DE",    new LocaleDE(s));
-            // AddLocaleSource("fr-FR",    new LocaleFR(s));
-            AddLocaleSource("es-ES", new LocaleES(s));
+            AddLocaleSource("de-DE",    new LocaleDE(s));
+            AddLocaleSource("es-ES",    new LocaleES(s));
+            AddLocaleSource("fr-FR",    new LocaleFR(s));
             // AddLocaleSource("it-IT",    new LocaleIT(s));
             // AddLocaleSource("ja-JP",    new LocaleJA(s));
             // AddLocaleSource("ko-KR",    new LocaleKO(s));
-            // AddLocaleSource("pt-BR",    new LocalePT_BR(s));
-            AddLocaleSource("zh-HANS", new LocaleZH_CN(s));
+            AddLocaleSource("pt-BR",    new LocalePT_BR(s));
+            AddLocaleSource("zh-HANS",  new LocaleZH_CN(s));
             // AddLocaleSource("zh-HANT",  new LocaleZH_HANT(s));
 
             // Load persisted settings or create defaults on first run.

@@ -7,25 +7,28 @@
 	<ShortDescription Value="Increases number of workers in City Services plus other small adjustments." />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="Increases number of workers in City Services and other small adjustments." /-->
-	<LongDescription>**City Services Redux**
+	<LongDescription>**City Services Redux** aka RealCity
 
-Tweaks and modifies City Service buildings to your liking. By default, you could just install this mod and enjoy it as-is.
+Tweaks and modifies City Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration.
 
+### Quick-Start
+- Just Click "Use PRESETS" and play game, done.
 - This has a curated preset list that increases the **number of workers** in a City Service (e.g., Central Intelligence) and a few other small adjustments (see below for details). 
 - Number of configured buildings and extensions: **186**.
 - Increased workers automatically increases the wages you pay per building (scaled by the game itself).
+- New parameters are only applied to **new buildings**. 
 
 ### Power Users
 - Also supports local configuration, so you can easily tweak the config file as you wish.
-- New parameters are only applied to **new buildings**. 
-- If you want to change an existing building, it needs to be destroyed and plopped again to see increased employees.
-
+- If you want to change an existing building, it needs to be destroyed and plopped again to see changed employees or other values.
+- DLC entries only work if you own the DLC and can plop the items.
+- There is a separate Excel sheet that can generate road cost/maintenance entries; add the entries to the custom Config.xml for the mod to apply them.
 
 ### Features
 
 * Curated Presets: all buildings have more workplaces and some have altered requirements for what education levels are required at that building.
-There is no formula used, all have been set manually taking into consideration various aspects. Some have only slightly more workers (2), but some have many more.
-* Example: Central Intelligense defaults to 100 is increased to 300 which to add more realism to such a large building.
+All presets have been set manually taking into consideration various aspects. Some have only slightly more workers (2), but some have many more.
+* Example: Central Intelligense vanilla is 100, the preset sets this to 300 workers for such a large building.
 * Look into Config.xml or RealCity.log to find out about specific buildings, but you can increase or decrease what is in the preset file that comes with the mod.
 * Crematorium has 2x higher processing rate to handle increased deaths from Population Rebalance (this won't matter if you use Magic Hearse).
 * If you don't like the preset numbers, then use the player-modifiable local Config.xml (from ModsData/RealCity/Config.xml).
@@ -34,15 +37,18 @@ There is no formula used, all have been set manually taking into consideration v
 
 ### Technical
 
+* The mod does **not** modify savefiles or any game systems.
+* Mod can be removed at any time. Already plopped buildings will retain modded params. New buildings will have ofc vanilla params.
 * The configuration is applied during the mod initialization and after clicking **Apply Configuration** button. It is possible to apply a new configuration during the game.
-* The mod does **not** modify savefiles.
-* The mod does **not** modify any game systems.
-* The mod can be turned off at any time. Already plopped buildings will retain modded params. New buildings will have ofc vanilla params.
+* Performance: this is a lightweight configuration mod. It only does a short pass when applying settings (on game load or when you press APPLY). 
+It does not add any per-frame systems, so it has essentially no impact on performance.
+
 
 ### CREDITS
 - River-Mochi current author/maintainer
 - Thanks to Infixo for the original City Services mod
-- Fans of the mod like Dorin who kept hope alive for a Redux
+- Fans of the mod who kept hope alive for a redux
+
 
 	</LongDescription>
 	<!--Thumbnail-->

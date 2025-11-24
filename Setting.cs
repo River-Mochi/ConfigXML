@@ -1,3 +1,6 @@
+// Setting.cs
+// Options UI + Config.xml helpers for City Services Redux.
+
 namespace RealCity
 {
     using System;                         // Exception
@@ -39,6 +42,10 @@ namespace RealCity
         // UIButton row grouping for custom config buttons
         private const string kCustomButtonsRow = "CustomConfigButtonsRow";
 
+        // External links
+        private const string kUrlParadoxMods =
+            "https://mods.paradoxplaza.com/uploaded?orderBy=desc&sortBy=best&time=alltime";
+
         // Backing fields for mutually exclusive toggles
         private bool m_UseModPresets;
         private bool m_UseLocalConfig;
@@ -64,6 +71,7 @@ namespace RealCity
         /// <summary>
         /// Use the Config.xml that ships with the mod (mod presets).
         /// Mutually exclusive with UseLocalConfig toggle.
+        /// Selecting this will immediately apply the preset configuration.
         /// </summary>
         [SettingsUISection(kSection, kToggleGroup)]
         public bool UseModPresets
@@ -77,12 +85,27 @@ namespace RealCity
                     return;
                 }
 
+                var changed = m_UseModPresets != value;
                 m_UseModPresets = value;
 
                 if (m_UseModPresets)
                 {
                     // Presets on => local custom off.
                     m_UseLocalConfig = false;
+
+                    if (changed)
+                    {
+                        try
+                        {
+                            Mod.Log("UseModPresets enabled; applying shipped preset configuration.");
+                            ConfigTool.ReadAndApply();
+                        }
+                        catch (Exception ex)
+                        {
+                            Mod.Log(
+                                $"UseModPresets apply failed: {ex.GetType().Name}: {ex.Message}");
+                        }
+                    }
                 }
             }
         }
@@ -90,6 +113,7 @@ namespace RealCity
         /// <summary>
         /// Use ModsData/RealCity/Config.xml as a local custom file.
         /// Mutually exclusive with UseModPresets toggle.
+        /// Selecting this will immediately apply the local configuration.
         /// </summary>
         [SettingsUISection(kSection, kToggleGroup)]
         public bool UseLocalConfig
@@ -103,12 +127,27 @@ namespace RealCity
                     return;
                 }
 
+                var changed = m_UseLocalConfig != value;
                 m_UseLocalConfig = value;
 
                 if (m_UseLocalConfig)
                 {
                     // Local custom on => presets off.
                     m_UseModPresets = false;
+
+                    if (changed)
+                    {
+                        try
+                        {
+                            Mod.Log("UseLocalConfig enabled; applying local configuration.");
+                            ConfigTool.ReadAndApply();
+                        }
+                        catch (Exception ex)
+                        {
+                            Mod.Log(
+                                $"UseLocalConfig apply failed: {ex.GetType().Name}: {ex.Message}");
+                        }
+                    }
                 }
             }
         }
@@ -197,9 +236,10 @@ namespace RealCity
         }
 
         // “How to use Config.xml” body text under the header (multiline).
-        // Always visible regardless of toggles.
+        // Only visible when using a local custom config.
         [SettingsUIMultilineText]
         [SettingsUISection(kSection, kConfigUsageGroup)]
+        [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
         public string ConfigUsageSteps => string.Empty;
 
         // ---------------
@@ -212,9 +252,34 @@ namespace RealCity
         [SettingsUISection(kDebugSection, kInfoGroup)]
         public string VersionDisplay => Mod.ModVersion;
 
-        // ---------------
+        // Paradox Mods link (Debug tab, under info)
+        [SettingsUIButtonGroup("SocialLinks")]
+        [SettingsUIButton]
+        [SettingsUISection(kDebugSection, kInfoGroup)]
+        public bool OpenParadoxModsButton
+        {
+            set
+            {
+                if (!value)
+                {
+                    return;
+                }
+
+                try
+                {
+                    Application.OpenURL(kUrlParadoxMods);
+                }
+                catch (Exception ex)
+                {
+                    Mod.Log(
+                        $"Failed to open Paradox Mods: {ex.GetType().Name}: {ex.Message}");
+                }
+            }
+        }
+
+        // ----------------
         // Debug tab: DEBUG
-        // ---------------
+        // ----------------
 
         [SettingsUISection(kDebugSection, kDebugGroup)]
         public bool Logging

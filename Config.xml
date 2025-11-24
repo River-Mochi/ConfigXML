@@ -3,9 +3,7 @@
 
 <!-- Config.xml - City Services Redux -->
 
-<!-- NOTE: Do NOT set worker counts to "0".
-     Use a small positive number if you want very low staffing. -->
-
+<!-- IMPORTANT: Never set workplace counts to 0. Use a small positive value instead (e.g. 1–5). -->
 <!-- SHORT GUIDE
 
 1. Configuration is stored in the hierarchical form: Prefab -> Component -> Field.

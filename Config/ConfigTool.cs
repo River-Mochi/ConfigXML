@@ -384,19 +384,17 @@ namespace RealCity
             Mod.s_Log.Info("CSR PREFAB STATUS DUMP BEGIN");
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
-                PrefabID id = new PrefabID(prefabXml.Type, prefabXml.Name);
+                var id = new PrefabID(prefabXml.Type, prefabXml.Name);
                 PrefabBase prefab;
-                Entity entity;
 
-                bool hasPrefab = prefabSystem.TryGetPrefab(id, out prefab);
-                bool hasEntity = hasPrefab && prefabSystem.TryGetEntity(prefab, out entity);
+                var hasPrefab = prefabSystem.TryGetPrefab(id, out prefab);
 
                 string status;
                 if (!hasPrefab)
                 {
                     status = "MISSING";
                 }
-                else if (!hasEntity)
+                else if (!prefabSystem.TryGetEntity(prefab, out _))
                 {
                     status = "NO_ENTITY";
                 }
@@ -407,8 +405,8 @@ namespace RealCity
 
                 Mod.s_Log.Info($"CSR PREFAB {status}: {prefabXml}");
             }
-
             Mod.s_Log.Info("CSR PREFAB STATUS DUMP END");
+
         }
 
         // List components from entity.

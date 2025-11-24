@@ -1,5 +1,5 @@
 // LocaleEN.cs
-// English locale strings for City Services Redux.
+// English en-US City Services Redux.
 
 namespace RealCity
 {
@@ -21,7 +21,7 @@ namespace RealCity
         {
             var title = Mod.ModName;
 
-            // Show "City Services Redux 0.5.0" in the tab header.
+            // Show "City Services Redux 0.5.0" title
             if (!string.IsNullOrEmpty(Mod.ModVersion))
             {
                 title = title + " " + Mod.ModVersion;
@@ -43,11 +43,17 @@ namespace RealCity
 
                 // Debug tab: Info group
                 {
-                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.NameDisplay)), "Mod" },
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.NameDisplay)), "Mod"
+                },
                 {
-                    m_Setting.GetOptionDescLocaleID(nameof(Setting.NameDisplay)), "Display name of this mod." },
-                {   m_Setting.GetOptionLabelLocaleID(nameof(Setting.VersionDisplay)), "Version" },
-                {   m_Setting.GetOptionDescLocaleID(nameof(Setting.VersionDisplay)), "Current version number." },
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.NameDisplay)), "Display name of this mod."
+                },
+                {
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.VersionDisplay)), "Version"
+                },
+                {
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.VersionDisplay)), "Current version number."
+                },
 
                 // -----------------------------
                 // Actions tab: Options toggles
@@ -56,34 +62,34 @@ namespace RealCity
                 // UseModPresets
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)),
-                    "Use PRESETS - recommended"
+                    "RECOMMENDED PRESETS"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "Use the PRESETS that ship with this mod - select this and start playing.\n" +
-                    "• Ignore local custom file in ModsData/RealCity.\n" +
-                    "**Recommended** for most players - already has curated tweaks to worker numbers/wages that differ from game defaults."
+                    "**Quick Start** - apply all recommended preset settings\n" +
+                    "EASY Mode:  1-Click and DONE!\n\n" +
+            
+                    "Recommended for most players - already has curated tweaks e.g. worker numbers/wages that differ from game defaults."
                 },
 
                 // UseLocalConfig
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)),
-                    "Use CUSTOM Config.xml"
+                    "USE CUSTOM Config.xml"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
-                    "POWER USERS\n" +
+                    "**POWER USERS**\n" +
                     "When enabled, allows using a local custom <ModsData/RealCity/Config.xml> instead of the built-in presets.\n" +
                     "• For advanced users who want different service settings per save or per machine.\n\n" +
                     "**TIPS**\n" +
-                    "Click Open config folder button" +
+                    "Click Open config folder button\n" +
                     "• It shows location of provided Config.xml in ModsData/RealCity, then tweak worker counts or other fields.\n" +
                     "• **Never** set workplaces to 0; use small positive values if you need low staffing.\n" +
                     "• After making changes, save the file, then use the **APPLY** button to update file changes to the mod.\n\n" +
                     "Use <Restore new> file <ONLY> if you mess up or just want a completely fresh Config.xml - replaces existing file.\n" +
                     "You can switch back to **[Use PRESETS]** at any time. "
-                    
-                    },
+                },
 
                 // -----------------------------
                 // Actions tab: Buttons (local custom only)
@@ -119,7 +125,7 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Apply your new custom configuration to many city-service buildings.\n " +
+                    "Apply your new custom changes to many city-service buildings.\n " +
                     "Are you sure?"
                 },
 
@@ -143,19 +149,20 @@ namespace RealCity
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
+                // (now only shown when UseLocalConfig is enabled)
                 // ----------------------------------
 
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ConfigUsageSteps)),
                     "Option 1\n" +
-                    " <[Use PRESETS (recommended)]> for the built-in Config.xml.\n" +
-                    "If you pick PRESETS, you are done. Play game.\n\n" +
-                    "------------------------\n\n" +
+                    "Select  <[Use PRESETS]> recommended for built-in presets.\n" +
+                    "If you pick PRESETS, done - Play game.\n\n" +
+                    "<--------------------------->\n\n" +
                     "Option 2 - Power users\n" +
-                    " <[Use CUSTOM Config.xml]> if you want to edit your own values.\n\n" +
-                    "1. Click <[OPEN Config folder]> (only needed if you are not using PRESETS).\n" +
+                    "Select  <[Use CUSTOM Config.xml]> to edit your own values.\n\n" +
+                    "1. Click <[OPEN Config folder]>\n" +
                     "2. Open, edit, and save <Config.xml> with your preferred text editor.\n" +
-                    "3. Then Click <[APPLY NEW configuration now]>.\n" +
+                    "3. Then Click <[APPLY NEW Configuration Now]>.\n" +
                     "4. <Load a city> (or reload) to see changes to **new** buildings."
                 },
                 {
@@ -169,14 +176,12 @@ namespace RealCity
 
                 // Logging (strong warning about performance)
                 {
-                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
-                    "Verbose logging (advanced)"
-                },
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)), "Verbose logging (advanced)" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
                     "Writes a lot of extra information to the log file.\n" +
-                    "<NOT recommended for normal gameplay.>\n" +
-                    "Excessive logging can slow down the game and create very large log files.\n" +
+                    "<NOT recommended> for normal gameplay.\n" +
+                    "Excessive logging can slow the game and create large log files.\n" +
                     "Turn this on only temporarily when you are collecting data or debugging."
                 },
 
@@ -191,20 +196,32 @@ namespace RealCity
                     "Checks every prefab listed in Config.xml and logs whether it is OK or missing.\n" +
                     "• Use this after a game patch to see which entries in Config.xml no longer match the game.\n" +
                     "• Ignore warnings for prefabs of DLC buildings you do not own - it's normal."
+                },
 
+                // Paradox Mods button (Debug tab, Info group)
+                {
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxModsButton)),
+                    "Paradox Mods"
+                },
+                {
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
+                    "Open the **Paradox Mods** webpage for City Services Redux and your other mods."
                 },
 
                 // Debug tab duplicate reset button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
+                {
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Restore new Config.xml"
                 },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
+                {
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Same as the Actions tab button: overwrite the local <ModsData/RealCity/Config.xml> with a fresh copy of " +
                     "the original mod Presets.\n" +
                     "Use this if your custom file is broken or you want to start fresh."
                 },
                 // Warning Prompt
-                { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
+                {
+                    m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Overwrite <ModsData/RealCity/Config.xml> with original mod PRESETS file?\n\n" +
                     "Any custom changes will be replaced by new file."
                 },

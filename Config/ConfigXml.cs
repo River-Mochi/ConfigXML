@@ -530,11 +530,17 @@ namespace RealCity
                     serializer.Serialize(fs, _config);
                 }
 
-                Mod.s_Log.Info($"Configuration saved to file {dumpFile}.");
+                // Only talk about the dump in the log if verbose logging is enabled.
+                if (Mod.setting != null && Mod.setting.Logging)
+                {
+                    Mod.Log($"Configuration dump saved to {dumpFile}.");
+                }
             }
             catch (Exception e)
             {
-                Mod.s_Log.Info($"ERROR: Cannot save configuration, exception {e.Message}.");
+                // Errors are rare and worth seeing.
+                Mod.s_Log.Warn(
+                    $"ERROR: Cannot save configuration dump: {e.GetType().Name}: {e.Message}");
             }
         }
 
