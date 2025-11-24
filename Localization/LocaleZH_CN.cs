@@ -21,7 +21,7 @@ namespace RealCity
         {
             var title = Mod.ModName;
 
-            // Show "City Services Redux 0.5.0" title
+            // Show "City Services Redux 0.5.1" title
             if (!string.IsNullOrEmpty(Mod.ModVersion))
             {
                 title = title + " " + Mod.ModVersion;

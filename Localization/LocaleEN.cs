@@ -21,7 +21,7 @@ namespace RealCity
         {
             var title = Mod.ModName;
 
-            // Show "City Services Redux 0.5.0" title
+            // Show "City Services Redux 0.5.1" title
             if (!string.IsNullOrEmpty(Mod.ModVersion))
             {
                 title = title + " " + Mod.ModVersion;
@@ -66,10 +66,10 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "**Quick Start** - apply all recommended preset settings\n" +
+                    "**Quick Start** - apply all recommended presets\n" +
                     "EASY Mode:  1-Click and DONE!\n\n" +
             
-                    "Recommended for most players - already has curated tweaks e.g. worker numbers/wages that differ from game defaults."
+                    "Recommended for most players - already has curated tweaks e.g. worker numbers/wages and more that differ from game defaults."
                 },
 
                 // UseLocalConfig
