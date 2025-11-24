@@ -149,13 +149,13 @@ namespace RealCity
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (now only shown when UseLocalConfig is enabled)
+                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
 
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ConfigUsageSteps)),
                     "Option 1\n" +
-                    "Select  <[Use PRESETS]> recommended for built-in presets.\n" +
+                    "Select  <[RECOMMENDED PRESETS]> for built-in presets.\n" +
                     "If you pick PRESETS, done - Play game.\n\n" +
                     "<--------------------------->\n\n" +
                     "Option 2 - Power users\n" +
@@ -165,10 +165,7 @@ namespace RealCity
                     "3. Then Click <[APPLY NEW Configuration Now]>.\n" +
                     "4. <Load a city> (or reload) to see changes to **new** buildings."
                 },
-                {
-                    m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)),
-                    " "
-                },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)), " " },
 
                 // -----------------------------------
                 // Debug tab: logging + status + reset
@@ -200,12 +197,11 @@ namespace RealCity
 
                 // Paradox Mods button (Debug tab, Info group)
                 {
-                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "Paradox Mods"
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxModsButton)), "Paradox Mods"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "Open the **Paradox Mods** webpage for City Services Redux and your other mods."
+                    "Open the **Paradox Mods** webpage for City Services Redux and other mods."
                 },
 
                 // Debug tab duplicate reset button

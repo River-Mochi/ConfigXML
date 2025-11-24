@@ -1,3 +1,6 @@
+// LocaleDE.cs
+// German de-DE City Services Redux.
+
 namespace RealCity
 {
     using System.Collections.Generic;
@@ -144,24 +147,24 @@ namespace RealCity
                     "Alle eigenen Änderungen gehen verloren."
                 },
 
-                // ----------------------------------
+                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (now only shown when UseLocalConfig is enabled)
+                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
-
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ConfigUsageSteps)),
                     "Option 1\n" +
-                    "Wähle <[EMPFOHLENE PRESETS]> für die eingebauten Presets.\n" +
+                    "Wähle <[EMPFOHLENE PRESETS]>, um die eingebauten Presets zu verwenden.\n" +
                     "Wenn du PRESETS nutzt, bist du fertig – spiel los.\n\n" +
                     "<--------------------------->\n\n" +
                     "Option 2 – Power-User\n" +
                     "Wähle <[EIGENE Config.xml]>, um deine eigenen Werte zu bearbeiten.\n\n" +
                     "1. Klicke auf <[Config-Ordner öffnen]>.\n" +
-                    "2. Öffne, bearbeite und speichere <Config.xml> mit deinem bevorzugten Editor.\n" +
+                    "2. Öffne, bearbeite und speichere <Config.xml> mit deinem bevorzugten Texteditor.\n" +
                     "3. Klicke dann auf <[NEUE Konfiguration anwenden]>.\n" +
                     "4. <Lade eine Stadt> (oder neu laden), um Änderungen an **neuen** Gebäuden zu sehen."
                 },
+
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)),
                     " "

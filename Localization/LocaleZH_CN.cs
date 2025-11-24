@@ -1,3 +1,6 @@
+// LocaleZH_CN.cs
+// Simplified chinese zh-HANS City Services Redux.
+
 namespace RealCity
 {
     using System.Collections.Generic;
@@ -146,21 +149,20 @@ namespace RealCity
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (now only shown when UseLocalConfig is enabled)
+                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
-
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ConfigUsageSteps)),
                     "方式 1\n" +
-                    "选择 <[推荐预设]> 使用模组内置设置。\n" +
+                    "选择 <[推荐预设]> 使用模组自带的预设设置。\n" +
                     "如果选择推荐预设，就可以直接开始游戏。\n\n" +
                     "<--------------------------->\n\n" +
                     "方式 2 – 高级玩家\n" +
                     "选择 <[使用自定义 Config.xml]>，自己调整参数。\n\n" +
                     "1. 点击 <[打开 Config 文件夹]>。\n" +
-                    "2. 使用文本编辑器打开、编辑并保存 <Config.xml>。\n" +
+                    "2. 用你喜欢的文本编辑器打开、编辑并保存 <Config.xml>。\n" +
                     "3. 然后点击 <[立即应用新配置]>。\n" +
-                    "4. <加载城市>（或重新加载），即可在**新建建筑**上看到改动。"
+                    "4. <加载城市>（或重新加载），即可在**新建建筑**上看到变化。"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)),

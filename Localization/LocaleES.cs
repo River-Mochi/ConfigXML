@@ -1,3 +1,6 @@
+// LocaleES.cs
+// Spanish es-ES City Services Redux.
+
 namespace RealCity
 {
     using System.Collections.Generic;
@@ -146,19 +149,18 @@ namespace RealCity
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (now only shown when UseLocalConfig is enabled)
+                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
-
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ConfigUsageSteps)),
                     "Opción 1\n" +
-                    "Selecciona <[AJUSTES RECOMENDADOS]> para usar los presets incluidos.\n" +
-                    "Si eliges AJUSTES RECOMENDADOS, ya está – juega tranquilo.\n\n" +
+                    "Selecciona <[AJUSTES RECOMENDADOS]> para usar los ajustes integrados.\n" +
+                    "Si eliges AJUSTES RECOMENDADOS, ya está: juega tranquilo.\n\n" +
                     "<--------------------------->\n\n" +
                     "Opción 2 – usuarios avanzados\n" +
                     "Selecciona <[USAR Config.xml PERSONAL]> para editar tus propios valores.\n\n" +
                     "1. Haz clic en <[ABRIR carpeta de Config.xml]>.\n" +
-                    "2. Abre, edita y guarda <Config.xml> con tu editor de texto.\n" +
+                    "2. Abre, edita y guarda <Config.xml> con tu editor de texto preferido.\n" +
                     "3. Luego haz clic en <[APLICAR nueva configuración]>.\n" +
                     "4. <Carga una ciudad> (o vuelve a cargar) para ver los cambios en los **nuevos** edificios."
                 },

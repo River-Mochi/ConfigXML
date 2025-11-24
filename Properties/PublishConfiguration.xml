@@ -14,15 +14,15 @@ Tweaks and modifies City Service buildings to your liking. By default, you could
 ### Quick-Start
 - Just Click "Use PRESETS" and play game, done.
 - This has a curated preset list that increases the **number of workers** in a City Service (e.g., Central Intelligence) and a few other small adjustments (see below for details). 
-- Number of configured buildings and extensions: **186**.
+- Number of preset configured buildings and extensions: **186**.
 - Increased workers automatically increases the wages you pay per building (scaled by the game itself).
-- New parameters are only applied to **new buildings**. 
+- New parameters are only applied to **new buildings**.
 
 ### Power Users
 - Also supports local configuration, so you can easily tweak the config file as you wish.
 - If you want to change an existing building, it needs to be destroyed and plopped again to see changed employees or other values.
 - DLC entries only work if you own the DLC and can plop the items.
-- There is a separate Excel sheet that can generate road cost/maintenance entries; add the entries to the custom Config.xml for the mod to apply them.
+- See Forum if interested in an Excel sheet helper that can generate road cost/maintenance entries that you then paste into Config.xml.
 
 ### Features
 
@@ -51,6 +51,7 @@ It does not add any per-frame systems, so it has essentially no impact on perfor
 ### CREDITS
 - River-Mochi current author/maintainer
 - Thanks to Infixo for the original City Services mod
+- Dorin made an excel file helper to create entries for road/maintenance costs
 - Fans of the mod who kept hope alive
 
 

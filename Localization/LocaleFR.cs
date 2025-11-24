@@ -1,3 +1,6 @@
+// LocaleFR.cs
+// French fr-FR City Services Redux.
+
 namespace RealCity
 {
     using System.Collections.Generic;
@@ -146,7 +149,7 @@ namespace RealCity
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (now only shown when UseLocalConfig is enabled)
+                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
 
                 {

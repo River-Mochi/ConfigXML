@@ -1,3 +1,6 @@
+// LocalePT_BR.cs
+// Brazilian Portuguese pt-BR. City Services Redux.
+
 namespace RealCity
 {
     using System.Collections.Generic;
@@ -145,7 +148,7 @@ namespace RealCity
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (now only shown when UseLocalConfig is enabled)
+                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
 
                 {
@@ -157,8 +160,8 @@ namespace RealCity
                     "Opção 2 – usuários avançados\n" +
                     "Selecione <[Config.xml personalizado]> para editar seus próprios valores.\n\n" +
                     "1. Clique em <[ABRIR pasta da Config]>.\n" +
-                    "2. Abra, edite e salve <Config.xml> com seu editor preferido.\n" +
-                    "3. Em seguida, clique em <[APLICAR nova configuração]>.\n" +
+                    "2. Abra, edite e salve <Config.xml> com seu editor de texto preferido.\n" +
+                    "3. Depois clique em <[APLICAR nova configuração]>.\n" +
                     "4. <Carregue uma cidade> (ou recarregue) para ver as mudanças em **novos** prédios."
                 },
                 {
