@@ -6,36 +6,38 @@
 <!-- IMPORTANT: Never set workplace counts to 0. Use a small positive value instead (e.g. 1–5). -->
 <!-- SHORT GUIDE
 
-1. Configuration is stored in the hierarchical form: Prefab -> Component -> Field.
-2. Prefabs.
-  a. You need to provide Prefab's name (e.g. ElementarySchool01) and type (e.g. BuildingPrefab).
-  b. RealCity does NOT support ResourcePrefab and CompanyPrefab - please use RealEco if you want to modify them.
-3. Components.
-  a. You need to know Comoponent's type (e.g. Workplace, School, PostFacility).
-4. Fields.
-  a. You need to know the Field's name (e.g. m_Workplaces) and type (enum, int, float).
-  b. ValueInt must be defined for int fields and enum fields.
-  c. ValueFloat must be defined for float fields.
-5. IMPORTANT
-  a. Do NOT modify fields that hold other data types, arrays, references, etc. This may crash the game.
-  b. Use local Config.xml for your own parameters.
-  c. Enable Detailed logging if you want to see a very detailed log of what the mod is doing.
-  d. Otherwise, LEAVE DEBUG Verbos logging DISABLED, off - long logs affect performance.
+1. a. Easy start - change worker value in one of the buildings below the guide, make new building in game, see the increase number of workers.
+1. b. If you want to add new building types to this file, then follow these instructions.
 
- 6. Examples in the file below, e.g., can change HighSchool01 from 30 to 50 employees and if you make a new high school in the city it will have more workers.
-  a. Options, "APPLY" needs to be clicked for file changes to be updated.
-  b. Only new buildings get the new employee numbers, you have to delete/remake old buildings for the change.
-  c. If you mess up and want an all new Config.xml, use the button.
-7. Config_Dump.xml is just a clean, serialized copy of whatever the mod successfully loaded
-  a. Don't worry about this file, it's auto generated from Config.xml.
-8. This Mod focuses on changing the number of employees at the Services building.
-  a. Game will automatically scale the wages with the increase or decrease of workers.
-  b. It's best to use mods like "Adjust School Capacity", "Adjust Transit Capacity", to adjust number of students/passengers/vehicles per building.
-  c. "Magic Garbage Truck" mod is better to adjust how much garbage each truck can carry because it also handles the unload speed.
+2. Configuration is stored in the hierarchical form: Prefab -> Component -> Field.
+3. Prefabs.
+   a. You need to provide Prefab's name (e.g. ElementarySchool01) and type (e.g. BuildingPrefab).
+   b. RealCity does NOT support ResourcePrefab and CompanyPrefab - please use RealEco if you want to modify them.
+4. Components.
+   a. You need to know Component's type (e.g. Workplace, School, PostFacility).
+5. Fields.
+   a. You need to know the Field's name (e.g. m_Workplaces) and type (enum, int, float).
+   b. ValueInt must be defined for int fields and enum fields.
+   c. ValueFloat must be defined for float fields.
+6. IMPORTANT
+   a. Do NOT modify fields that hold other data types, arrays, references, etc. This may crash the game.
+   b. Use local Config.xml for your own parameters.
+   c. Enable Detailed logging if you want to see a very detailed log of what the mod is doing.
+   d. Otherwise, LEAVE Debug Verbose logging DISABLED, off - long logs affect performance.
 
-
+7. Examples in the file below, e.g., can change HighSchool01 from 30 to 50 employees. Then all new high schools will have more workers.
+   a. Options, "APPLY" needs to be clicked for file changes to be updated and applied.
+   b. Only new buildings get the new employee numbers, you have to delete/remake old buildings for the change.
+   c. If you mess up and want an all new Config.xml, use the Restore button.
+8. Config_Dump.xml is just a clean, serialized copy of whatever the mod successfully loaded
+   a. Don't worry about this file, it's auto generated from Config.xml.
+9. This Mod focuses on changing the number of employees at all Services buildings.
+   a. For Schools and all other Services building's it's great for tweaking the number of workers.
+   b. Game will automatically scale the wages with the increase or decrease of workers.
+   c. However it's better to use mods like "Adjust School Capacity", "Adjust Transit Capacity", to adjust number of students/passengers/vehicles per building.
+   d. "Magic Garbage Truck" mod is better to adjust how much garbage each truck can carry because it also handles the unload speed.
+   e. Increase mail workers here, but use "Magic Mail" to adjust everything else about Post Offices.
 -->
-
 
 <!-- CITY SERVICES BUILDINGS -->
 <!-- Note on Workplace Complexity: only main building matters :( extensions just add new workers but their Complexity is ignored :( -->
@@ -62,13 +64,13 @@
 <!-- High School -->
 <Prefab type="BuildingPrefab" name="HighSchool01">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="30" /> <!-- 12, 800 places -->
+	<Field name="m_Workplaces" valueInt="30" /> <!-- 15, 800 places -->
 	<Field name="m_Complexity" valueInt="2" /> <!-- Simple => Complex -->
   </Component>
 </Prefab>
 <Prefab type="BuildingExtensionPrefab" name="HighSchool01 Extension Wing">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="20" /> <!-- 4, 400 places -->
+	<Field name="m_Workplaces" valueInt="20" /> <!-- 0, 400 places -->
   </Component>
 </Prefab>
 <Prefab type="BuildingExtensionPrefab" name="HighSchool01 Library">
@@ -85,13 +87,13 @@
 <!-- College -->
 <Prefab type="BuildingPrefab" name="College01">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="40" /> <!-- 32, 1000 places -->
+	<Field name="m_Workplaces" valueInt="80" /> <!-- 15, 10000 places -->
 	<Field name="m_Complexity" valueInt="3" /> <!-- Complex => Hitech -->
   </Component>
 </Prefab>
 <Prefab type="BuildingExtensionPrefab" name="College01 Extension Wing">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="25" /> <!-- 10, 500 places -->
+	<Field name="m_Workplaces" valueInt="30" /> <!-- 10, 2500 places -->
   </Component>
 </Prefab>
 <Prefab type="BuildingPrefab" name="College01 Library">
@@ -103,13 +105,13 @@
 <!-- University -->
 <Prefab type="BuildingPrefab" name="University01">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="100" /> <!-- 28, 2000 places -->
+	<Field name="m_Workplaces" valueInt="150" /> <!-- 15, 15000 places -->
 	<Field name="m_Complexity" valueInt="3" /> <!-- Hitech => ok -->
   </Component>
 </Prefab>
 <Prefab type="BuildingExtensionPrefab" name="University01 Extension Wing">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="25" /> <!-- 10, 500 places -->
+	<Field name="m_Workplaces" valueInt="25" /> <!-- 10, 2500 places -->
   </Component>
 </Prefab>
 <Prefab type="BuildingPrefab" name="University01 Library">
@@ -119,7 +121,7 @@
 </Prefab>
 <Prefab type="BuildingPrefab" name="University01 Park">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="10" /> <!-- 10 -->
+	<Field name="m_Workplaces" valueInt="15" /> <!-- 10 -->
   </Component>
 </Prefab>
 
@@ -271,25 +273,25 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Central Investigation Bureau -->
   <Prefab type="BuildingPrefab" name="CentralInvestigationBureau01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="300" valueFloat="0" /> <!-- 200 -->
+      <Field name="m_Workplaces" valueInt="330" valueFloat="0" /> <!-- 200 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>
   <!-- City Hall -->
   <Prefab type="BuildingPrefab" name="CityHall01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="100" valueFloat="0" /> <!-- 16 -->
+      <Field name="m_Workplaces" valueInt="200" valueFloat="0" /> <!-- 50 -->
       <Field name="m_Complexity" valueInt="2" valueFloat="0" /> <!-- Complex => ok -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="CityHall01 Court">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!-- 10 -->
+      <Field name="m_Workplaces" valueInt="50" valueFloat="0" /> <!-- 30 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="CityHall01 Planning Offices">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!-- 10 -->
+      <Field name="m_Workplaces" valueInt="50" valueFloat="0" /> <!-- 30 -->
     </Component>
   </Prefab>
   <!-- Coal Power Plant -->
@@ -373,18 +375,18 @@ This mod is best for changing the number of workers or education level of worker
   <!-- EmergencyBatteryStation -->
   <Prefab type="BuildingPrefab" name="EmergencyBatteryStation01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="25" valueFloat="0" /> <!-- 16 -->
+      <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 32 -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Complex => Simple -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="EmergencyBatteryStation01 Additional Battery Bank">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="5" valueFloat="0" /> <!-- 4 -->
+      <Field name="m_Workplaces" valueInt="12" valueFloat="0" /> <!-- 8 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="EmergencyBatteryStation01 Diesel Generator">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="0" valueFloat="0" />
+      <Field name="m_Workplaces" valueInt="1" valueFloat="0" /> <!-- 0 original-->
     </Component>
   </Prefab>
   <!-- Fire House -->
@@ -626,25 +628,25 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Large Hadron Collider -->
   <Prefab type="BuildingPrefab" name="LargeHadronCollider01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="150" valueFloat="0" /> <!-- 52 -->
+      <Field name="m_Workplaces" valueInt="200" valueFloat="0" /> <!-- 52 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>
   <!-- Medical Clinic -->
   <Prefab type="BuildingPrefab" name="MedicalClinic01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!-- 12 -->
+      <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!-- 18 -->
       <Field name="m_Complexity" valueInt="2" valueFloat="0" /> <!-- Complex => ok -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="MedicalClinic01 Ambulance Depot">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="5" valueFloat="0" /> <!-- 2 -->
+      <Field name="m_Workplaces" valueInt="16" valueFloat="0" /> <!-- 8 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="MedicalClinic01 Extension Wing">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="15" valueFloat="0" /> <!-- 6 -->
+      <Field name="m_Workplaces" valueInt="16" valueFloat="0" /> <!-- 8 -->
     </Component>
   </Prefab>
   <!-- MedicalUniversity -->
@@ -735,18 +737,18 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Park Maintenance Depot -->
   <Prefab type="BuildingPrefab" name="ParkMaintenanceDepot01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="24" valueFloat="0" /> <!-- 10, 10 vehicles -->
+      <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 30, 8 vehicles -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Simple => ok -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="ParkMaintenanceDepot01 Extra Garage">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="12" valueFloat="0" /> <!-- 0, 5 vehicles -->
+      <Field name="m_Workplaces" valueInt="20" valueFloat="0" /> <!-- 10, 5 vehicles -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="ParkMaintenanceDepot01 Supply Storage">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="4" valueFloat="0" /> <!-- 4 -->
+      <Field name="m_Workplaces" valueInt="12" valueFloat="0" /> <!-- 8 -->
     </Component>
   </Prefab>
   <!-- Police Headquarters -->
@@ -785,7 +787,8 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
 
   <!-- Post Office (workplaces only)
-		Suggested: use Magic Mail mod for other features, it's better for tuning mail vans, capacities. -->
+		Suggested: use Magic Mail mod for other features, it's better for tuning mail vans, capacities.
+        Use this mod to change worker numbers and education requirements for the workers. -->
   <Prefab type="BuildingPrefab" name="PostOffice01">
     <Component name="Workplace">
       <Field name="m_Workplaces" valueInt="25" valueFloat="0" /> <!-- 12 -->
@@ -954,18 +957,18 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Solar Power Station -->
   <Prefab type="BuildingPrefab" name="SolarPowerStation01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="25" valueFloat="0" /> <!-- 16 -->
+      <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 32 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Complex => Hitech -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="SolarPowerStation01 Additional Transformer Station">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="0" valueFloat="0" />
+      <Field name="m_Workplaces" valueInt="1" valueFloat="0" />  <!-- 0, original -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="SolarPowerStation01 Backup Battery">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="4" valueFloat="0" />
+      <Field name="m_Workplaces" valueInt="12" valueFloat="0" />  <!-- 8 -->
     </Component>
   </Prefab>
   <!-- Space Center -->
@@ -1016,30 +1019,26 @@ This mod is best for changing the number of workers or education level of worker
     </Component>
   </Prefab>
   <!-- Taxi Depot -->
-  <Prefab type="BuildingPrefab" name="TaxiDepot01">
+  <Prefab type="BuildingPrefab" name="TaxiDepot01">  <!-- large depot -->
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!-- 8, 20 taxis -->
+      <Field name="m_Workplaces" valueInt="36" valueFloat="0" /> <!-- 8, 25 taxis -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Simple => ok -->
     </Component>
-	<!-- EXAMPLE - changes number of taxis in the depot
-    <Component name="TransportDepot">
-      <Field name="m_VehicleCapacity" valueInt="20" />
-    </Component>
-	-->
+
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TaxiDepot01 Dispatch Center">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="10" valueFloat="0" /> <!-- 4 -->
+      <Field name="m_Workplaces" valueInt="12" valueFloat="0" /> <!-- 8 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TaxiDepot01 Electric Taxis">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="4" valueFloat="0" />
+      <Field name="m_Workplaces" valueInt="12" valueFloat="0" />  <!-- 8 -->
     </Component>
   </Prefab>
-  <Prefab type="BuildingPrefab" name="TaxiDepot01 Taxi Garage">
+  <Prefab type="BuildingPrefab" name="TaxiDepot01 Taxi Garage"> <!-- small -->
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="10" valueFloat="0" /> <!-- 4, 5 taxis -->
+      <Field name="m_Workplaces" valueInt="12" valueFloat="0" /> <!-- 10, 10 taxis -->
     </Component>
   </Prefab>
   <!-- Technical University -->

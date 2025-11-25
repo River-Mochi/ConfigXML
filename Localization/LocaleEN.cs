@@ -149,7 +149,7 @@ namespace RealCity
                     "2. Open, edit, save <Config.xml> with a text editor (e.g., Notepad++).\n" +
                     "3. Click <[APPLY NEW Configuration Now]> - updates any changes to file.\n" +
                     "4. <Load City> (or reload) to see changes to <NEW> buildings.\n" +
-                    "5. Steps 1-4 can be repeated with no restart if you always click <APPLY> changes."
+                    "5. Steps 1-4 can be repeated with no restart if you click <APPLY> changes."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)), " " },
 
