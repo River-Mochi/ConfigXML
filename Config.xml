@@ -26,9 +26,13 @@
   a. Options, "APPLY" needs to be clicked for file changes to be updated.
   b. Only new buildings get the new employee numbers, you have to delete/remake old buildings for the change.
   c. If you mess up and want an all new Config.xml, use the button.
-
 7. Config_Dump.xml is just a clean, serialized copy of whatever the mod successfully loaded
   a. Don't worry about this file, it's auto generated from Config.xml.
+8. This Mod focuses on changing the number of employees at the Services building.
+  a. Game will automatically scale the wages with the increase or decrease of workers.
+  b. It's best to use mods like "Adjust School Capacity", "Adjust Transit Capacity", to adjust number of students/passengers/vehicles per building.
+  c. "Magic Garbage Truck" mod is better to adjust how much garbage each truck can carry because it also handles the unload speed.
+
 
 -->
 
@@ -156,6 +160,8 @@
     </Component>
   </Prefab>
   <!-- Bus Depot -->
+  <!-- It's best to use "Adjust Transit Capacity" mod to change how much each Bus can carry or maximum vehicles the buildings can handle.
+This mod is best for changing the number of workers or education level of workers at the building. -->
   <Prefab type="BuildingPrefab" name="BusDepot01">
     <Component name="Workplace">
       <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 16, there are 25 buses... -->
@@ -587,6 +593,8 @@
     </Component>
   </Prefab>
   <!-- Landfill -->
+  <!-- Use "Magic Garbage Truck" mod to change how much each truck can carry.
+This mod is best for changing the number of workers or education level of workers below. -->
   <Prefab type="BuildingPrefab" name="Landfill01">
     <Component name="Workplace">
       <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!--- 10, 20 trucks -->
@@ -1229,13 +1237,5 @@
     </Component>
   </Prefab>
   -->
-  
-<!-- EXAMPLE - changes capacity of garbage trucks
-<Prefab type="CarPrefab" name="GarbageTruck01">
-  <Component name="GarbageTruck">
-	<Field name="m_GarbageCapacity" valueInt="20000" />
-  </Component>
-</Prefab>
--->
 
 </Configuration>
