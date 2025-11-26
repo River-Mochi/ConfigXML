@@ -1,6 +1,5 @@
 // Config/ConfigTool.cs
-// Reads Config.xml and applies prefab + component tweaks for City Services Redux.
-
+// Reads Config.xml and applies prefab + component tweaks
 namespace RealCity
 {
     using System;                 // Exception, Type
@@ -326,10 +325,37 @@ namespace RealCity
                 ? "Apply LOCAL Config.xml (ModsData/RealCity)"
                 : "Apply PRESET Config.xml (shipped mod defaults)";
 
-            Mod.s_Log.Info($"RealCity: {sourceDescription}.");
+            // Go through the safe logging helper so logging failures can never NRE.
+            Mod.Log($"RealCity: {sourceDescription}.");
 
-            m_PrefabSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PrefabSystem>();
-            m_EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            // ECS / world safety: do nothing if there's no default world yet.
+            World world;
+            try
+            {
+                world = World.DefaultGameObjectInjectionWorld;
+            }
+            catch (Exception ex)
+            {
+                Mod.s_Log.Warn($"ConfigTool.ReadAndApply: Failed to get default world: {ex.GetType().Name}: {ex.Message}");
+                return;
+            }
+
+            if (world == null)
+            {
+                Mod.s_Log.Warn("ConfigTool.ReadAndApply: No default world; are we in a game? Skipping configuration.");
+                return;
+            }
+
+            try
+            {
+                m_PrefabSystem = world.GetOrCreateSystemManaged<PrefabSystem>();
+                m_EntityManager = world.EntityManager;
+            }
+            catch (Exception ex)
+            {
+                Mod.s_Log.Warn($"ConfigTool.ReadAndApply: Failed to get PrefabSystem / EntityManager: {ex.GetType().Name}: {ex.Message}");
+                return;
+            }
 
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
@@ -350,6 +376,7 @@ namespace RealCity
                 }
             }
         }
+
 
         /// <summary>
         /// DEBUG helper: dump status for every Prefab listed in Config.xml

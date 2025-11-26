@@ -38,7 +38,7 @@ namespace RealCity
                 { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "Options - pick one" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "Actions" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "How to use Config.xml" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.kInfoGroup), "Info" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kInfoGroup), " " },  // No Info section title
                 { m_Setting.GetOptionGroupLocaleID(Setting.kDebugGroup), "DEBUG" },
 
                 // Debug tab: Info group
@@ -166,7 +166,7 @@ namespace RealCity
                     "<Do NOT use> for normal gameplay.\n" +
                     "Excessive logging can slow the game and create large log files.\n" +
                     "Turn this on only temporarily when collecting data or debugging.\n" +
-                    "If you are not sure what this is, best to leave it DISABLED."
+                    "If you don't know what this is, best to leave it DISABLED."
                 },
 
                 // DumpPrefabStatus button

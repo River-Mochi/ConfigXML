@@ -7,7 +7,7 @@
 	<ShortDescription Value="Increases number of workers and other small adjustments for City Services." />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="Increases number of workers in City Services and other small adjustments." /-->
-	<LongDescription>**City Services Redux** aka RealCity
+	<LongDescription>**City Services Redux**
 
 Tweak and modify City Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration.
 
@@ -17,7 +17,7 @@ Tweak and modify City Service buildings to your liking. By default, you could ju
 - Increased workers automatically increases the wages (scaled by the game itself).
 - New settings are only applied to **new** buildings.
 
-Number of **preset** buildings and extensions: **221**.
+Number of **preset** buildings and extensions: **220**.
 
 ### 7 Languages
 * English, Français French, Deutsch German, Español Spanish
@@ -79,7 +79,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- adds prefabs, Config increased to 221 presets now.
+- adds prefabs, Config increased to 220 presets now.
 - adds EE and FR medical clinics to presets.
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->

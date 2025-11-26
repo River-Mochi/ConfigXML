@@ -152,6 +152,14 @@
 	<Field name="m_Workplaces" valueInt="16" /> <!-- 8 -->
   </Component>
 </Prefab>
+
+<Prefab type="BuildingPrefab" name="FR_HighSchool">
+  <Component name="Workplace">
+	<Field name="m_Workplaces" valueInt="125" /> <!-- 100, 2500 places -->
+	<Field name="m_Complexity" valueInt="1" /> <!-- Simple => ok -->
+  </Component>
+</Prefab>
+
 <!-- College -->
 <Prefab type="BuildingPrefab" name="College01">
   <Component name="Workplace">
@@ -169,6 +177,14 @@
 	<Field name="m_Workplaces" valueInt="30" /> <!-- 24 -->
   </Component>
 </Prefab>
+
+<Prefab type="BuildingPrefab" name="FR_College">
+  <Component name="Workplace">
+	<Field name="m_Workplaces" valueInt="120" /> <!-- 100, 1500 places -->
+	<Field name="m_Complexity" valueInt="2" /> <!-- 2 Complex => ok -->
+  </Component>
+</Prefab>
+
 <!-- University -->
 <Prefab type="BuildingPrefab" name="University01">
   <Component name="Workplace">
@@ -221,7 +237,7 @@
       <Field name="m_Complexity" valueInt="0" valueFloat="0" /> <!-- Manual => ok -->
     </Component>
   </Prefab>
-  <!-- BronzeStatue -->
+  <!-- BronzeStatue Park -->
   <Prefab type="BuildingPrefab" name="BronzeStatue01">
     <Component name="Workplace">
       <Field name="m_Workplaces" valueInt="21" valueFloat="0" /> <!-- 20 -->
@@ -1349,25 +1365,25 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingPrefab" name="Nasinneula">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 16 -->
+      <Field name="m_Workplaces" valueInt="60" valueFloat="0" /> <!-- 46 -->
       <Field name="m_Complexity" valueInt="2" valueFloat="0" /> <!-- Complex => Simple -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="NationalGalleryofArts">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="120" valueFloat="0" /> <!-- 18 -->
+      <Field name="m_Workplaces" valueInt="120" valueFloat="0" /> <!-- 50 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Simple => Hitech -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="NotreDame">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="60" valueFloat="0" /> <!-- 24 -->
+      <Field name="m_Workplaces" valueInt="60" valueFloat="0" /> <!-- 40 -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Simple => ok -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="TheNationalDiet">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="100" valueFloat="0" /> <!-- 24 -->
+      <Field name="m_Workplaces" valueInt="110" valueFloat="0" /> <!-- 60 -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Manual => Simple -->
     </Component>
   </Prefab>
@@ -1379,7 +1395,7 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingPrefab" name="XianBellTower">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="35" valueFloat="0" /> <!-- 24 -->
+      <Field name="m_Workplaces" valueInt="48" valueFloat="0" /> <!-- 40 -->
       <Field name="m_Complexity" valueInt="0" valueFloat="0" /> <!-- Manual => ok -->
     </Component>
   </Prefab>
@@ -1391,7 +1407,7 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingPrefab" name="BotanicalGarden01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 24 -->
+      <Field name="m_Workplaces" valueInt="45" valueFloat="0" /> <!-- 40 -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Manual => Simple -->
     </Component>
   </Prefab>
@@ -1403,7 +1419,7 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingPrefab" name="GrandHotel01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="120" valueFloat="0" /> <!-- 10 -->
+      <Field name="m_Workplaces" valueInt="120" valueFloat="0" /> <!-- 50 -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Complex => Simple -->
     </Component>
   </Prefab>
