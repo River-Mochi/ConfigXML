@@ -17,7 +17,7 @@ Tweak and modify City Service buildings to your liking. By default, you could ju
 - Increased workers automatically increases the wages (scaled by the game itself).
 - New settings are only applied to **new** buildings.
 
-Number of **preset** buildings and extensions: **219**.
+Number of **preset** buildings and extensions: **221**.
 
 ### 7 Languages
 * English, Français French, Deutsch German, Español Spanish
@@ -79,7 +79,8 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- added prefabs, Config increased to 219 presets now.
+- adds prefabs, Config increased to 221 presets now.
+- adds EE and FR medical clinics to presets.
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

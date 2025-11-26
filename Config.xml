@@ -1325,6 +1325,13 @@ This mod is best for changing the number of workers or education level of worker
     </Component>
   </Prefab>
 
+  <Prefab type="BuildingPrefab" name="RS_ServiceCenter">   <!-- Modern Architecture -->
+    <Component name="Workplace">
+      <Field name="m_Workplaces" valueInt="50" valueFloat="0" /> <!-- 12 -->
+      <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Simple => ok -->
+    </Component>
+  </Prefab>
+
   <Prefab type="BuildingPrefab" name="EE_WelfareOffice">
     <Component name="Workplace">
       <Field name="m_Workplaces" valueInt="80" valueFloat="0" /> <!-- 50 -->
