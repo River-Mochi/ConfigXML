@@ -15,7 +15,7 @@ Number of configured buildings and extensions: **186**.
 - The file is loaded when the game starts or when you click “APPLY new configuration now” in options.
 - For existing buildings, you need to rebuild them to see new values.
 - New mod versions should not overwrite your custom Config.xml in ModsData/RealCity.
-- If you want a clean starting point again, use the "Restore new Config.xml" button in options.
+- If you want a clean starting point again, use the "Reset new Config.xml" button in options.
 
 ### Customizing the parameters
 - As for now the mod allows to change any parameter that is stored as either an integer number (so Enums too) or a float number. This covers like 90% of params :)

@@ -14,24 +14,24 @@ Tweak and modify City Service buildings to your liking. By default, you could ju
 ### Quick-Start
 - Just select "PRESETS" and play, done.
 - Curated preset list increases the number of workers and a few other small adjustments (details below). 
-- Increased workers automatically increases the wages (scaled by the game itself).
-- New settings are only applied to **new** buildings.
+- Wages are scaled up/down based on the number of workers automatically by the game itself (we just tweak worker counts).
+- New settings are only applied to **new** placed buildings.
 
 Number of **preset** buildings and extensions: **221**.
 
-### 7 Languages
+### 8 Languages
 * English, Français French, Deutsch German, Español Spanish
 * 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
 * 한국어 Korean
 
 ### Curated Presets
-* All buildings have more workplaces, some have required education levels adjusted, and other allowed tweaks.
-* Presets are designed with various considerations. Some have only slightly more workers (2), and some have many.
-* Examples: University is 170 workers, preset increases this to 400 as this large building campus.
-* Crematorium has 2x higher processing rate to handle increased deaths from Population Rebalance.
-* Existing buildings need to be destroyed and plopped again to see new changes.
-* If you want more than preset numbers, then see Power users.
-
+* All buildings have more workplaces. The required education level for the job is also adjusted in 'some' buildings, and other allowed tweaks.
+* Presets are designed with various considerations. Some have only slightly more workers (2), and some have many. 
+This better utilizes large buildings that previously had few workers, and may help reduce unemployment.
+* Examples: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students. Crematorium has 2x higher processing rate.
+* Existing buildings need to be rebuilt to see new config changes.
+* Add these companion mods to also Increase Students or Transit Passengers
+* See Power Users if you want to adjust the presets yourself.
 
 ### Power Users
 - Easily tweak all player adjustable config file as you wish.
@@ -47,7 +47,7 @@ Number of **preset** buildings and extensions: **221**.
 * Performance: this is a lightweight configuration mod. It only does a short pass when applying settings (on game load or when you click APPLY).
 It does not add any per-frame systems, so it essentially has no impact on performance.
 * Works with mods: Adjust School, Adjust Transit, Magic Mail, Magic Garbage Truck, as this mod is focused on the number of workers and those do not.
-* Magic Hearse and Achievement Fixer also works with this. Pretty much any mod that doesn't adjust worker numbers should be good.
+* Magic Hearse and Achievement Fixer also works with this. Pretty much any mod that doesn't also adjust worker numbers should be good.
 
 
 ### CREDITS
@@ -55,6 +55,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 - Thanks to Infixo for the original City Services Rebalance mod
 - Fans of the mod who kept hope alive
 - BugsyG - testing
+- Dorin - testing
 
 	</LongDescription>
 	<!--Thumbnail-->
@@ -66,21 +67,22 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<Screenshot Value="Properties/40Actions-HowtoUse.jpg" />
 	<Screenshot Value="Properties/50Actions-custom.jpg" />
 	<Screenshot Value="Properties/70Actions-ZH-CN.jpg" />
+	<Screenshot Value="Properties/80University.jpg" />
 
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-services-rebalance-redux.1878625/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.5.8" />
+	<ModVersion Value="0.5.9" />
 	<!--Recommended version of the base game to use the mod-->
-	<GameVersion Value="1.4.*" />
+	<GameVersion Value="1.5.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- adds 한국어 Korean
+- Update for game patch 1.5.2
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

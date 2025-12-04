@@ -79,7 +79,7 @@ namespace RealCity
                     "• Otworzy folder z plikiem Config.xml w ModsData/RealCity, gdzie możesz zmieniać liczbę pracowników i inne pola.\n" +
                     "• **Nigdy** nie ustawiaj liczby pracowników na 0; używaj małych dodatnich wartości, jeśli chcesz niski poziom obsady.\n" +
                     "• Po wprowadzeniu zmian zapisz plik i użyj przycisku **APPLY**, aby mod je odczytał.\n\n" +
-                    "Użyj <Restore new>, jeśli plik się zepsuje lub chcesz całkiem nowy Config.xml – zastąpi on istniejący plik.\n" +
+                    "Użyj <Reset new>, jeśli plik się zepsuje lub chcesz całkiem nowy Config.xml – zastąpi on istniejący plik.\n" +
                     "W każdej chwili możesz wrócić do **PRESETÓW**. "
                 },
 

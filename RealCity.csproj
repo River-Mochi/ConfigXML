@@ -4,7 +4,7 @@
     <Configurations>Debug;Release</Configurations>
 
     <!-- Single source of truth for version number -->
-    <Version>0.5.8</Version>
+    <Version>0.5.9</Version>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <FileVersion>$(Version).0</FileVersion>
 

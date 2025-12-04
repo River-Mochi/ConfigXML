@@ -75,7 +75,7 @@ namespace RealCity
                     "• It shows location of provided Config.xml in ModsData/RealCity, then tweak worker counts or other fields.\n" +
                     "• **Never** set workplaces to 0; use small positive values if you need low staffing.\n" +
                     "• After making changes, save the file, then use the **APPLY** button to update file changes to the mod.\n\n" +
-                    "Use <Restore new> file <ONLY> if you mess up or just want a completely fresh Config.xml - replaces existing file.\n" +
+                    "Use <Reset new> file <ONLY> if you mess up or just want a completely fresh Config.xml - replaces existing file.\n" +
                     "You can switch back to **PRESETS** at any time. "
                 },
 
@@ -117,14 +117,14 @@ namespace RealCity
                 // ResetLocalConfig (Actions tab)
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Restore new Config.xml"
+                    "Reset new Config.xml"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "START OVER BUTTON\n\n" +
                     "Overwrite the **ModsData/RealCity/Config.xml** with a fresh copy of the original mod presets.\n" +
                     "• Use this <only> if your custom file becomes corrupt or you just want to start over.\n\n" +
-                    "• **Restore new** replaces the existing file - must close original Config.xml file first."
+                    "• **Reset new** replaces the existing file - must close original Config.xml file first."
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
@@ -194,7 +194,7 @@ namespace RealCity
                 // Debug tab duplicate reset button
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Restore new Config.xml"
+                    "Reset new Config.xml"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),

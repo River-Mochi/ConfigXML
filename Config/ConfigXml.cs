@@ -316,17 +316,17 @@ namespace RealCity
             using (var writer = new StreamWriter(fs))
             {
                 writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-                writer.WriteLine("<!-- CSR-STUB: Config.xml placeholder created because a default config could not be found.");
-                writer.WriteLine("     The mod will not change any buildings while this stub is active.");
-                writer.WriteLine("     Please reinstall the mod or use the in-game reset button to restore the real Config.xml. -->");
+                writer.WriteLine("<!-- CSR-STUB: Config.xml temp created because a default config could not be found.");
+                writer.WriteLine("     The mod will not change any buildings while this temp stub is active.");
+                writer.WriteLine("     Reinstall the mod or use the in-game reset button to get a real working Config.xml. -->");
                 writer.WriteLine("<Configuration>");
                 writer.WriteLine("  <!-- No prefabs defined. This stub is safe but does nothing. -->");
                 writer.WriteLine("</Configuration>");
             }
 
             Mod.s_Log.Warn(
-                $"Configuration: created stub Config.xml at {configPath}. " +
-                "The mod will not apply any changes until a real config is restored.");
+                $"Configuration: created temp stub Config.xml at {configPath}. " +
+                "The mod will not apply any changes until a real config file is restored.");
         }
 
         /// <summary>

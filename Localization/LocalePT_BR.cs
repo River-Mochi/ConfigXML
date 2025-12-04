@@ -79,7 +79,7 @@ namespace RealCity
                     "• Mostra a pasta com o Config.xml em ModsData/RealCity; aí você pode ajustar funcionários e outros campos.\n" +
                     "• **Nunca** coloque o número de trabalhadores em 0; use valores positivos pequenos se quiser pouco pessoal.\n" +
                     "• Depois das mudanças, salve o arquivo e use o botão **APPLY** para aplicar as alterações no mod.\n\n" +
-                    "Use <Restore new> apenas se estragar o arquivo ou quiser um Config.xml completamente novo – substitui o arquivo atual.\n" +
+                    "Use <Reset new> apenas se estragar o arquivo ou quiser um Config.xml completamente novo – substitui o arquivo atual.\n" +
                     "Você pode voltar às **PREDEFINIÇÕES** a qualquer momento. "
                 },
 

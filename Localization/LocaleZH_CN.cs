@@ -79,7 +79,7 @@ namespace RealCity
                     "• 会打开 ModsData/RealCity 中的 Config.xml，你可以在里面调整工作岗位等字段。\n" +
                     "• **不要**把岗位设置为 0；如果想要很少的员工，请用一个很小的正数。\n" +
                     "• 修改后保存文件，然后点 **APPLY** 按钮，让模组加载新配置。\n\n" +
-                    "如果文件弄坏了，或者想要一个全新的 Config.xml，可以使用 <Restore new> —— 会替换现有文件。\n" +
+                    "如果文件弄坏了，或者想要一个全新的 Config.xml，可以使用 <Reset new> —— 会替换现有文件。\n" +
                     "你可以随时切回 **推荐预设**。 "
                 },
 
@@ -131,7 +131,7 @@ namespace RealCity
                     "“重新开始”按钮\n\n" +
                     "用模组原始预设的全新副本覆盖 **ModsData/RealCity/Config.xml**。\n" +
                     "• 仅在自定义文件损坏或想从头再来时使用。\n\n" +
-                    "• **Restore new** 会替换现有文件 —— 记得先在编辑器中关闭旧的 Config.xml。"
+                    "• **Reset new** 会替换现有文件 —— 记得先在编辑器中关闭旧的 Config.xml。"
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),

@@ -28,7 +28,7 @@
 7. Examples in the file below, e.g., can change HighSchool01 from 30 to 50 employees. Then all new high schools will have more workers.
    a. Options, "APPLY" needs to be clicked for file changes to be updated and applied.
    b. Only new buildings get the new employee numbers, you have to delete/remake old buildings for the change.
-   c. If you mess up and want an all new Config.xml, use the Restore button.
+   c. If you mess up and want an all new Config.xml, use the "Reset New" button.
 8. Config_Dump.xml is just a clean, serialized copy of whatever the mod successfully loaded
    a. Don't worry about this file, it's auto generated from Config.xml.
 9. This Mod focuses on changing the number of employees at all Services buildings.
@@ -58,7 +58,7 @@
 </Prefab>
 <Prefab type="BuildingPrefab" name="ElementarySchool01 Childrens Clinic">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="18" /> <!-- 15 -->
+	<Field name="m_Workplaces" valueInt="20" /> <!-- 15 -->
   </Component>
 </Prefab>
 <Prefab type="BuildingPrefab" name="ElementarySchool02">
@@ -155,7 +155,7 @@
 
 <Prefab type="BuildingPrefab" name="FR_HighSchool">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="125" /> <!-- 100, 2500 places -->
+	<Field name="m_Workplaces" valueInt="130" /> <!-- 100, 2500 places -->
 	<Field name="m_Complexity" valueInt="1" /> <!-- Simple => ok -->
   </Component>
 </Prefab>
@@ -163,7 +163,7 @@
 <!-- College -->
 <Prefab type="BuildingPrefab" name="College01">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="300" /> <!-- 100, 10000 places -->
+	<Field name="m_Workplaces" valueInt="350" /> <!-- 100, 10000 places -->
 	<Field name="m_Complexity" valueInt="3" /> <!-- 2 Complex => 3 Hitech -->
   </Component>
 </Prefab>
@@ -371,7 +371,7 @@ This mod is best for changing number of workers or education level of workers at
   <!-- Central Investigation Bureau -->
   <Prefab type="BuildingPrefab" name="CentralInvestigationBureau01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="330" valueFloat="0" /> <!-- 200 -->
+      <Field name="m_Workplaces" valueInt="350" valueFloat="0" /> <!-- 200 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>

@@ -79,7 +79,7 @@ namespace RealCity
                     "• Zeigt den Ordner mit der bereitgestellten Config.xml in ModsData/RealCity, dann kannst du dort Arbeitsplätze oder andere Felder anpassen.\n" +
                     "• Setze die Arbeitsplätze **niemals** auf 0; nutze kleine positive Werte, wenn du wenig Personal willst.\n" +
                     "• Nach Änderungen Datei speichern und den Button **APPLY** nutzen, um die Änderungen in den Mod zu übernehmen.\n\n" +
-                    "Nutze <Restore new>, wenn du deine Datei zerschossen hast oder einfach wieder eine frische Config.xml möchtest – ersetzt die vorhandene Datei.\n" +
+                    "Nutze <Reset new>, wenn du deine Datei zerschossen hast oder einfach wieder eine frische Config.xml möchtest – ersetzt die vorhandene Datei.\n" +
                     "Du kannst jederzeit zurück zu **PRESETS** wechseln. "
                 },
 
@@ -131,7 +131,7 @@ namespace RealCity
                     "NEU ANFANGEN-BUTTON\n\n" +
                     "Überschreibt **ModsData/RealCity/Config.xml** mit einer frischen Kopie der ursprünglichen Mod-Presets.\n" +
                     "• Nutze dies nur, wenn deine eigene Datei kaputt ist oder du komplett neu anfangen willst.\n\n" +
-                    "• **Restore new** ersetzt die bestehende Datei – schließe die alte Config.xml vorher im Editor."
+                    "• **Reset new** ersetzt die bestehende Datei – schließe die alte Config.xml vorher im Editor."
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
