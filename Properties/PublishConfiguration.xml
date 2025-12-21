@@ -12,10 +12,13 @@
 Tweak and modify City Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration.
 
 ### Quick-Start
+
 - Just select "PRESETS" and play, done.
-- Curated preset list increases the number of workers and a few other small adjustments (details below). 
+- Curated preset list increases the number of workers and a few other small adjustments (details below).
 - Wages are scaled up/down based on the number of workers automatically by the game itself (we just tweak worker counts).
-- New settings are only applied to **new** placed buildings.
+- New settings are only applied to new placed buildings.
+- Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is already included). 
+It does the change before any city is loaded, so there is no performance impact.
 
 Number of **preset** buildings and extensions: **221**.
 
@@ -25,19 +28,18 @@ Number of **preset** buildings and extensions: **221**.
 * 한국어 Korean
 
 ### Curated Presets
-* All buildings have more workplaces. The required education level for the job is also adjusted in 'some' buildings, and other allowed tweaks.
-* Presets are designed with various considerations. Some have only slightly more workers (2), and some have many. 
-This better utilizes large buildings that previously had few workers, and may help reduce unemployment.
-* Examples: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students. Crematorium has 2x higher processing rate.
-* Existing buildings need to be rebuilt to see new config changes.
-* Add these companion mods to also Increase Students or Transit Passengers
-* See Power Users if you want to adjust the presets yourself.
+- All buildings have more workplaces. The required education level for the job is also adjusted in 'some' buildings, and other allowed tweaks.
+- Presets are designed with various considerations. Some have only slightly more workers (2), and some have many. This better utilizes large buildings that previously had few workers, and may help reduce unemployment.
+- Examples: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students. Crematorium has 2x higher processing rate.
+- Existing buildings need to be rebuilt to see new config changes.
+- Add these companion mods to also Increase Students or Transit Passengers
+- See Power Users if you want to adjust the presets yourself.
 
 ### Power Users
 - Easily tweak all player adjustable config file as you wish.
-- Open mod Options > Custom > [Open Config folder] to create a Config.xml file you can customize.
+- Open mod Options > Custom > [Open Config folder] to create a customizable Config.xml file.
 - Refer to info / examples in Config.xml for how to add / alter components (edit with Notepad++ or similar).
-- New changes can be "Applied" even during the game (use options menu).
+- New changes can be "Applied" even during the game without a restart (options menu).
 
 ### Notes
 
@@ -74,7 +76,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-services-rebalance-redux.1878625/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.5.9" />
+	<ModVersion Value="0.6.1" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the mod, can be set multiple times-->
@@ -82,7 +84,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- Update for game patch 1.5.2
+- update/fix for paradox link
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

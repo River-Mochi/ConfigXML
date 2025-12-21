@@ -1,7 +1,7 @@
 ﻿# City Services Redux Mod
 The mod allows for virtually any changes to City Services buildings. At the moment, it mainly **increases number of workers in City Services buildings** and does other small adjustments (see below for details). It does so by changing Prefab parameters during the game start-up, so no changes to game systems are required. In the long term this can serve as a foundation for **tuning and balancing any parameter**. I encourage to contribute to the mod by raising issues and/or PRs on GitHub with proposed changes and rationale behind such changes.
 
-Number of configured buildings and extensions: **186**.
+Number of configured buildings and extensions: **221**.
 
 
 ## Features

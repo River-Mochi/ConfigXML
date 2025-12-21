@@ -44,7 +44,7 @@ namespace RealCity
 
         // External links
         private const string kUrlParadoxMods =
-            "https://mods.paradoxplaza.com/authors/kimosabe1/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime";
+             "https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime";
 
         // Backing fields for mutually exclusive toggles
         private bool m_UseModPresets;
