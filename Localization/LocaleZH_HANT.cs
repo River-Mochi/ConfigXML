@@ -1,16 +1,16 @@
-// LocaleEN.cs
-// English en-US Config-XML.
+// LocaleZH_Hant.cs
+// Traditional Chinese zh-Hant for Config-XML.
 
 namespace ConfigXML
 {
     using Colossal;
     using System.Collections.Generic;
 
-    public class LocaleEN : IDictionarySource
+    public class LocaleZH_Hant : IDictionarySource
     {
         private readonly Setting m_Setting;
 
-        public LocaleEN(Setting setting)
+        public LocaleZH_Hant(Setting setting)
         {
             m_Setting = setting;
         }
@@ -21,7 +21,7 @@ namespace ConfigXML
         {
             var title = Mod.ModName;
 
-            // Show "City Services Redux 0.5.3" title
+            // Show "Config-XML 0.6.2" title
             if (!string.IsNullOrEmpty(Mod.ModVersion))
             {
                 title = title + " " + Mod.ModVersion;
@@ -31,21 +31,21 @@ namespace ConfigXML
             {
                 // Tab titles
                 { m_Setting.GetSettingsLocaleID(), title },
-                { m_Setting.GetOptionTabLocaleID(Setting.kSection), "Actions" },
-                { m_Setting.GetOptionTabLocaleID(Setting.kDebugSection), "Debug" },
+                { m_Setting.GetOptionTabLocaleID(Setting.kSection), "操作" },
+                { m_Setting.GetOptionTabLocaleID(Setting.kDebugSection), "除錯" },
 
                 // Groups
-                { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "Options - pick one" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "Actions" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "How to use Config.xml" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "選項（擇一）" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "操作" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "Config.xml 使用方式" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kInfoGroup), " " },  // No Info section title
                 { m_Setting.GetOptionGroupLocaleID(Setting.kDebugGroup), "DEBUG" },
 
                 // Debug tab: Info group
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.NameDisplay)), "Mod" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.NameDisplay)), "Display name of this mod." },
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VersionDisplay)), "Version" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.VersionDisplay)), "Current version number." },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.NameDisplay)), "模組" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.NameDisplay)), "此模組的顯示名稱。" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VersionDisplay)), "版本" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.VersionDisplay)), "目前版本號。" },
 
                 // -----------------------------
                 // Actions tab: Options toggles
@@ -53,30 +53,30 @@ namespace ConfigXML
 
                 // UseModPresets
                 {
-                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "RECOMMENDED PRESETS" },
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "推薦預設" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "**Quick Start** - apply all recommended presets\n" +
-                    "EASY Mode:  1-Click and DONE!\n\n" +
+                    "**快速開始** - 套用所有推薦預設\n" +
+                    "簡單模式：一鍵完成！\n\n" +
 
-                    "Recommended for most players - already has curated tweaks e.g. worker numbers/wages and more that differ from game defaults."
+                    "適合大多數玩家，已包含精選調整（如工人數量、薪資等）。"
                 },
 
                 // UseLocalConfig
                 {
-                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "USE CUSTOM FILE" },
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "使用自訂檔案" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
-                    "**POWER USERS**\n" +
-                    "When enabled, allows using a local custom <ModsData/ConfigXML/Config.xml> instead of the built-in presets.\n" +
-                    "• For advanced users who want different service settings per save or per machine.\n\n" +
-                    "**TIPS**\n" +
-                    "Click Open config folder button\n" +
-                    "• It shows location of provided Config.xml in ModsData/ConfigXML, then tweak worker counts or other fields.\n" +
-                    "• **Never** set workplaces to 0; use small positive values if you need low staffing.\n" +
-                    "• After making changes, save the file, then use the **APPLY** button to update file changes to the mod.\n\n" +
-                    "Use <Reset new> file <ONLY> if you mess up or just want a completely fresh Config.xml - replaces existing file.\n" +
-                    "You can switch back to **PRESETS** at any time. "
+                    "**進階玩家**\n" +
+                    "啟用後，將使用 <ModsData/ConfigXML/Config.xml> 取代內建預設。\n" +
+                    "• 適合想要為不同存檔或電腦使用不同服務設定的玩家。\n\n" +
+                    "**提示**\n" +
+                    "點擊「開啟 Config 資料夾」\n" +
+                    "• 編輯 ModsData/ConfigXML 中的 Config.xml 以調整工人數或其他欄位。\n" +
+                    "• **不要** 將工人數設為 0；需要低人力時請使用小的正數。\n" +
+                    "• 修改後請儲存，並點擊 **APPLY** 套用變更。\n\n" +
+                    "只有在檔案損壞或想完全重來時才使用 <Reset new>。\n" +
+                    "隨時可以切回 **PRESETS**。"
                 },
 
                 // -----------------------------
@@ -84,72 +84,70 @@ namespace ConfigXML
                 // -----------------------------
 
                 // OpenConfigFile button (now: folder)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "OPEN Config folder" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "開啟 Config 資料夾" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
-                    "This is not required, only use this if you plan on changing the default presets already set by the mod.\n" +
-                    "• Opens <ModsData/ConfigXML/> folder that contains **Config.xml**.\n" +
-                    "1. Edit this with your preferred text editor (i.e., <Notepad++>).\n\n" +
-                    "2. Example path it opens (Windows):\n" +
+                    "一般情況不需要使用，只有在要修改預設時才用。\n" +
+                    "• 會開啟包含 **Config.xml** 的 <ModsData/ConfigXML/> 資料夾。\n" +
+                    "1. 使用文字編輯器（例如 <Notepad++>）編輯。\n\n" +
+                    "2. 開啟的路徑範例（Windows）：\n" +
                     "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "APPLY new configuration now"
+                    "立即套用新 Config"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Reads your local <ModsData/ConfigXML/Config.xml> and applies the new values to city-service prefabs" +
-                    "(workplaces, processing rates, etc.).\n\n" +
-                    "• Applies to **new buildings** and not existing ones.\n" +
-                    "• For existing cities, delete the old building; new buildings show changed values.\n" +
-                    "• If you are happy with the settings, you can just load a city.\n" +
-                    "   Only need to click **Apply New** when you update Config.xml again."
+                    "讀取本機的 <ModsData/ConfigXML/Config.xml>，並套用到服務建築。" +
+                    "• 只會影響 **新建築**。\n" +
+                    "• 現有城市需刪除並重建建築。\n" +
+                    "• 如果設定沒問題，直接載入城市即可。\n" +
+                    "   只有在再次修改 Config.xml 時才需要點擊 **Apply New**。"
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Apply your new custom changes to many city-service buildings.\n " +
-                    "Are you sure?"
+                    "將套用變更到多個服務建築。\n" +
+                    "確定要繼續嗎？"
                 },
 
                 // ResetLocalConfig (Actions tab)
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Reset new Config.xml"
+                    "重設 Config.xml 為預設"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "START OVER BUTTON\n\n" +
-                    "Overwrite the **ModsData/ConfigXML/Config.xml** with a fresh copy of the original mod presets.\n" +
-                    "• Use this <only> if your custom file becomes corrupt or you just want to start over.\n\n" +
-                    "• **Reset new** replaces the existing file - must close original Config.xml file first."
+                    "重新開始\n\n" +
+                    "使用原始模組預設，覆蓋任何自訂的 **ModsData/ConfigXML/Config.xml**。\n" +
+                    "• 僅在檔案損壞或想重新開始時使用。\n\n" +
+                    "• 此操作會取代現有檔案，請先關閉 Config.xml。"
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Overwrite ModsData/ConfigXML/Config.xml with original file?\n\n" +
-                    "Custom changes you applied to the file are replaced with a fresh copy."
+                    "要用預設檔案覆蓋 ModsData/ConfigXML/Config.xml 嗎？\n\n" +
+                    "所有自訂內容將被取代。"
                 },
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // (only shown when UseLocalConfig is enabled)
                 // ----------------------------------
 
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ConfigUsageSteps)),
-                    "Option 1\n" +
-                    "Select  <[RECOMMENDED PRESETS]> for built-in presets.\n" +
-                    "If you pick PRESETS, done - Play game.\n\n" +
+                    "方式 1\n" +
+                    "選擇 <[推薦預設]>。\n" +
+                    "完成，直接遊戲。\n\n" +
                     "<--------------------------->\n\n" +
-                    "Option 2 - Power users\n" +
-                    "Select  <[Use CUSTOM FILE]> to edit your own Config.xml.\n\n" +
-                    "1. Click <[OPEN Config folder]>\n" +
-                    "2. Open, edit, save <Config.xml> with a text editor (e.g., Notepad++).\n" +
-                    "3. Click <[APPLY NEW Configuration Now]> - updates any changes to file.\n" +
-                    "4. <Load City> (or reload) to see changes to <NEW> buildings.\n" +
-                    "5. Steps 1-4 can be repeated with no restart if you click <APPLY> changes."
+                    "方式 2 - 進階玩家\n" +
+                    "選擇 <[使用自訂檔案]>。\n\n" +
+                    "1. 點擊 <[開啟 Config 資料夾]>\n" +
+                    "2. 編輯並儲存 <Config.xml>。\n" +
+                    "3. 點擊 <[APPLY 新 Config]>。\n" +
+                    "4. <載入城市> 查看 <新> 建築的變化。\n" +
+                    "5. 點擊 <APPLY NEW> 可無需重啟重複操作。"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)), " " },
 
@@ -159,27 +157,27 @@ namespace ConfigXML
 
                 // Logging (strong warning about performance)
                 {
-                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)), "Verbose logs (Read Warnings on right side before use)" },
+                    m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)), "詳細記錄（使用前請閱讀警告）" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
-                    "Writes a lot of extra information to the log file.\n" +
-                    "<Do NOT use> for normal gameplay.\n" +
-                    "Excessive logging can slow the game and create large log files.\n" +
-                    "Turn this on only temporarily when collecting data or debugging.\n" +
-                    "If you don't know what this is, best to leave it DISABLED."
+                    "會寫入大量額外記錄。\n" +
+                    "<一般遊戲時請勿使用>\n" +
+                    "可能降低效能並產生大型記錄檔。\n" +
+                    "僅在除錯或收集資料時 **暫時** 啟用。\n" +
+                    "<若不清楚用途，請保持關閉。>"
                 },
 
                 // DumpPrefabStatus button
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)),
-                    "Dump prefab status to log"
+                    "輸出預製物件狀態到記錄"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
-                    "**POWER USERS**\n" +
-                    "Checks every prefab listed in Config.xml and logs whether it is OK or missing.\n" +
-                    "• Use this after a game patch to see which entries in Config.xml no longer match the game.\n" +
-                    "• Ignore warnings for prefabs of DLC buildings you do not own - it's normal."
+                    "**進階玩家**\n" +
+                    "檢查 Config.xml 中的所有預製物件，並將結果寫入記錄。\n" +
+                    "• 遊戲更新後可用來檢查不再匹配的項目。\n" +
+                    "• 未擁有的 DLC 項目警告可忽略。"
                 },
 
                 // Paradox Mods button (Debug tab, Info group)
@@ -188,25 +186,24 @@ namespace ConfigXML
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "Open the **Paradox Mods** webpage forConfig-XML and other mods."
+                    "開啟 **Config-XML** 的 Paradox Mods 網頁。"
                 },
 
                 // Debug tab duplicate reset button
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Reset new Config.xml"
+                    "重設新的 Config.xml"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Same as the Actions tab button: overwrite the local <ModsData/ConfigXML/Config.xml> with a fresh copy of " +
-                    "the original mod Presets.\n" +
-                    "Use this if your custom file is broken or you want to start fresh."
+                    "與操作頁籤相同功能。\n" +
+                    "用原始模組預設覆蓋本機 <ModsData/ConfigXML/Config.xml>。"
                 },
                 // Warning Prompt
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Overwrite <ModsData/ConfigXML/Config.xml> with original mod PRESETS file?\n\n" +
-                    "Any custom changes will be replaced by new file."
+                    "要用原始模組預設覆蓋 <ModsData/ConfigXML/Config.xml> 嗎？\n\n" +
+                    "所有自訂變更將被取代。"
                 },
             };
         }
