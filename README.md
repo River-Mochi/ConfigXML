@@ -6,7 +6,7 @@ Number of configured buildings and extensions: **221**.
 
 ## Features
 
-### Version 0.5
+### Version 0.6
 - All buildings have more workplaces and some have a bit different requirements as for what education levels are required. There is no formula used, all have been set manually taking into consideration various aspects. Some have only slightly more workers, but some have many more. You need to take a look into Config.xml to find out about specific buildings.
 - Crematorium has 2x higher processing rate to handle increased deaths from Population Rebalance.
 
