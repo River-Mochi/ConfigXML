@@ -1,4 +1,4 @@
-// LocaleZH_Hant.cs
+// LocaleZH_HANT.cs
 // Traditional Chinese zh-Hant for Config-XML.
 
 namespace ConfigXML
@@ -6,11 +6,11 @@ namespace ConfigXML
     using Colossal;
     using System.Collections.Generic;
 
-    public class LocaleZH_Hant : IDictionarySource
+    public class LocaleZH_HANT : IDictionarySource
     {
         private readonly Setting m_Setting;
 
-        public LocaleZH_Hant(Setting setting)
+        public LocaleZH_HANT(Setting setting)
         {
             m_Setting = setting;
         }
