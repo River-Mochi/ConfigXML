@@ -1,10 +1,8 @@
 // Mod.cs
 // Entry point for City Services Rebalance [CSR].
 
-namespace RealCity
+namespace ConfigXML
 {
-    using System;
-    using System.Reflection;
     using Colossal;                      // IDictionarySource
     using Colossal.IO.AssetDatabase;     // AssetDatabase.LoadSettings
     using Colossal.Localization;         // LocalizationManager
@@ -12,14 +10,16 @@ namespace RealCity
     using Game;                          // UpdateSystem
     using Game.Modding;                  // IMod
     using Game.SceneFlow;                // GameManager, ExecutableAsset
+    using System;
+    using System.Reflection;
 
     public sealed class Mod : IMod
     {
         // ---- PUBLIC CONSTANTS / METADATA ----
 
-        public const string ModId = "RealCity";
-        public const string ModName = "City Services Redux";
-        public const string ModTag = "[CSR]";
+        public const string ModId = "ConfigXML";
+        public const string ModName = "Config-XML";
+        public const string ModTag = "[CFG]";
 
         /// <summary>
         /// Read Version number from assembly (3-part).
@@ -111,16 +111,16 @@ namespace RealCity
             AddLocaleSource("es-ES", new LocaleES(s));
             AddLocaleSource("fr-FR", new LocaleFR(s));
             // AddLocaleSource("it-IT",    new LocaleIT(s));
-            // AddLocaleSource("ja-JP",    new LocaleJA(s));
+            AddLocaleSource("ja-JP",    new LocaleJA(s));
             AddLocaleSource("ko-KR",    new LocaleKO(s));
             AddLocaleSource("pl-PL",    new LocalePL(s));
             AddLocaleSource("pt-BR",    new LocalePT_BR(s));
             AddLocaleSource("zh-HANS",  new LocaleZH_CN(s));
-            // AddLocaleSource("zh-HANT",  new LocaleZH_HANT(s));
+            AddLocaleSource("zh-HANT",  new LocaleZH_HANT(s));
             // AddLocaleSource("vi-VN", new LocaleVI(settings));
 
             // Load persisted settings or create defaults on first run.
-            AssetDatabase.global.LoadSettings(ModId, s, new Setting(this));
+            AssetDatabase.global.LoadSettings("ConfigSettings", s, new Setting(this));
 
             // Register in Options UI.
             s.RegisterInOptionsUI();
@@ -129,7 +129,7 @@ namespace RealCity
             s._Hidden = false;
 
             // Read and apply prefab configuration.
-            // This will also ensure ModsData/RealCity/Config.xml exists.
+            // This will also ensure ModsData/ConfigXML/Config.xml exists.
             ConfigTool.ReadAndApply();
         }
 

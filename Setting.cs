@@ -1,16 +1,16 @@
 // Setting.cs
-// Options UI + Config.xml helpers for City Services Redux.
+// Options UI + Config.xml helpers for Config-XML.
 
-namespace RealCity
+namespace ConfigXML
 {
-    using System;                         // Exception
-    using System.IO;                      // Path, Directory
     using Colossal.IO.AssetDatabase;      // ModSetting, FileLocation
     using Game.Modding;                   // IMod
     using Game.Settings;                  // Settings attributes
+    using System;                         // Exception
+    using System.IO;                      // Path, Directory
     using UnityEngine;                    // Application.persistentDataPath, OpenURL
 
-    [FileLocation("ModsSettings/RealCity/RealCity")]
+    [FileLocation("ModsSettings/ConfigXML/ConfigSettings")]
     [SettingsUITabOrder(
         kSection,
         kDebugSection)]
@@ -111,7 +111,7 @@ namespace RealCity
         }
 
         /// <summary>
-        /// Use ModsData/RealCity/Config.xml as a local custom file.
+        /// Use ModsData/ConfigXML/Config.xml as a local custom file.
         /// Mutually exclusive with UseModPresets toggle.
         /// Selecting this will immediately apply the local configuration.
         /// </summary>
@@ -157,7 +157,7 @@ namespace RealCity
         // Only visible when UseLocalConfig is enabled.
         // -----------------------------
 
-        // Open Folder: ModsData/RealCity that contains Config.xml
+        // Open Folder: ModsData/ConfigXML that contains Config.xml
         [SettingsUIButtonGroup(kCustomButtonsRow)]
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
@@ -287,7 +287,7 @@ namespace RealCity
             get; set;
         }
 
-        // Debug tab: dump current prefab status vs Config.xml into RealCity.log
+        // Debug tab: dump current prefab status vs Config.xml into ConfigXML.log
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         public bool DumpPrefabStatus

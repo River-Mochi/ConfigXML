@@ -1,7 +1,7 @@
 // Config/ConfigXml.cs
-// XML model + load/save helpers for City Services Redux.
+// XML model + load/save helpers for Config-XML.
 
-namespace RealCity
+namespace ConfigXML
 {
     using System;                     // Exception
     using System.Collections.Generic; // List<T>
@@ -330,7 +330,7 @@ namespace RealCity
         }
 
         /// <summary>
-        /// Ensure that Config.xml exists in ModsData/RealCity.
+        /// Ensure that Config.xml exists in ModsData/ConfigXML.
         /// If missing, try to copy it from the shipped mod folder.
         /// If that also fails, create a stub Config.xml with CSR-STUB marker.
         /// </summary>
@@ -451,7 +451,7 @@ namespace RealCity
         }
 
         /// <summary>
-        /// Loads prefab config data from ModsData/RealCity/Config.xml (local custom file).
+        /// Loads prefab config data from ModsData/ConfigXML/Config.xml (local custom file).
         /// Ensures the file exists, copying from shipped config or creating a stub if needed.
         /// </summary>
         public static ConfigurationXml? LoadLocalConfig(string assetPath)
@@ -545,7 +545,7 @@ namespace RealCity
         }
 
         /// <summary>
-        /// Overwrite ModsData/RealCity/Config.xml with the shipped Config.xml next to the DLL, if available.
+        /// Overwrite ModsData/ConfigXML/Config.xml with the shipped Config.xml next to the DLL, if available.
         /// Used by the in-game reset buttons.
         /// </summary>
         public static void RestoreDefaultConfigForUI(string assetPath)

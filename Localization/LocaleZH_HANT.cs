@@ -1,5 +1,5 @@
 // LocaleEN.cs
-// English en-US for Config-XML.
+// English en-US Config-XML.
 
 namespace ConfigXML
 {
@@ -21,7 +21,7 @@ namespace ConfigXML
         {
             var title = Mod.ModName;
 
-            // Show "Config-XML 0.6.2" title
+            // Show "City Services Redux 0.5.3" title
             if (!string.IsNullOrEmpty(Mod.ModVersion))
             {
                 title = title + " " + Mod.ModVersion;
@@ -97,11 +97,12 @@ namespace ConfigXML
                 // ApplyConfiguration button
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "APPLY New Config now"
+                    "APPLY new configuration now"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Reads your local <ModsData/ConfigXML/Config.xml> and applies the new values to service prefabs (e.g., building workplaces, etc..)" +
+                    "Reads your local <ModsData/ConfigXML/Config.xml> and applies the new values to city-service prefabs" +
+                    "(workplaces, processing rates, etc.).\n\n" +
                     "• Applies to **new buildings** and not existing ones.\n" +
                     "• For existing cities, delete the old building; new buildings show changed values.\n" +
                     "• If you are happy with the settings, you can just load a city.\n" +
@@ -109,26 +110,26 @@ namespace ConfigXML
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Apply your new changes to many service buildings.\n " +
+                    "Apply your new custom changes to many city-service buildings.\n " +
                     "Are you sure?"
                 },
 
                 // ResetLocalConfig (Actions tab)
                 {
                     m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Reset Config.xml to defaults"
+                    "Reset new Config.xml"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "START OVER BUTTON\n\n" +
-                    "Overwrite any custom **ModsData/ConfigXML/Config.xml** with a fresh copy of the original mod presets.\n" +
+                    "Overwrite the **ModsData/ConfigXML/Config.xml** with a fresh copy of the original mod presets.\n" +
                     "• Use this <only> if your custom file becomes corrupt or you just want to start over.\n\n" +
-                    "• **Reset to defaults** replaces the existing file - must close original Config.xml file first."
+                    "• **Reset new** replaces the existing file - must close original Config.xml file first."
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Overwrite ModsData/ConfigXML/Config.xml with original default file?\n\n" +
-                    "New default file REPLACES any existing file you made."
+                    "Overwrite ModsData/ConfigXML/Config.xml with original file?\n\n" +
+                    "Custom changes you applied to the file are replaced with a fresh copy."
                 },
 
                 // ----------------------------------
@@ -146,9 +147,9 @@ namespace ConfigXML
                     "Select  <[Use CUSTOM FILE]> to edit your own Config.xml.\n\n" +
                     "1. Click <[OPEN Config folder]>\n" +
                     "2. Open, edit, save <Config.xml> with a text editor (e.g., Notepad++).\n" +
-                    "3. Click <[APPLY NEW Config Now]> - updates any changes to file.\n" +
-                    "4. <Load City> to see changes to <NEW> buildings.\n" +
-                    "5. Steps 1-4 can be repeated with no restart if you click <APPLY NEW> changes."
+                    "3. Click <[APPLY NEW Configuration Now]> - updates any changes to file.\n" +
+                    "4. <Load City> (or reload) to see changes to <NEW> buildings.\n" +
+                    "5. Steps 1-4 can be repeated with no restart if you click <APPLY> changes."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ConfigUsageSteps)), " " },
 
@@ -164,8 +165,8 @@ namespace ConfigXML
                     "Writes a lot of extra information to the log file.\n" +
                     "<Do NOT use> for normal gameplay.\n" +
                     "Excessive logging can slow the game and create large log files.\n" +
-                    "Turn this on only **temporarily** when collecting data or debugging.\n" +
-                    "<If you don't know what this is, best to leave it DISABLED.>"
+                    "Turn this on only temporarily when collecting data or debugging.\n" +
+                    "If you don't know what this is, best to leave it DISABLED."
                 },
 
                 // DumpPrefabStatus button
@@ -187,7 +188,7 @@ namespace ConfigXML
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "Open the **Paradox Mods** webpage for **Config-XML** and other mods."
+                    "Open the **Paradox Mods** webpage forConfig-XML and other mods."
                 },
 
                 // Debug tab duplicate reset button

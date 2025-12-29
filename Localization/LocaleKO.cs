@@ -1,10 +1,10 @@
 // LocaleKO.cs
-// Korean ko-KR City Services Redux.
+// Korean ko-KR Config-XML.
 
-namespace RealCity
+namespace ConfigXML
 {
-    using System.Collections.Generic;
     using Colossal;
+    using System.Collections.Generic;
 
     public class LocaleKO : IDictionarySource
     {
@@ -68,11 +68,11 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
                     "**고급 사용자용**\n" +
-                    "이 옵션을 켜면 기본 프리셋 대신 로컬 커스텀 <ModsData/RealCity/Config.xml> 을 사용할 수 있습니다.\n" +
+                    "이 옵션을 켜면 기본 프리셋 대신 로컬 커스텀 <ModsData/ConfigXML/Config.xml> 을 사용할 수 있습니다.\n" +
                     "• 세이브나 PC마다 다른 서비스 설정을 쓰고 싶은 고급 사용자용입니다.\n\n" +
                     "**팁**\n" +
                     "\"Config 폴더 열기\" 버튼을 클릭하세요.\n" +
-                    "• 여기서 ModsData/RealCity 위치에 있는 Config.xml 을 열고 근로자 수 등 필드를 수정할 수 있습니다.\n" +
+                    "• 여기서 ModsData/ConfigXML 위치에 있는 Config.xml 을 열고 근로자 수 등 필드를 수정할 수 있습니다.\n" +
                     "• 근무 인원(workplaces)을 **절대** 0으로 두지 마세요. 정말 적게 쓰고 싶다면 작은 양의 양수로 설정하세요.\n" +
                     "• 수정 후 파일을 저장하고 **새 설정 지금 적용** 버튼을 눌러 변경 사항을 모드에 반영하세요.\n\n" +
                     "<Reset new> 는 설정을 망가뜨렸거나 완전히 새 Config.xml 이 필요할 때에만 사용하세요. 기존 파일을 덮어씁니다.\n" +
@@ -88,10 +88,10 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "필수는 아니며, 모드가 제공하는 기본 프리셋을 직접 수정할 계획이 있을 때만 사용하세요.\n" +
-                    "• **Config.xml** 이 들어 있는 <ModsData/RealCity/> 폴더를 엽니다.\n" +
+                    "• **Config.xml** 이 들어 있는 <ModsData/ConfigXML/> 폴더를 엽니다.\n" +
                     "1. 원하는 텍스트 편집기(예: <Notepad++>)로 이 파일을 수정하세요.\n\n" +
                     "2. (Windows) 예시 경로:\n" +
-                    "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/RealCity/Config.xml"
+                    "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
@@ -101,7 +101,7 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "로컬 파일 <ModsData/RealCity/Config.xml> 을 읽고, 새로운 값을 시 서비스 프리팹에 적용합니다" +
+                    "로컬 파일 <ModsData/ConfigXML/Config.xml> 을 읽고, 새로운 값을 시 서비스 프리팹에 적용합니다" +
                     "(근로자 수, 처리량 등).\n\n" +
                     "• **새로 짓는 건물**에만 적용되며 기존 건물에는 적용되지 않습니다.\n" +
                     "• 기존 도시에선 옛 건물을 지우고 다시 지으면 변경된 값을 볼 수 있습니다.\n" +
@@ -122,13 +122,13 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "처음부터 다시 시작 버튼\n\n" +
-                    "**ModsData/RealCity/Config.xml** 을 원래 모드 프리셋의 새 복사본으로 덮어씁니다.\n" +
+                    "**ModsData/ConfigXML/Config.xml** 을 원래 모드 프리셋의 새 복사본으로 덮어씁니다.\n" +
                     "• 커스텀 파일이 깨졌거나 그냥 처음부터 다시 설정하고 싶을 때만 사용하세요.\n\n" +
                     "• **새 Config.xml 복원** 은 기존 파일을 교체합니다. 먼저 열려 있던 Config.xml 을 닫아 두세요."
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "ModsData/RealCity/Config.xml 을 원본 파일로 덮어쓸까요?\n\n" +
+                    "ModsData/ConfigXML/Config.xml 을 원본 파일로 덮어쓸까요?\n\n" +
                     "지금까지 적용한 커스텀 변경 사항은 새 파일로 모두 대체됩니다."
                 },
 
@@ -198,13 +198,13 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Actions 탭에 있는 버튼과 동일합니다. 로컬 <ModsData/RealCity/Config.xml> 을 원래 모드 프리셋의 새 복사본으로 덮어씁니다.\n" +
+                    "Actions 탭에 있는 버튼과 동일합니다. 로컬 <ModsData/ConfigXML/Config.xml> 을 원래 모드 프리셋의 새 복사본으로 덮어씁니다.\n" +
                     "커스텀 파일이 깨졌거나 처음부터 다시 시작하고 싶을 때 사용하세요."
                 },
                 // Warning Prompt
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "<ModsData/RealCity/Config.xml> 을 원본 모드 추천 프리셋 파일로 덮어쓸까요?\n\n" +
+                    "<ModsData/ConfigXML/Config.xml> 을 원본 모드 추천 프리셋 파일로 덮어쓸까요?\n\n" +
                     "모든 커스텀 변경 사항은 새 파일로 대체됩니다."
                 },
             };

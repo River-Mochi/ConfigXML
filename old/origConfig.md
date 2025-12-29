@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Configuration>
 
-<!-- Config.xml - City Services Redux -->
+<!-- Config.xml -Config-XML -->
 
 <!-- IMPORTANT: Never set workplace counts to 0. Use a small positive value instead (e.g. 1–5). -->
 <!-- SHORT GUIDE
@@ -9,7 +9,7 @@
 1. Configuration is stored in the hierarchical form: Prefab -> Component -> Field.
 2. Prefabs.
   a. You need to provide Prefab's name (e.g. ElementarySchool01) and type (e.g. BuildingPrefab).
-  b. RealCity does NOT support ResourcePrefab and CompanyPrefab - please use RealEco if you want to modify them.
+  b. ConfigXML does NOT support ResourcePrefab and CompanyPrefab - please use RealEco if you want to modify them.
 3. Components.
   a. You need to know Comoponent's type (e.g. Workplace, School, PostFacility).
 4. Fields.

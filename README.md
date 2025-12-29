@@ -1,4 +1,4 @@
-﻿# City Services Redux Mod
+﻿# Config-XML Mod
 The mod allows for virtually any changes to City Services buildings. At the moment, it mainly **increases number of workers in City Services buildings** and does other small adjustments (see below for details). It does so by changing Prefab parameters during the game start-up, so no changes to game systems are required. In the long term this can serve as a foundation for **tuning and balancing any parameter**. I encourage to contribute to the mod by raising issues and/or PRs on GitHub with proposed changes and rationale behind such changes.
 
 Number of configured buildings and extensions: **221**.
@@ -14,7 +14,7 @@ Number of configured buildings and extensions: **221**.
 - The configuration is kept in the `Config.xml` file that comes together with the mod.
 - The file is loaded when the game starts or when you click “APPLY new configuration now” in options.
 - For existing buildings, you need to rebuild them to see new values.
-- New mod versions should not overwrite your custom Config.xml in ModsData/RealCity.
+- New mod versions should not overwrite your custom Config.xml in ModsData/ConfigXML.
 - If you want a clean starting point again, use the "Reset new Config.xml" button in options.
 
 ### Customizing the parameters

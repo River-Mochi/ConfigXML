@@ -1,10 +1,10 @@
 // LocaleFR.cs
-// French (fr-FR) City Services Redux.
+// French (fr-FR) Config-XML.
 
-namespace RealCity
+namespace ConfigXML
 {
-    using System.Collections.Generic;
     using Colossal;
+    using System.Collections.Generic;
 
     public class LocaleFR : IDictionarySource
     {
@@ -72,11 +72,11 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
                     "**UTILISATEURS AVANCÉS**\n" +
-                    "Permet d’utiliser un fichier local personnalisé <ModsData/RealCity/Config.xml> à la place des préréglages intégrés.\n" +
+                    "Permet d’utiliser un fichier local personnalisé <ModsData/ConfigXML/Config.xml> à la place des préréglages intégrés.\n" +
                     "• Pour ceux qui veulent des réglages différents par sauvegarde ou par machine.\n\n" +
                     "**ASTUCES**\n" +
                     "Clique sur le bouton Ouvrir le dossier Config.\n" +
-                    "• Affiche l’emplacement de Config.xml dans ModsData/RealCity, ensuite tu peux ajuster les employés ou d’autres champs.\n" +
+                    "• Affiche l’emplacement de Config.xml dans ModsData/ConfigXML, ensuite tu peux ajuster les employés ou d’autres champs.\n" +
                     "• Ne mets **jamais** le nombre d’emplois à 0 ; utilise de petites valeurs positives si tu veux peu de personnel.\n" +
                     "• Après tes modifications, sauvegarde le fichier puis utilise le bouton **APPLY** pour que le mod prenne les changements en compte.\n\n" +
                     "Utilise <Reset new> uniquement si tu as cassé ton fichier ou si tu veux un Config.xml complètement neuf – remplace le fichier existant.\n" +
@@ -95,10 +95,10 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "Pas obligatoire – utilise ceci seulement si tu veux modifier les préréglages fournis par le mod.\n" +
-                    "• Ouvre le dossier <ModsData/RealCity/> qui contient **Config.xml**.\n" +
+                    "• Ouvre le dossier <ModsData/ConfigXML/> qui contient **Config.xml**.\n" +
                     "1. Édite le fichier avec ton éditeur préféré (par ex. <Notepad++>).\n\n" +
                     "2. Exemple de chemin sous Windows :\n" +
-                    "C:/Users/TonNom/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/RealCity/Config.xml"
+                    "C:/Users/TonNom/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
@@ -108,7 +108,7 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Lit ton fichier local <ModsData/RealCity/Config.xml> et applique les nouvelles valeurs aux bâtiments de services " +
+                    "Lit ton fichier local <ModsData/ConfigXML/Config.xml> et applique les nouvelles valeurs aux bâtiments de services " +
                     "(emplois, taux de traitement, etc.).\n\n" +
                     "• S’applique uniquement aux **nouveaux bâtiments**, pas à ceux déjà placés.\n" +
                     "• Pour une ville existante : supprime l’ancien bâtiment et place-en un nouveau pour voir les changements.\n" +
@@ -129,13 +129,13 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "BOUTON « REPARTIR DE ZÉRO »\n\n" +
-                    "Remplace **ModsData/RealCity/Config.xml** par une copie neuve des préréglages d’origine du mod.\n" +
+                    "Remplace **ModsData/ConfigXML/Config.xml** par une copie neuve des préréglages d’origine du mod.\n" +
                     "• À utiliser seulement si ton fichier perso est cassé ou si tu veux repartir à zéro.\n\n" +
                     "• **Restaurer nouveau** remplace le fichier existant – pense à fermer l’ancien Config.xml dans l’éditeur."
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Remplacer ModsData/RealCity/Config.xml par le fichier d’origine ?\n\n" +
+                    "Remplacer ModsData/ConfigXML/Config.xml par le fichier d’origine ?\n\n" +
                     "Tes modifications personnalisées seront écrasées par une nouvelle copie."
                 },
 
@@ -198,7 +198,7 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "Ouvre la page **Paradox Mods** pour City Services Redux et tes autres mods."
+                    "Ouvre la page **Paradox Mods** pour **Config-XML** et tes autres mods."
                 },
 
                 // Debug tab duplicate reset button
@@ -208,14 +208,14 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Même chose que le bouton dans l’onglet Actions : remplace <ModsData/RealCity/Config.xml> par une copie neuve " +
+                    "Même chose que le bouton dans l’onglet Actions : remplace <ModsData/ConfigXML/Config.xml> par une copie neuve " +
                     "des préréglages d’origine du mod.\n" +
                     "À utiliser si ton fichier perso est cassé ou si tu veux repartir de zéro."
                 },
                 // Warning Prompt
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Remplacer <ModsData/RealCity/Config.xml> par le fichier de PRÉRÉGLAGES d’origine du mod ?\n\n" +
+                    "Remplacer <ModsData/ConfigXML/Config.xml> par le fichier de PRÉRÉGLAGES d’origine du mod ?\n\n" +
                     "Toutes tes modifications perso seront remplacées par un nouveau fichier."
                 },
             };

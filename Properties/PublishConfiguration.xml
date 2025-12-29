@@ -2,37 +2,31 @@
 	<!--Id must be set in order to update existed mod. it is not required for publishing mod for the first time-->
 	<ModId Value="125675" />
 	<!--Name of the mod to display to players-->
-	<DisplayName Value="City Services Redux" />
+	<DisplayName Value="Config-XML" />
 	<!--Short description of the mod-->
-	<ShortDescription Value="Increases number of workers and other small adjustments for City Services." />
+	<ShortDescription Value="Increases number of workers and other small adjustments for Service Buildings." />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
-	<!--LongDescription Value="Increases number of workers in City Services and other small adjustments." /-->
-	<LongDescription>**City Services Redux**
+	<LongDescription>**Config-XML**
 
-Tweak and modify City Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration.
+Tweak and modify Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration.
 
 ### Quick-Start
 
-- Just select "PRESETS" and play, done.
-- Curated preset list increases the number of workers and a few other small adjustments (details below).
-- Wages are scaled up/down based on the number of workers automatically by the game itself (we just tweak worker counts).
-- New settings are only applied to new placed buildings.
-- Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is already included). 
-It does the change before any city is loaded, so there is no performance impact.
+- Just select "PRESETS" and play, done (list of changes already included).
+- Curated presets increase the **number of workers** and a few other small adjustments (details below).
+- Wages are scaled up/down based on the number of workers - done automatically by the game (we just tweak worker counts).
+- Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is included).
+- Change is applied before any city is loaded, so there is no performance impact.
 
 Number of **preset** buildings and extensions: **221**.
 
-### 8 Languages
-* English, Français French, Deutsch German, Español Spanish
-* 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
-* 한국어 Korean
-
 ### Curated Presets
-- All buildings have more workplaces. The required education level for the job is also adjusted in 'some' buildings, and other allowed tweaks.
-- Presets are designed with various considerations. Some have only slightly more workers (2), and some have many. This better utilizes large buildings that previously had few workers, and may help reduce unemployment.
-- Examples: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students. Crematorium has 2x higher processing rate.
+- All buildings have more workplaces. The required education level for jobs is also adjusted in 'some' buildings, and other allowed tweaks.
+- Presets design: some have only a few more workers (2), and some have many. This better utilizes large buildings that previously had few workers, and may help reduce unemployment.
+- Examples: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students.
 - Existing buildings need to be rebuilt to see new config changes.
-- Add these companion mods to also Increase Students or Transit Passengers
+		
+- Add these companion mods to also <a href="https://mods.paradoxplaza.com/mods/123887/Windows">Increase Students</a> or <a href="https://mods.paradoxplaza.com/mods/123738/Windows">Transit Passengers</a>
 - See Power Users if you want to adjust the presets yourself.
 
 ### Power Users
@@ -43,21 +37,25 @@ Number of **preset** buildings and extensions: **221**.
 
 ### Notes
 
-* DLC entries only work if you own the DLC and can plop the items.
-* Safety: mod does **not** modify save files or any game systems.
-* Can be removed at any time - already plopped buildings retain modded values and new buildings will have vanilla values.
-* Performance: this is a lightweight configuration mod. It only does a short pass when applying settings (on game load or when you click APPLY).
+- DLC entries only work if you own the DLC and can plop the items.
+- Safety: mod does **not** modify save files or any game systems.
+- Can be removed at any time - already plopped buildings retain modded values and new buildings will have vanilla values.
+- Performance: this is a lightweight configuration mod. It only does a short pass when applying settings (on game load or when you click APPLY).
 It does not add any per-frame systems, so it essentially has no impact on performance.
-* Works with mods: Adjust School, Adjust Transit, Magic Mail, Magic Garbage Truck, as this mod is focused on the number of workers and those do not.
-* Magic Hearse and Achievement Fixer also works with this. Pretty much any mod that doesn't also adjust worker numbers should be good.
+- Works with mods: Adjust School, Adjust Transit, <a href="https://mods.paradoxplaza.com/mods/125343/Windows">Magic Mail</a>, <a href="https://mods.paradoxplaza.com/mods/124159/Windows">Magic Garbage</a>, as this mod is focused on the number of workers and those do not.
+- <a href="https://mods.paradoxplaza.com/mods/123497/Windows">Magic Hearse</a> and <a href="https://mods.paradoxplaza.com/mods/121256/Windows">Achievement Fixer</a> also works with this.
+- Pretty much any mod that doesn't also adjust worker numbers should be good.
 
+### 10 Languages
+* English, Français French, Deutsch German, Español Spanish
+* 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
+* 한국어 Korean, 日本語 Japanese, 繁體中文 Traditional Chinese
 
 ### CREDITS
 - River-Mochi author
-- Thanks to Infixo for the original City Services Rebalance mod
+- Thanks to Infixo for original City Services Rebalance mod (retired)
 - Fans of the mod who kept hope alive
-- BugsyG - testing
-- Dorin - testing
+- BugsyG, Dorin - testing
 
 	</LongDescription>
 	<!--Thumbnail-->
@@ -76,7 +74,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-services-rebalance-redux.1878625/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.6.1" />
+	<ModVersion Value="0.6.2" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the mod, can be set multiple times-->
@@ -84,8 +82,10 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- update/fix for paradox link
-</ChangeLog>
+- name change
+- adds Japanese 日本語 Japanese
+- adds 繁體中文 Traditional Chinese
+	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
 	<ExternalLink Type="github" Url="https://github.com/River-Mochi/CityServicesRedux" />

@@ -1,10 +1,10 @@
 // LocalePT_BR.cs
-// Portuguese (pt-BR) City Services Redux.
+// Portuguese (pt-BR) Config-XML.
 
-namespace RealCity
+namespace ConfigXML
 {
-    using System.Collections.Generic;
     using Colossal;
+    using System.Collections.Generic;
 
     public class LocalePT_BR : IDictionarySource
     {
@@ -72,11 +72,11 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
                     "**USUÁRIOS AVANÇADOS**\n" +
-                    "Quando ativado, usa um arquivo local personalizado <ModsData/RealCity/Config.xml> em vez das predefinições do mod.\n" +
+                    "Quando ativado, usa um arquivo local personalizado <ModsData/ConfigXML/Config.xml> em vez das predefinições do mod.\n" +
                     "• Para quem quer configurações diferentes por save ou por máquina.\n\n" +
                     "**DICAS**\n" +
                     "Clique no botão Abrir pasta de config.\n" +
-                    "• Mostra a pasta com o Config.xml em ModsData/RealCity; aí você pode ajustar funcionários e outros campos.\n" +
+                    "• Mostra a pasta com o Config.xml em ModsData/ConfigXML; aí você pode ajustar funcionários e outros campos.\n" +
                     "• **Nunca** coloque o número de trabalhadores em 0; use valores positivos pequenos se quiser pouco pessoal.\n" +
                     "• Depois das mudanças, salve o arquivo e use o botão **APPLY** para aplicar as alterações no mod.\n\n" +
                     "Use <Reset new> apenas se estragar o arquivo ou quiser um Config.xml completamente novo – substitui o arquivo atual.\n" +
@@ -95,10 +95,10 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "Não é obrigatório – use apenas se quiser alterar as predefinições padrão do mod.\n" +
-                    "• Abre a pasta <ModsData/RealCity/> que contém **Config.xml**.\n" +
+                    "• Abre a pasta <ModsData/ConfigXML/> que contém **Config.xml**.\n" +
                     "1. Edite o arquivo com seu editor de texto favorito (ex.: <Notepad++>).\n\n" +
                     "2. Caminho de exemplo no Windows:\n" +
-                    "C:/Users/SeuNome/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/RealCity/Config.xml"
+                    "C:/Users/SeuNome/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
@@ -108,7 +108,7 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Lê seu <ModsData/RealCity/Config.xml> local e aplica os novos valores aos prédios de serviços " +
+                    "Lê seu <ModsData/ConfigXML/Config.xml> local e aplica os novos valores aos prédios de serviços " +
                     "(vagas de trabalho, taxas de processamento etc.).\n\n" +
                     "• Aplica-se apenas a **novos edifícios**, não aos já construídos.\n" +
                     "• Em cidades existentes, remova o prédio antigo e construa outro para ver as mudanças.\n" +
@@ -129,13 +129,13 @@ namespace RealCity
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "BOTÃO PARA RECOMEÇAR\n\n" +
-                    "Substitui **ModsData/RealCity/Config.xml** por uma cópia nova das predefinições originais do mod.\n" +
+                    "Substitui **ModsData/ConfigXML/Config.xml** por uma cópia nova das predefinições originais do mod.\n" +
                     "• Use apenas se seu arquivo personalizado estiver corrompido ou se quiser começar do zero.\n\n" +
                     "• **Restaurar novo** substitui o arquivo existente – feche o Config.xml antigo no editor antes."
                 },
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "Substituir ModsData/RealCity/Config.xml pelo arquivo original?\n\n" +
+                    "Substituir ModsData/ConfigXML/Config.xml pelo arquivo original?\n\n" +
                     "As alterações personalizadas serão perdidas e trocadas por uma cópia nova."
                 },
 
@@ -198,7 +198,7 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "Abre a página do **Paradox Mods** para City Services Redux e outros mods."
+                    "Abre a página do **Paradox Mods** para Config-XML e outros mods."
                 },
 
                 // Debug tab duplicate reset button
@@ -208,14 +208,14 @@ namespace RealCity
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Igual ao botão da aba Ações: substitui <ModsData/RealCity/Config.xml> por uma cópia nova " +
+                    "Igual ao botão da aba Ações: substitui <ModsData/ConfigXML/Config.xml> por uma cópia nova " +
                     "das predefinições originais do mod.\n" +
                     "Use se seu arquivo personalizado estiver quebrado ou se quiser recomeçar do zero."
                 },
                 // Warning Prompt
                 {
                     m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Substituir <ModsData/RealCity/Config.xml> pelo arquivo de PREDEFINIÇÕES original do mod?\n\n" +
+                    "Substituir <ModsData/ConfigXML/Config.xml> pelo arquivo de PREDEFINIÇÕES original do mod?\n\n" +
                     "Todas as alterações personalizadas serão trocadas por um novo arquivo."
                 },
             };

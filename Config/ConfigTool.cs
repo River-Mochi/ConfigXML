@@ -1,10 +1,10 @@
 // Config/ConfigTool.cs
 // Reads Config.xml and applies prefab + component tweaks
-namespace RealCity
+namespace ConfigXML
 {
+    using Game.Prefabs;           // PrefabSystem, PrefabBase, ComponentBase, PrefabID
     using System;                 // Exception, Type
     using System.Reflection;      // BindingFlags, FieldInfo, MethodInfo
-    using Game.Prefabs;           // PrefabSystem, PrefabBase, ComponentBase, PrefabID
     using Unity.Entities;         // Entity, EntityManager, ComponentType, World, IComponentData
     using Unity.Mathematics;      // math
 
@@ -322,11 +322,11 @@ namespace RealCity
             }
 
             var sourceDescription = useLocal
-                ? "Apply LOCAL Config.xml (ModsData/RealCity)"
+                ? "Apply LOCAL Config.xml (ModsData/ConfigXML)"
                 : "Apply PRESET Config.xml (shipped mod defaults)";
 
             // Go through the safe logging helper so logging failures can never NRE.
-            Mod.Log($"RealCity: {sourceDescription}.");
+            Mod.Log($"ConfigXML: {sourceDescription}.");
 
             // ECS / world safety: do nothing if there's no default world yet.
             World world;
