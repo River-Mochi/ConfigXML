@@ -221,7 +221,7 @@ namespace ConfigXML
         private static readonly string _configFileName = "Config.xml";
         private static readonly string _dumpFileName = "Config_Dump.xml";
 
-        private const string StubMarker = "CSR-STUB";
+        private const string StubMarker = "CFG-STUB";
 
         private static ConfigurationXml? _config;
 
@@ -316,7 +316,7 @@ namespace ConfigXML
             using (var writer = new StreamWriter(fs))
             {
                 writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-                writer.WriteLine("<!-- CSR-STUB: Config.xml temp created because a default config could not be found.");
+                writer.WriteLine("<!-- CFG-STUB: Config.xml temp created because a default config could not be found.");
                 writer.WriteLine("     The mod will not change any buildings while this temp stub is active.");
                 writer.WriteLine("     Reinstall the mod or use the in-game reset button to get a real working Config.xml. -->");
                 writer.WriteLine("<Configuration>");
@@ -332,7 +332,7 @@ namespace ConfigXML
         /// <summary>
         /// Ensure that Config.xml exists in ModsData/ConfigXML.
         /// If missing, try to copy it from the shipped mod folder.
-        /// If that also fails, create a stub Config.xml with CSR-STUB marker.
+        /// If that also fails, create a stub Config.xml with CFG-STUB marker.
         /// </summary>
         private static void EnsureConfigFileExists(string assetPath)
         {

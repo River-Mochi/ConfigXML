@@ -1,5 +1,5 @@
 // Mod.cs
-// Entry point for City Services Rebalance [CSR].
+// Entry point for ConfigXML [CFG].
 
 namespace ConfigXML
 {

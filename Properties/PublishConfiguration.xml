@@ -72,7 +72,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
-	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-services-rebalance-redux.1878625/" />
+	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/config-xml.1878625/" />
 	<!--Version of the mod-->
 	<ModVersion Value="0.6.2" />
 	<!--Recommended version of the base game to use the mod-->
@@ -88,5 +88,5 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
-	<ExternalLink Type="github" Url="https://github.com/River-Mochi/CityServicesRedux" />
+	<ExternalLink Type="github" Url="https://github.com/River-Mochi/ConfigXML" />
 </Publish>
