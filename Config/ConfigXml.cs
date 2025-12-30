@@ -528,7 +528,7 @@ namespace ConfigXML
         {
             EnsureConfigFileExists(assetPath);
 
-            // Overwrite README each update (your requested behavior).
+            // Ensure README exists; update only if shipped README content has changed.
             EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
         }
 

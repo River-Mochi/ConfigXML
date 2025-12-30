@@ -10,8 +10,8 @@ namespace ConfigXML
     using Game;                          // UpdateSystem
     using Game.Modding;                  // IMod
     using Game.SceneFlow;                // GameManager, ExecutableAsset
-    using System;
-    using System.Reflection;
+    using System;                        // Exception
+    using System.Reflection;             // Get Assembly version number
 
     public sealed class Mod : IMod
     {
