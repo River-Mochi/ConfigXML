@@ -1,5 +1,5 @@
-// Config/ConfigXml.cs
-// XML model + load/save helpers for Config-XML.
+// File: Config/ConfigXml.cs
+// Purpose: XML model + load/save helpers for Config-XML.
 
 namespace ConfigXML
 {
@@ -221,6 +221,12 @@ namespace ConfigXML
         private static readonly string _configFileName = "Config.xml";
         private static readonly string _dumpFileName = "Config_Dump.xml";
 
+        // README lives next to Config.xml in ModsData/ConfigXML/
+        private static readonly string _readmeFileName = "README_Config.txt";
+
+        // One-time migration from old mod folder.
+        private const string OldModId = "RealCity";
+
         private const string StubMarker = "CFG-STUB";
 
         private static ConfigurationXml? _config;
@@ -245,6 +251,18 @@ namespace ConfigXML
         {
             var dir = GetConfigDirectory();
             return Path.Combine(dir, _configFileName);
+        }
+
+        private static string GetOldConfigFilePath()
+        {
+            var root = Application.persistentDataPath;
+            return Path.Combine(root, "ModsData", OldModId, _configFileName);
+        }
+
+        private static string GetReadmeFilePath()
+        {
+            var dir = GetConfigDirectory();
+            return Path.Combine(dir, _readmeFileName);
         }
 
         private static string GetConfigDumpFilePath()
@@ -309,6 +327,37 @@ namespace ConfigXML
             return false;
         }
 
+        private static bool IsFileEmptyOrWhitespace(string path)
+        {
+            try
+            {
+                if (!File.Exists(path))
+                {
+                    return false;
+                }
+
+                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var reader = new StreamReader(fs))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+            catch
+            {
+                // If we can't read it, do NOT assume it's empty.
+                return false;
+            }
+        }
+
         private static void CreateStubConfig(string configPath)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
@@ -329,10 +378,81 @@ namespace ConfigXML
                 "The mod will not apply any changes until a real config file is restored.");
         }
 
+        private static void EnsureReadmeExists(string assetPath, bool overwriteIfDifferent)
+        {
+            var readmePath = GetReadmeFilePath();
+
+            try
+            {
+                var assetDir = GetAssetDirectorySafe(assetPath);
+                var shippedReadme = !string.IsNullOrEmpty(assetDir)
+                    ? Path.Combine(assetDir, _readmeFileName)
+                    : null;
+
+                Directory.CreateDirectory(Path.GetDirectoryName(readmePath)!);
+
+                // If missing: create from shipped, else small fallback.
+                if (!File.Exists(readmePath))
+                {
+                    if (!string.IsNullOrEmpty(shippedReadme) && File.Exists(shippedReadme))
+                    {
+                        File.Copy(shippedReadme, readmePath, overwrite: false);
+                    }
+                    else
+                    {
+                        File.WriteAllText(
+                            readmePath,
+                            "Config-XML README\r\n\r\n" +
+                            "This folder contains Config.xml for custom service building tweaks.\r\n" +
+                            "Edit Config.xml and use APPLY in Options to reload.\r\n");
+                    }
+
+                    return;
+                }
+
+                // If shipped README can not be located, nothing to compare/update.
+                if (!overwriteIfDifferent || string.IsNullOrEmpty(shippedReadme) || !File.Exists(shippedReadme))
+                {
+                    return;
+                }
+
+                // Compare contents; only write if actually different.
+                // README is small, a full read is fine and avoids repeated writes.
+                string shippedText;
+                string existingText;
+
+                try
+                {
+                    shippedText = File.ReadAllText(shippedReadme);
+                    existingText = File.ReadAllText(readmePath);
+                }
+                catch
+                {
+                    // If reading fails for any reason, do not overwrite user file.
+                    return;
+                }
+
+                if (!string.Equals(existingText, shippedText, StringComparison.Ordinal))
+                {
+                    File.WriteAllText(readmePath, shippedText);
+                    Mod.s_Log.Info($"{Mod.ModTag} README updated: {readmePath}");
+                }
+            }
+            catch (Exception e)
+            {
+                Mod.s_Log.Warn($"EnsureReadmeExists failed: {e.GetType().Name}: {e.Message}");
+            }
+        }
+
         /// <summary>
         /// Ensure that Config.xml exists in ModsData/ConfigXML.
-        /// If missing, try to copy it from the shipped mod folder.
-        /// If that also fails, create a stub Config.xml with CFG-STUB marker.
+        /// Migration rules:
+        /// - If ConfigXML/Config.xml exists:
+        ///     - If it's a stub and shipped config exists => replace stub.
+        ///     - If it's empty/whitespace and shipped config exists => replace empty file.
+        /// - Else if old RealCity/Config.xml exists => copy old as-is to new location.
+        /// - Else if shipped Config.xml exists => copy shipped.
+        /// - Else create stub.
         /// </summary>
         private static void EnsureConfigFileExists(string assetPath)
         {
@@ -340,37 +460,52 @@ namespace ConfigXML
 
             try
             {
+                var assetDir = GetAssetDirectorySafe(assetPath);
+                var shippedPath = !string.IsNullOrEmpty(assetDir)
+                    ? Path.Combine(assetDir, _configFileName)
+                    : null;
+
                 if (File.Exists(configPath))
                 {
-                    // If this is a stub and a real shipped config is available, replace stub.
-                    var assetDirForStub = GetAssetDirectorySafe(assetPath);
-                    if (!string.IsNullOrEmpty(assetDirForStub) && IsStubConfig(configPath))
+                    // If stub and shipped exists, replace.
+                    if (!string.IsNullOrEmpty(shippedPath) && File.Exists(shippedPath) && IsStubConfig(configPath))
                     {
-                        var shippedPath = Path.Combine(assetDirForStub, _configFileName);
-                        if (File.Exists(shippedPath))
-                        {
-                            Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
-                            File.Copy(shippedPath, configPath, overwrite: true);
-                            Mod.s_Log.Info(
-                                $"Configuration: replaced stub Config.xml with shipped default at {configPath}.");
-                        }
+                        Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
+                        File.Copy(shippedPath, configPath, overwrite: true);
+                        Mod.s_Log.Info(
+                            $"Configuration: replaced stub Config.xml with shipped default at {configPath}.");
+                    }
+
+                    // If file exists but is empty/whitespace, replace with shipped default (safe repair).
+                    if (!string.IsNullOrEmpty(shippedPath) && File.Exists(shippedPath) && IsFileEmptyOrWhitespace(configPath))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
+                        File.Copy(shippedPath, configPath, overwrite: true);
+                        Mod.s_Log.Warn(
+                            $"Configuration: replaced empty Config.xml with shipped default at {configPath}.");
                     }
 
                     return;
                 }
 
-                var assetDir = GetAssetDirectorySafe(assetPath);
-                if (!string.IsNullOrEmpty(assetDir))
+                // One-time migration: old RealCity config -> new ConfigXML location (as-is).
+                var oldPath = GetOldConfigFilePath();
+                if (File.Exists(oldPath))
                 {
-                    var shippedPath = Path.Combine(assetDir, _configFileName);
-                    if (File.Exists(shippedPath))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
-                        File.Copy(shippedPath, configPath, overwrite: false);
-                        Mod.s_Log.Info(
-                            $"Configuration: copied default Config.xml from {shippedPath} to {configPath}.");
-                        return;
-                    }
+                    Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
+                    File.Copy(oldPath, configPath, overwrite: false);
+                    Mod.s_Log.Info($"Configuration: migrated old Config.xml from {oldPath} to {configPath}.");
+                    return;
+                }
+
+                // Copy shipped default if available.
+                if (!string.IsNullOrEmpty(shippedPath) && File.Exists(shippedPath))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
+                    File.Copy(shippedPath, configPath, overwrite: false);
+                    Mod.s_Log.Info(
+                        $"Configuration: copied default Config.xml from {shippedPath} to {configPath}.");
+                    return;
                 }
 
                 // If a file is still not available, create a minimal shell stub for safety.
@@ -386,13 +521,25 @@ namespace ConfigXML
         }
 
         /// <summary>
+        /// Ensure ModsData/ConfigXML contains Config.xml and README.
+        /// Call on startup if you want the folder always present even for preset-only players.
+        /// </summary>
+        public static void EnsureModsDataSeeded(string assetPath)
+        {
+            EnsureConfigFileExists(assetPath);
+
+            // Overwrite README each update (your requested behavior).
+            EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
+        }
+
+        /// <summary>
         /// Used by the Options UI button to open the active Config.xml.
-        /// Ensures the file exists first.
+        /// Ensures the file exists first (and README is present/up-to-date).
         /// </summary>
         public static string GetConfigFilePathForUI()
         {
             var assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
-            EnsureConfigFileExists(assetPath);
+            EnsureModsDataSeeded(assetPath);
             return GetConfigFilePath();
         }
 
@@ -452,7 +599,8 @@ namespace ConfigXML
 
         /// <summary>
         /// Loads prefab config data from ModsData/ConfigXML/Config.xml (local custom file).
-        /// Ensures the file exists, copying from shipped config or creating a stub if needed.
+        /// Ensures the file exists, migrating from old RealCity config, copying shipped config,
+        /// or creating a stub if needed.
         /// </summary>
         public static ConfigurationXml? LoadLocalConfig(string assetPath)
         {
@@ -460,7 +608,7 @@ namespace ConfigXML
 
             try
             {
-                EnsureConfigFileExists(assetPath);
+                EnsureModsDataSeeded(assetPath);
 
                 if (!File.Exists(configPath))
                 {
@@ -575,6 +723,9 @@ namespace ConfigXML
                 Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                 File.Copy(shippedPath, configPath, overwrite: true);
                 Mod.s_Log.Info($"Restore default Config.xml: copied from {shippedPath} to {configPath}.");
+
+                // Also refresh README on reset (keeps docs up-to-date).
+                EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
             }
             catch (Exception e)
             {

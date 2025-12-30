@@ -58,6 +58,7 @@ a. By default, the Mod will look for the old folder \RealCity and copy (\ModsDat
 b. If you customized the old one, then you could keep this older \RealCity file as a backup copy or delete the RealCity folder and config.xml.
 c. If you never customized it, then it's fine to delete \RealCity and just use the new Config.xml that comes with Presets when the Mod is installed.
 d: Full path of old file:  \Users\YourName\AppData\LocalLow\Colossal Order\Cities Skylines II\ModsData\RealCity\Config.xml
-e. Copy your old building changes directly into the new location Config.xml 
-f. Or copy your entire old file to  "..\ModsData\ConfigXML\Config.xml" 
-    - however if you do this you might miss out on any extra buildings or options added to new Mod updates
+e. Copy your old building changes directly into the new ModsData\ConfigXML\Config.xml 
+f. Or copy your entire old file to  "..\ModsData\ConfigXML\" 
+    - however if you do this you might miss out on any extra buildings or options added to the newest Mod updated Config file.
+    - Use Reset button in Options if you ever want a new Config.xml file based on the newest version released.

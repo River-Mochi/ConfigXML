@@ -1,8 +1,14 @@
-## Changelog
+﻿## Changelog
 
 - v0.6.2 (2025-12-29)
-
-
+  - Renamed mod to **Config-XML**.
+  - Added Japanese (日本語) and Traditional Chinese (繁體中文) translations.
+  - One-time migration: existing **RealCity Config.xml** is automatically copied to the new **ConfigXML** folder if present.
+  - New README file added next to Config.xml with updated usage and migration notes.
+  - Improved Config.xml safety:
+    - Automatically repairs missing or empty config files.
+    - Stub configs are replaced with a valid default.
+ 
 - v0.5.0 (2025-11-23)
   - Complete refactor and rebrand as **City Services Redux**.
   - Updated config and code for game patch **1.4.\***.

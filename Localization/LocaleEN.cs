@@ -24,7 +24,7 @@ namespace ConfigXML
             // Show "Config-XML 0.6.2" title
             if (!string.IsNullOrEmpty(Mod.ModVersion))
             {
-                title = title + " " + Mod.ModVersion;
+                title = title + " (" + Mod.ModVersion + ")";
             }
 
             return new Dictionary<string, string>

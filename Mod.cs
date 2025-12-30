@@ -1,5 +1,5 @@
-// Mod.cs
-// Entry point for ConfigXML [CFG].
+// File: Mod.cs
+// Purpose: Entry point for ConfigXML [CFG].
 
 namespace ConfigXML
 {
@@ -111,12 +111,12 @@ namespace ConfigXML
             AddLocaleSource("es-ES", new LocaleES(s));
             AddLocaleSource("fr-FR", new LocaleFR(s));
             // AddLocaleSource("it-IT",    new LocaleIT(s));
-            AddLocaleSource("ja-JP",    new LocaleJA(s));
-            AddLocaleSource("ko-KR",    new LocaleKO(s));
-            AddLocaleSource("pl-PL",    new LocalePL(s));
-            AddLocaleSource("pt-BR",    new LocalePT_BR(s));
-            AddLocaleSource("zh-HANS",  new LocaleZH_CN(s));
-            AddLocaleSource("zh-HANT",  new LocaleZH_HANT(s));
+            AddLocaleSource("ja-JP", new LocaleJA(s));
+            AddLocaleSource("ko-KR", new LocaleKO(s));
+            AddLocaleSource("pl-PL", new LocalePL(s));
+            AddLocaleSource("pt-BR", new LocalePT_BR(s));
+            AddLocaleSource("zh-HANS", new LocaleZH_CN(s));
+            AddLocaleSource("zh-HANT", new LocaleZH_HANT(s));
             // AddLocaleSource("vi-VN", new LocaleVI(settings));
 
             // Load persisted settings or create defaults on first run.
@@ -128,8 +128,21 @@ namespace ConfigXML
             // Ensure the settings asset is actually written.
             s._Hidden = false;
 
+            // Seed ModsData/ConfigXML/ (Config.xml + README) even for preset-only players.
+            // - Migrates old RealCity config if needed
+            // - Repairs stub/empty config if needed
+            // - Refreshes README each update
+            try
+            {
+                var assetPath = modAsset != null ? modAsset.path : string.Empty;
+                ConfigToolXml.EnsureModsDataSeeded(assetPath);
+            }
+            catch (Exception ex)
+            {
+                s_Log.Warn($"EnsureModsDataSeeded failed: {ex.GetType().Name}: {ex.Message}");
+            }
+
             // Read and apply prefab configuration.
-            // This will also ensure ModsData/ConfigXML/Config.xml exists.
             ConfigTool.ReadAndApply();
         }
 
