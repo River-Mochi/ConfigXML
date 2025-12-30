@@ -6,8 +6,10 @@
   - One-time migration: existing **RealCity Config.xml** is automatically copied to the new **ConfigXML** folder if present.
   - New README file added next to Config.xml with updated usage and migration notes.
   - Improved Config.xml safety:
+    - Creates Config.xml on first run if missing.
     - Automatically repairs missing or empty config files.
-    - Stub configs are replaced with a valid default.
+    - Stub configs are replaced with a valid default when available.
+
  
 - v0.5.0 (2025-11-23)
   - Complete refactor and rebrand as **City Services Redux**.
