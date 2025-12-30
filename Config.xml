@@ -180,7 +180,7 @@
 </Prefab>
 <Prefab type="BuildingPrefab" name="College01 Library">
   <Component name="Workplace">
-	<Field name="m_Workplaces" valueInt="30" /> <!-- 24 -->
+	<Field name="m_Workplaces" valueInt="35" /> <!-- 24 -->
   </Component>
 </Prefab>
 
