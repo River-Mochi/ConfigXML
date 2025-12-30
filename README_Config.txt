@@ -1,5 +1,6 @@
-Config.xml - City Service Building Changes
+Config.xml - Service Building Changes
 
+README_Config.txt last update: Dec. 29, 2025
 IMPORTANT: Never set workplace counts to 0. Use a small positive value instead (e.g. 1–5).
 SHORT GUIDE
 

@@ -303,7 +303,7 @@ namespace ConfigXML
             }
             catch (Exception)
             {
-                // Treat as non-stub if we cannot read it; do not destroy user data.
+                // Treat as non-stub if it can't be read; do not destroy user data.
             }
 
             return false;
@@ -342,7 +342,7 @@ namespace ConfigXML
             {
                 if (File.Exists(configPath))
                 {
-                    // If this is a stub and we now have a real shipped config, replace it.
+                    // If this is a stub and a real shipped config is available, replace stub.
                     var assetDirForStub = GetAssetDirectorySafe(assetPath);
                     if (!string.IsNullOrEmpty(assetDirForStub) && IsStubConfig(configPath))
                     {
@@ -373,7 +373,7 @@ namespace ConfigXML
                     }
                 }
 
-                // If we still don't have a file, create a minimal shell stub.
+                // If a file is still not available, create a minimal shell stub for safety.
                 if (!File.Exists(configPath))
                 {
                     CreateStubConfig(configPath);

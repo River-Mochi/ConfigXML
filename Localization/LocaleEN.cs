@@ -89,7 +89,7 @@ namespace ConfigXML
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "This is not required, only use this if you plan on changing the default presets already set by the mod.\n" +
                     "• Opens <ModsData/ConfigXML/> folder that contains **Config.xml**.\n" +
-                    "1. Edit this with your preferred text editor (i.e., <Notepad++>).\n\n" +
+                    "1. Edit this with your preferred text editor (<Notepad++>).\n\n" +
                     "2. Example path it opens (Windows):\n" +
                     "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
@@ -199,7 +199,7 @@ namespace ConfigXML
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Same as the Actions tab button: overwrite the local <ModsData/ConfigXML/Config.xml> with a fresh copy of " +
                     "the original mod Presets.\n" +
-                    "Use this if your custom file is broken or you want to start fresh."
+                    "Use this if your custom file is broken, you want the newest version, or want a fresh start."
                 },
                 // Warning Prompt
                 {

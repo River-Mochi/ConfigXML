@@ -407,7 +407,7 @@ namespace ConfigXML
 
             PrefabSystem prefabSystem = world.GetOrCreateSystemManaged<PrefabSystem>();
 
-            Mod.s_Log.Info("CFG PREFAB STATUS DUMP BEGIN");
+            Mod.s_Log.Info($"{Mod.ModTag} PREFAB STATUS DUMP BEGIN");
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
                 var id = new PrefabID(prefabXml.Type, prefabXml.Name);
@@ -429,9 +429,9 @@ namespace ConfigXML
                     status = "OK";
                 }
 
-                Mod.s_Log.Info($"CFG PREFAB {status}: {prefabXml}");
+                Mod.s_Log.Info($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
             }
-            Mod.s_Log.Info("CFG PREFAB STATUS DUMP END");
+            Mod.s_Log.Info($"{Mod.ModTag} PREFAB STATUS DUMP END");
 
         }
 
