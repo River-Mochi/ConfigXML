@@ -3,77 +3,43 @@
 
 namespace ConfigXML
 {
-    using Colossal;                      // IDictionarySource
-    using Colossal.IO.AssetDatabase;     // AssetDatabase.LoadSettings
-    using Colossal.Localization;         // LocalizationManager
-    using Colossal.Logging;              // ILog, LogManager
-    using Game;                          // UpdateSystem
-    using Game.Modding;                  // IMod
-    using Game.SceneFlow;                // GameManager, ExecutableAsset
-    using System;                        // Exception
-    using System.Reflection;             // Get Assembly version number
+    using Colossal;                  // IDictionarySource
+    using Colossal.IO.AssetDatabase; // AssetDatabase.LoadSettings
+    using Colossal.Localization;     // LocalizationManager
+    using Colossal.Logging;          // ILog, LogManager
+    using Game;                      // UpdateSystem
+    using Game.Modding;              // IMod
+    using Game.SceneFlow;            // GameManager, ExecutableAsset
+    using System;                    // Exception, Type
+    using System.Reflection;          // Assembly, FieldInfo, PropertyInfo
 
     public sealed class Mod : IMod
     {
-        // ---- PUBLIC CONSTANTS / METADATA ----
-
         public const string ModId = "ConfigXML";
         public const string ModName = "Config-XML";
         public const string ModTag = "[CFG]";
 
-        /// <summary>
-        /// Read Version number from assembly (3-part).
-        /// </summary>
         public static readonly string ModVersion =
             Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
 
-        /// <summary>
-        /// Single shared logger for this mod
-        /// </summary>
         public static readonly ILog s_Log =
             LogManager.GetLogger(ModId).SetShowsErrorsInUI(false);
 
-        /// <summary>
-        /// Mod instance
-        /// </summary>
-        public static Mod instance
-        {
-            get;
-            private set;
-        } = null!;
+        public static Mod? instance { get; private set; }
 
-        /// <summary>
-        /// Executable asset for this mod (needed for Config.xml seeding path).
-        /// </summary>
-        public static ExecutableAsset modAsset
-        {
-            get;
-            private set;
-        } = null!;
+        // Nullable: resolution can fail depending on load context.
+        public static ExecutableAsset? modAsset { get; private set; }
 
-        /// <summary>
-        /// Global settings instance
-        /// </summary>
-        public static Setting setting
-        {
-            get;
-            private set;
-        } = null!;
-
-        // ---- PRIVATE STATE ----
+        // Nullable to avoid null-forgiving patterns.
+        public static Setting? setting { get; private set; }
 
         private static bool s_BannerLogged;
-
-        // --------------------------------------------------------------------
-        // IMod
-        // --------------------------------------------------------------------
 
         public void OnLoad(UpdateSystem updateSystem)
         {
             instance = this;
 
-            // One-time log banner
-            if (!s_BannerLogged)
+            if (!s_BannerLogged)    // one-time banner
             {
                 s_BannerLogged = true;
                 s_Log.Info($"{ModName} {ModTag} v{ModVersion} OnLoad");
@@ -86,63 +52,64 @@ namespace ConfigXML
                 return;
             }
 
-            // Resolve ExecutableAsset (needed so ConfigTool knows the mod path).
-            if (gameManager.modManager.TryGetExecutableAsset(this, out ExecutableAsset asset))
+            // Resolve mod asset path (helps locate shipped Config.xml / README).
+            try
             {
+                if (gameManager.modManager.TryGetExecutableAsset(this, out ExecutableAsset resolved))
+                {
+                    modAsset = resolved;
+
 #if DEBUG
-                s_Log.Info($"{asset.name} v{asset.version} mod asset at {asset.path}"); // Full path to DLL
+                    s_Log.Info($"{resolved.name} v{resolved.version} mod asset at {resolved.path}");
 #endif
-                modAsset = asset;
+                }
+                else
+                {
+                    // Not fatal: ConfigToolXml can fall back to assembly location.
+                    s_Log.Warn("Failed to resolve mod ExecutableAsset; falling back to assembly location for shipped files.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                s_Log.Warn("Failed to resolve mod ExecutableAsset; Config.xml seeding may be skipped.");
+                s_Log.Warn($"TryGetExecutableAsset failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-            // Settings must exist before locales so labels resolve correctly.
-            Setting s = new Setting(this);
+            // Create settings before locales so localized UI resolves correctly.
+            var s = new Setting(this);
             setting = s;
 
-            // Register locales
             AddLocaleSource("en-US", new LocaleEN(s));
-
-            // Ready for future locales
             AddLocaleSource("de-DE", new LocaleDE(s));
             AddLocaleSource("es-ES", new LocaleES(s));
             AddLocaleSource("fr-FR", new LocaleFR(s));
-            // AddLocaleSource("it-IT",    new LocaleIT(s));
+            // AddLocaleSource("it-IT", new LocaleIT(s));
             AddLocaleSource("ja-JP", new LocaleJA(s));
             AddLocaleSource("ko-KR", new LocaleKO(s));
             AddLocaleSource("pl-PL", new LocalePL(s));
             AddLocaleSource("pt-BR", new LocalePT_BR(s));
             AddLocaleSource("zh-HANS", new LocaleZH_CN(s));
             AddLocaleSource("zh-HANT", new LocaleZH_HANT(s));
-            // AddLocaleSource("vi-VN", new LocaleVI(settings));
+            // AddLocaleSource("vi-VN", new LocaleVI(s));
 
-            // Load persisted settings or create defaults on first run.
+            // Load persisted settings (or defaults on first run).
             AssetDatabase.global.LoadSettings("ConfigSettings", s, new Setting(this));
 
-            // Register in Options UI.
             s.RegisterInOptionsUI();
 
-            // Ensure the settings asset is actually written.
+            // Force settings file creation even when all visible options are defaults.
             s._Hidden = false;
 
-            // Seed ModsData/ConfigXML/ (Config.xml + README) even for preset-only players.
-            // - Migrates old RealCity config if needed
-            // - Repairs stub/empty config if needed
-            // - Refreshes README each update
+            // Seed ModsData (Config.xml + README). Method handles migration + repairs.
             try
             {
-                var assetPath = modAsset != null ? modAsset.path : string.Empty;
-                ConfigToolXml.EnsureModsDataSeeded(assetPath);
+                ConfigToolXml.EnsureModsDataSeeded(GetAssetPathSafe());
             }
             catch (Exception ex)
             {
                 s_Log.Warn($"EnsureModsDataSeeded failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-            // Read and apply prefab configuration.
+            // Apply-on-load.
             ConfigTool.ReadAndApply();
         }
 
@@ -153,15 +120,36 @@ namespace ConfigXML
             if (setting != null)
             {
                 setting.UnregisterInOptionsUI();
-                setting = null!;
+                setting = null;
             }
+
+            modAsset = null;
+            instance = null;
         }
 
-        // --------------------------------------------------------------------
-        // Debug helper
-        // --------------------------------------------------------------------
+        // -----------------------------------------------------------------
+        // Helpers
+        // -----------------------------------------------------------------
 
-        public static void DumpObjectData(object objectToDump)
+        /// <summary>
+        /// Returns the installed mod folder path (ExecutableAsset.path) when available.
+        /// Returns empty string when path not resolved (caller may fallback).
+        /// </summary>
+        public static string GetAssetPathSafe()
+        {
+            if (modAsset != null && !string.IsNullOrEmpty(modAsset.path))
+            {
+                return modAsset.path;
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Debug helper: logs fields + properties of an object via reflection.
+        /// For diagnosing game objects/components without a debugger.
+        /// </summary>
+        public static void DumpObjectData(object? objectToDump)
         {
             if (objectToDump == null)
             {
@@ -173,20 +161,17 @@ namespace ConfigXML
 
             Type type = objectToDump.GetType();
 
+            // Includes private fields because game types often hide useful state there.
             FieldInfo[] fields = type.GetFields(
-                BindingFlags.Public
-                | BindingFlags.NonPublic
-                | BindingFlags.Instance);
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (FieldInfo field in fields)
             {
                 SafeLogInfo(" " + field.Name + ": " + field.GetValue(objectToDump));
             }
-
+            // Same for properties (some game types expose state via properties only).
             PropertyInfo[] properties = type.GetProperties(
-                BindingFlags.Public
-                | BindingFlags.NonPublic
-                | BindingFlags.Instance);
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (PropertyInfo property in properties)
             {
@@ -194,12 +179,13 @@ namespace ConfigXML
             }
         }
 
-        // --------------------------------------------------------------------
-        // Logging helpers – protect against logging-related exceptions.
-        // --------------------------------------------------------------------
+        // -----------------------------------------------------------------
+        // Log Helpers
+        // -----------------------------------------------------------------
 
         /// <summary>
-        /// Always log (Info). For important messages.
+        /// Always-on informational logging.
+        /// Routes through SafeLogInfo so logger failures cannot throw into gameplay/UI.
         /// </summary>
         public static void Log(string message)
         {
@@ -207,7 +193,8 @@ namespace ConfigXML
         }
 
         /// <summary>
-        /// Verbose logging: only logs when the in-game checkbox is enabled.
+        /// Verbose logging: only active when in-game Logging checkbox is enabled.
+        /// Use for per-prefab/per-field spam that would otherwise hurt performance.
         /// </summary>
         public static void LogIf(string message)
         {
@@ -219,6 +206,11 @@ namespace ConfigXML
             SafeLogInfo(message);
         }
 
+        /// <summary>
+        /// Lowest-level log write with guard rails:
+        /// - ignores empty strings
+        /// - catches logger exceptions (rare but real in CS2)
+        /// </summary>
         private static void SafeLogInfo(string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -230,20 +222,12 @@ namespace ConfigXML
             {
                 s_Log.Info(message);
             }
-            catch (Exception)
+            catch
             {
-                // Swallow logging failures so they never surface to the player.
+                // Swallow CO logger fails so they never surface to the player.
             }
         }
 
-        // --------------------------------------------------------------------
-        // Localization helper
-        // --------------------------------------------------------------------
-
-        /// <summary>
-        /// Wrapper around LocalizationManager.AddSource that catches exceptions
-        /// so localization issues can't crash the mod.
-        /// </summary>
         private static void AddLocaleSource(string localeId, IDictionarySource source)
         {
             if (string.IsNullOrEmpty(localeId))
@@ -264,8 +248,7 @@ namespace ConfigXML
             }
             catch (Exception ex)
             {
-                s_Log.Warn(
-                    $"AddLocaleSource: AddSource for '{localeId}' failed: {ex.GetType().Name}: {ex.Message}");
+                s_Log.Warn($"AddLocaleSource: AddSource for '{localeId}' failed: {ex.GetType().Name}: {ex.Message}");
             }
         }
     }

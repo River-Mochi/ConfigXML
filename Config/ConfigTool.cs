@@ -1,19 +1,20 @@
-// Config/ConfigTool.cs
-// Reads Config.xml and applies prefab + component tweaks
+// File: Config/ConfigTool.cs
+// Purpose: Reads Config.xml and applies prefab + component tweaks.
+
 namespace ConfigXML
 {
-    using Game.Prefabs;           // PrefabSystem, PrefabBase, ComponentBase, PrefabID
-    using System;                 // Exception, Type
-    using System.Reflection;      // BindingFlags, FieldInfo, MethodInfo
-    using Unity.Entities;         // Entity, EntityManager, ComponentType, World, IComponentData
-    using Unity.Mathematics;      // math
+    using Game.Prefabs;      // PrefabSystem, PrefabBase, ComponentBase, PrefabID
+    using System;            // Exception, Type
+    using System.Reflection; // BindingFlags, FieldInfo, MethodInfo
+    using Unity.Entities;    // Entity, EntityManager, ComponentType, World, IComponentData
+    using Unity.Mathematics; // math
 
     public static class ConfigTool
     {
         // Will enable AddPrefab patch to process prefabs loaded AFTER mods are initialized (there are some).
         public static bool isLatePrefabsActive = false;
 
-        private static PrefabSystem m_PrefabSystem = null!;
+        private static PrefabSystem? m_PrefabSystem;
         private static EntityManager m_EntityManager;
 
         public static void DumpFields(PrefabBase prefab, ComponentBase component)
@@ -23,6 +24,7 @@ namespace ConfigXML
 
             object obj = component;
             Type type = obj.GetType();
+
             FieldInfo[] fields = type.GetFields(
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -47,7 +49,6 @@ namespace ConfigXML
             Entity entity,
             bool skipEntity = false)
         {
-            // If skipEntity is true, skip any modifications for this component.
             if (skipEntity)
             {
                 Mod.LogIf($"{prefab.name}.{component.name}: skipEntity flag set, skipping configuration.");
@@ -103,60 +104,58 @@ namespace ConfigXML
 
                 foreach (FieldXml fieldConfig in compConfig.Fields)
                 {
-                    // Get the FieldInfo object for the field with the given name.
                     FieldInfo? field = component.GetType().GetField(
                         fieldConfig.Name,
                         BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-                    if (field != null)
+                    if (field == null)
                     {
-                        object? oldValue = field.GetValue(component);
+                        Mod.LogIf($"{prefab.name}.{compName}: Warning! Field {fieldConfig.Name} not found in the component.");
+                        continue;
+                    }
 
-                        // TODO: extend for other field types.
-                        if (field.FieldType == typeof(int))
-                        {
-                            field.SetValue(component, fieldConfig.ValueInt ?? 0);
-                        }
-                        else if (field.FieldType == typeof(float))
-                        {
-                            field.SetValue(component, fieldConfig.ValueFloat ?? 0f);
-                        }
-                        else if (field.FieldType == typeof(uint))
-                        {
-                            field.SetValue(
-                                component,
-                                (uint)math.clamp(fieldConfig.ValueInt ?? 0, 0, int.MaxValue));
-                        }
-                        else if (field.FieldType == typeof(short))
-                        {
-                            field.SetValue(
-                                component,
-                                (short)math.clamp(fieldConfig.ValueInt ?? 0, short.MinValue, short.MaxValue));
-                        }
-                        else if (field.FieldType == typeof(byte))
-                        {
-                            field.SetValue(
-                                component,
-                                (byte)math.clamp(fieldConfig.ValueInt ?? 0, 0, byte.MaxValue));
-                        }
-                        else
-                        {
-                            field.SetValue(component, fieldConfig.ValueInt ?? 0);
-                        }
+                    object? oldValue = field.GetValue(component);
 
-                        if (Mod.setting != null && Mod.setting.Logging)
-                        {
-                            Mod.Log(
-                                $"{prefab.name}.{compName}.{field.Name}: {oldValue} -> {field.GetValue(component)} " +
-                                $"({field.FieldType}, {fieldConfig})");
-                        }
-
-                        isPatched = true;
+                    // TODO: extend for other field types.
+                    if (field.FieldType == typeof(int))
+                    {
+                        field.SetValue(component, fieldConfig.ValueInt ?? 0);
+                    }
+                    else if (field.FieldType == typeof(float))
+                    {
+                        field.SetValue(component, fieldConfig.ValueFloat ?? 0f);
+                    }
+                    else if (field.FieldType == typeof(uint))
+                    {
+                        field.SetValue(
+                            component,
+                            (uint)math.clamp(fieldConfig.ValueInt ?? 0, 0, int.MaxValue));
+                    }
+                    else if (field.FieldType == typeof(short))
+                    {
+                        field.SetValue(
+                            component,
+                            (short)math.clamp(fieldConfig.ValueInt ?? 0, short.MinValue, short.MaxValue));
+                    }
+                    else if (field.FieldType == typeof(byte))
+                    {
+                        field.SetValue(
+                            component,
+                            (byte)math.clamp(fieldConfig.ValueInt ?? 0, 0, byte.MaxValue));
                     }
                     else
                     {
-                        Mod.LogIf($"{prefab.name}.{compName}: Warning! Field {fieldConfig.Name} not found in the component.");
+                        field.SetValue(component, fieldConfig.ValueInt ?? 0);
                     }
+
+                    if (Mod.setting != null && Mod.setting.Logging)
+                    {
+                        Mod.Log(
+                            $"{prefab.name}.{compName}.{field.Name}: {oldValue} -> {field.GetValue(component)} " +
+                            $"({field.FieldType}, {fieldConfig})");
+                    }
+
+                    isPatched = true;
                 }
 
                 if (Mod.setting != null && Mod.setting.Logging)
@@ -165,7 +164,6 @@ namespace ConfigXML
                 }
             }
 
-            // Quit if there is no default processing nor special cases.
             if (!isPatched)
             {
                 Mod.LogIf($"{prefab.name}.{compName}: SKIP");
@@ -180,7 +178,7 @@ namespace ConfigXML
 
             bool hasInit = methodInit != null && methodInit.DeclaringType == componentType;
             bool hasLate = methodLate != null && methodLate.DeclaringType == componentType;
-            bool hasArch = methodArch != null; // not declared on ComponentBase for all components.
+            bool hasArch = methodArch != null;
 
             Mod.LogIf(
                 prefab.name + "." + compName +
@@ -211,7 +209,6 @@ namespace ConfigXML
                 }
             }
 
-            // After that there are cases where RefreshArchetype is needed - very rare so can be handled as exception.
             if (hasArch)
             {
                 Mod.s_Log.Warn($"ARCHETYPE: {prefab.name}.{compName} has RefreshArchetype; not supported.");
@@ -248,6 +245,7 @@ namespace ConfigXML
             where T : struct, IComponentData
         {
             Type type = typeof(T);
+
             FieldInfo[] fields = type.GetFields(
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
@@ -286,8 +284,7 @@ namespace ConfigXML
             Entity entity,
             bool skipEntity = false)
         {
-            Mod.LogIf(
-                $"{prefab.name}: valid {prefab.GetType().Name} entity {entity.Index} skipEntity={skipEntity}");
+            Mod.LogIf($"{prefab.name}: valid {prefab.GetType().Name} entity {entity.Index} skipEntity={skipEntity}");
 
             // Check first if the main prefab needs to be changed.
             ConfigureComponent(prefab, prefabConfig, prefab, entity, skipEntity);
@@ -301,19 +298,16 @@ namespace ConfigXML
 
         public static void ReadAndApply()
         {
-            if (Mod.modAsset == null)
-            {
-                Mod.s_Log.Warn("ConfigTool.ReadAndApply called before modAsset is set; skipping configuration.");
-                return;
-            }
+            // Use empty string when modAsset is unavailable; ConfigToolXml can fall back to assembly location.
+            string assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
 
             bool useLocal =
                 Mod.setting != null &&
                 Mod.setting.UseLocalConfig;
 
             ConfigurationXml? config = useLocal
-                ? ConfigToolXml.LoadLocalConfig(Mod.modAsset.path)
-                : ConfigToolXml.LoadPresetConfig(Mod.modAsset.path);
+                ? ConfigToolXml.LoadLocalConfig(assetPath)
+                : ConfigToolXml.LoadPresetConfig(assetPath);
 
             if (config == null || config.Prefabs == null || config.Prefabs.Count == 0)
             {
@@ -325,7 +319,6 @@ namespace ConfigXML
                 ? "Apply LOCAL Config.xml (ModsData/ConfigXML)"
                 : "Apply PRESET Config.xml (shipped mod defaults)";
 
-            // Go through the safe logging helper so logging failures can never NRE.
             Mod.Log($"ConfigXML: {sourceDescription}.");
 
             // ECS / world safety: do nothing if there's no default world yet.
@@ -342,7 +335,7 @@ namespace ConfigXML
 
             if (world == null)
             {
-                Mod.s_Log.Warn("ConfigTool.ReadAndApply: No default world; are we in a game? Skipping configuration.");
+                Mod.s_Log.Warn("ConfigTool.ReadAndApply: Default ECS world not available; not in a game? Skip configuration.");
                 return;
             }
 
@@ -360,11 +353,9 @@ namespace ConfigXML
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
                 PrefabID prefabID = new PrefabID(prefabXml.Type, prefabXml.Name);
-                PrefabBase prefab;
-                Entity entity;
 
-                if (m_PrefabSystem.TryGetPrefab(prefabID, out prefab)
-                    && m_PrefabSystem.TryGetEntity(prefab, out entity))
+                if (m_PrefabSystem.TryGetPrefab(prefabID, out PrefabBase prefab)
+                    && m_PrefabSystem.TryGetEntity(prefab, out Entity entity))
                 {
                     Mod.LogIf(prefabXml + " successfully retrieved from the PrefabSystem.");
                     ConfigurePrefab(prefab, prefabXml, entity);
@@ -377,21 +368,16 @@ namespace ConfigXML
             }
         }
 
-
         /// <summary>
         /// DEBUG helper: dump status for every Prefab listed in Config.xml
         /// (FOUND / MISSING) to the log, without changing anything.
         /// </summary>
         public static void DumpPrefabStatus()
         {
-            if (Mod.modAsset == null)
-            {
-                Mod.s_Log.Warn("DumpPrefabStatus: modAsset not set; cannot load configuration.");
-                return;
-            }
+            string assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
 
-            // Always check against the preset config – that’s your “source of truth”.
-            ConfigurationXml? config = ConfigToolXml.LoadPresetConfig(Mod.modAsset.path);
+            // Always check against the preset config – “source of truth”.
+            ConfigurationXml? config = ConfigToolXml.LoadPresetConfig(assetPath);
             if (config == null || config.Prefabs == null || config.Prefabs.Count == 0)
             {
                 Mod.s_Log.Warn("DumpPrefabStatus: configuration has no Prefabs to check.");
@@ -411,12 +397,9 @@ namespace ConfigXML
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
                 var id = new PrefabID(prefabXml.Type, prefabXml.Name);
-                PrefabBase prefab;
-
-                var hasPrefab = prefabSystem.TryGetPrefab(id, out prefab);
 
                 string status;
-                if (!hasPrefab)
+                if (!prefabSystem.TryGetPrefab(id, out PrefabBase prefab))
                 {
                     status = "MISSING";
                 }
@@ -431,13 +414,19 @@ namespace ConfigXML
 
                 Mod.s_Log.Info($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
             }
-            Mod.s_Log.Info($"{Mod.ModTag} PREFAB STATUS DUMP END");
 
+            Mod.s_Log.Info($"{Mod.ModTag} PREFAB STATUS DUMP END");
         }
 
         // List components from entity.
         internal static void ListComponents(PrefabBase prefab, Entity entity)
         {
+            // If ReadAndApply never ran successfully, EntityManager may not be valid here.
+            if (m_PrefabSystem == null) // Debug helper can be called without initialization; avoid throwing.
+            {
+                return;
+            }
+
             foreach (ComponentType componentType in m_EntityManager.GetComponentTypes(entity))
             {
                 Mod.s_Log.Info(

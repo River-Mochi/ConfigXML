@@ -353,7 +353,7 @@ namespace ConfigXML
             }
             catch
             {
-                // If we can't read it, do NOT assume it's empty.
+                // Do NOT assume it's empty if it can not be read.
                 return false;
             }
         }
@@ -522,7 +522,7 @@ namespace ConfigXML
 
         /// <summary>
         /// Ensure ModsData/ConfigXML contains Config.xml and README.
-        /// Call on startup if you want the folder always present even for preset-only players.
+        /// Call on startup if the folder should be present even for preset-only players.
         /// </summary>
         public static void EnsureModsDataSeeded(string assetPath)
         {

@@ -1,14 +1,14 @@
-// Setting.cs
-// Options UI + Config.xml helpers for Config-XML.
+// File: Setting.cs
+// Purpose: Options UI + Config.xml helpers for Config-XML.
 
 namespace ConfigXML
 {
-    using Colossal.IO.AssetDatabase;      // ModSetting, FileLocation
-    using Game.Modding;                   // IMod
-    using Game.Settings;                  // Settings attributes
-    using System;                         // Exception
-    using System.IO;                      // Path, Directory
-    using UnityEngine;                    // Application.persistentDataPath, OpenURL
+    using Colossal.IO.AssetDatabase; // ModSetting, FileLocation
+    using Game.Modding;              // IMod
+    using Game.Settings;             // Settings attributes
+    using System;                    // Exception
+    using System.IO;                 // Path, Directory
+    using UnityEngine;               // Application.OpenURL
 
     [FileLocation("ModsSettings/ConfigXML/ConfigSettings")]
     [SettingsUITabOrder(
@@ -28,25 +28,31 @@ namespace ConfigXML
         kDebugGroup)]
     public class Setting : ModSetting
     {
+        // --------------------
         // Tabs (sections)
+        // --------------------
+
         public const string kSection = "Actions";
         public const string kDebugSection = "Debug";
 
+        // --------------------
         // Groups
+        // --------------------
+
         public const string kToggleGroup = "Options";
         public const string kButtonGroup = "Actions";
         public const string kConfigUsageGroup = "ConfigUsage";
         public const string kInfoGroup = "Info";
         public const string kDebugGroup = "Debug";
 
-        // UIButton row grouping for custom config buttons
+        // Keep multiple buttons on one row.
         private const string kCustomButtonsRow = "CustomConfigButtonsRow";
 
         // External links
         private const string kUrlParadoxMods =
-             "https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime";
+            "https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime";
 
-        // Backing fields for mutually exclusive toggles
+        // Backing fields for mutually exclusive toggles.
         private bool m_UseModPresets;
         private bool m_UseLocalConfig;
 
@@ -57,7 +63,7 @@ namespace ConfigXML
         }
 
         // Used to force saving of ModSettings even if all visible options are defaults
-        // (would otherwise be empty and not created).
+        // (otherwise the settings file may not be created).
         [SettingsUIHidden]
         public bool _Hidden
         {
@@ -69,9 +75,9 @@ namespace ConfigXML
         // --------------------
 
         /// <summary>
-        /// Use the Config.xml that ships with the mod (mod presets).
-        /// Mutually exclusive with UseLocalConfig toggle.
-        /// Selecting this will immediately apply the preset configuration.
+        /// Uses the Config.xml that ships with the mod (preset).
+        /// Mutually exclusive with UseLocalConfig.
+        /// Changing this applies immediately.
         /// </summary>
         [SettingsUISection(kSection, kToggleGroup)]
         public bool UseModPresets
@@ -79,41 +85,44 @@ namespace ConfigXML
             get => m_UseModPresets;
             set
             {
-                // Do not allow both toggles to be false.
+                // Prevent both toggles from being false.
                 if (!value && !m_UseLocalConfig)
                 {
                     return;
                 }
 
-                var changed = m_UseModPresets != value;
+                bool changed = m_UseModPresets != value;
                 m_UseModPresets = value;
 
-                if (m_UseModPresets)
+                if (!m_UseModPresets)
                 {
-                    // Presets on => local custom off.
-                    m_UseLocalConfig = false;
+                    return;
+                }
 
-                    if (changed)
-                    {
-                        try
-                        {
-                            Mod.Log("UseModPresets enabled; applying shipped preset configuration.");
-                            ConfigTool.ReadAndApply();
-                        }
-                        catch (Exception ex)
-                        {
-                            Mod.Log(
-                                $"UseModPresets apply failed: {ex.GetType().Name}: {ex.Message}");
-                        }
-                    }
+                // Presets on => local custom off.
+                m_UseLocalConfig = false;
+
+                if (!changed)
+                {
+                    return;
+                }
+
+                try
+                {
+                    Mod.Log("UseModPresets enabled; applying shipped preset configuration.");
+                    ConfigTool.ReadAndApply();
+                }
+                catch (Exception ex)
+                {
+                    Mod.Log($"UseModPresets apply failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
         /// <summary>
-        /// Use ModsData/ConfigXML/Config.xml as a local custom file.
-        /// Mutually exclusive with UseModPresets toggle.
-        /// Selecting this will immediately apply the local configuration.
+        /// Uses ModsData/ConfigXML/Config.xml as a local custom file.
+        /// Mutually exclusive with UseModPresets.
+        /// Changing this applies immediately.
         /// </summary>
         [SettingsUISection(kSection, kToggleGroup)]
         public bool UseLocalConfig
@@ -121,43 +130,46 @@ namespace ConfigXML
             get => m_UseLocalConfig;
             set
             {
-                // Do not allow both toggles to be false.
+                // Prevent both toggles from being false.
                 if (!value && !m_UseModPresets)
                 {
                     return;
                 }
 
-                var changed = m_UseLocalConfig != value;
+                bool changed = m_UseLocalConfig != value;
                 m_UseLocalConfig = value;
 
-                if (m_UseLocalConfig)
+                if (!m_UseLocalConfig)
                 {
-                    // Local custom on => presets off.
-                    m_UseModPresets = false;
+                    return;
+                }
 
-                    if (changed)
-                    {
-                        try
-                        {
-                            Mod.Log("UseLocalConfig enabled; applying local configuration.");
-                            ConfigTool.ReadAndApply();
-                        }
-                        catch (Exception ex)
-                        {
-                            Mod.Log(
-                                $"UseLocalConfig apply failed: {ex.GetType().Name}: {ex.Message}");
-                        }
-                    }
+                // Local custom on => presets off.
+                m_UseModPresets = false;
+
+                if (!changed)
+                {
+                    return;
+                }
+
+                try
+                {
+                    Mod.Log("UseLocalConfig enabled; applying local configuration.");
+                    ConfigTool.ReadAndApply();
+                }
+                catch (Exception ex)
+                {
+                    Mod.Log($"UseLocalConfig apply failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
-        // -----------------------------
+        // -----------------------------------------
         // Actions tab: custom config buttons
         // Only visible when UseLocalConfig is enabled.
-        // -----------------------------
+        // -----------------------------------------
 
-        // Open Folder: ModsData/ConfigXML that contains Config.xml
+        // Opens the folder that contains ModsData/ConfigXML/Config.xml.
         [SettingsUIButtonGroup(kCustomButtonsRow)]
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
@@ -173,31 +185,32 @@ namespace ConfigXML
 
                 try
                 {
-                    // Ensure the Config.xml exists (copy from shipped or create stub)
-                    // and then open the containing folder.
-                    var configPath = ConfigToolXml.GetConfigFilePathForUI();
-                    var modsDataDir = Path.GetDirectoryName(configPath);
+                    // Ensures Config.xml exists before opening the folder.
+                    string configPath = ConfigToolXml.GetConfigFilePathForUI();
+                    string? modsDataDir = Path.GetDirectoryName(configPath);
 
-                    if (!string.IsNullOrEmpty(modsDataDir))
+                    if (string.IsNullOrEmpty(modsDataDir))
                     {
-                        if (!Directory.Exists(modsDataDir))
-                        {
-                            Directory.CreateDirectory(modsDataDir);
-                        }
-
-                        // Just open the folder; player chooses their editor.
-                        OpenWithUnityFileUrl(modsDataDir, isDirectory: true);
+                        return;
                     }
+
+                    if (!Directory.Exists(modsDataDir))
+                    {
+                        Directory.CreateDirectory(modsDataDir);
+                    }
+
+                    // Opens the folder; editor selection is up to the player.
+                    OpenWithUnityFileUrl(modsDataDir, isDirectory: true);
                 }
                 catch (Exception ex)
                 {
-                    // Never throw from options UI.
-                    Mod.Log($"OpenConfigFile (folder) failed: {ex.GetType().Name}: {ex.Message}");
+                    // Never throw from Options UI callbacks.
+                    Mod.Log($"OpenConfigFile failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
-        // Apply-Update Config.xml (local custom file)
+        // Applies current ModsData/ConfigXML/Config.xml (local custom).
         [SettingsUIButtonGroup(kCustomButtonsRow)]
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
@@ -212,12 +225,12 @@ namespace ConfigXML
                     return;
                 }
 
-                Mod.Log("ApplyConfiguration clicked (local custom file).");
+                Mod.Log("ApplyConfiguration clicked.");
                 ConfigTool.ReadAndApply();
             }
         }
 
-        // Refresh file button: "I messed up my custom config file, give me a fresh copy" (Actions tab)
+        // Restores ModsData/ConfigXML/Config.xml from shipped Config.xml (Actions tab).
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
@@ -235,8 +248,7 @@ namespace ConfigXML
             }
         }
 
-        // “How to use Config.xml” body text under the header (multiline).
-        // Only visible when using a local custom config.
+        // Multiline help text (localized) under Config Usage group.
         [SettingsUIMultilineText]
         [SettingsUISection(kSection, kConfigUsageGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
@@ -252,7 +264,7 @@ namespace ConfigXML
         [SettingsUISection(kDebugSection, kInfoGroup)]
         public string VersionDisplay => Mod.ModVersion;
 
-        // Paradox Mods link (Debug tab, under info)
+        // Paradox Mods link button.
         [SettingsUIButtonGroup("SocialLinks")]
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kInfoGroup)]
@@ -271,23 +283,23 @@ namespace ConfigXML
                 }
                 catch (Exception ex)
                 {
-                    Mod.Log(
-                        $"Failed to open Paradox Mods: {ex.GetType().Name}: {ex.Message}");
+                    Mod.Log($"Failed to open Paradox Mods: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
         // ----------------
-        // Debug tab: DEBUG
+        // Debug tab: Debug
         // ----------------
 
+        // When enabled: writes detailed per-prefab/per-field logs.
         [SettingsUISection(kDebugSection, kDebugGroup)]
         public bool Logging
         {
             get; set;
         }
 
-        // Debug tab: dump current prefab status vs Config.xml into ConfigXML.log
+        // Dumps prefab presence status vs shipped preset config.
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         public bool DumpPrefabStatus
@@ -305,14 +317,13 @@ namespace ConfigXML
                 }
                 catch (Exception ex)
                 {
-                    // Don't let debug helper bubble an exception to the UI.
-                    Mod.s_Log?.Warn(
-                        $"DumpPrefabStatus failed: {ex.GetType().Name}: {ex.Message}");
+                    // Avoid throwing from Options UI callbacks.
+                    Mod.s_Log?.Warn($"DumpPrefabStatus failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
-        // Duplicate reset button on Debug tab (always visible)
+        // Restores ModsData/ConfigXML/Config.xml from shipped Config.xml (Debug tab).
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         [SettingsUIConfirmation]
@@ -329,18 +340,24 @@ namespace ConfigXML
             }
         }
 
+        // ----------------
+        // Defaults
+        // ----------------
+
         public override void SetDefaults()
         {
             _Hidden = true;
-            Logging = false;          // default OFF
 
-            // Default behaviour: use shipped presets, no local custom file.
+            // Default OFF: avoids log spam and avoids performance cost.
+            Logging = false;
+
+            // Default behavior: shipped presets (no local custom file).
             m_UseModPresets = true;
             m_UseLocalConfig = false;
         }
 
         // -------------------------------
-        // HELPERS
+        // Helpers
         // -------------------------------
 
         // Shared reset implementation used by both reset buttons.
@@ -348,35 +365,39 @@ namespace ConfigXML
         {
             try
             {
-                var assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
+                // Installed mod folder path when available; empty string otherwise.
+                string assetPath = Mod.GetAssetPathSafe();
+
+                // Copies shipped Config.xml into ModsData/ConfigXML/Config.xml when available.
                 ConfigToolXml.RestoreDefaultConfigForUI(assetPath);
             }
             catch (Exception ex)
             {
+                // Avoid throwing from Options UI callbacks.
                 Mod.Log($"ResetLocalConfig failed: {ex.GetType().Name}: {ex.Message}");
             }
         }
 
-        // Helper: open a file or folder via Unity, using a file:/// URI.
+        // Opens a file or folder via Unity using a file:/// URI.
         private static void OpenWithUnityFileUrl(string path, bool isDirectory = false)
         {
             try
             {
                 // Normalize to forward slashes for URI.
-                var normalized = path.Replace('\\', '/');
+                string normalized = path.Replace('\\', '/');
 
-                // Some platforms like a trailing slash for directories.
+                // Some platforms prefer trailing slash for directories.
                 if (isDirectory && !normalized.EndsWith("/", StringComparison.Ordinal))
                 {
                     normalized += "/";
                 }
 
-                var uri = "file:///" + normalized;
+                string uri = "file:///" + normalized;
                 Application.OpenURL(uri);
             }
             catch
             {
-                // Swallow; callers already log if needed.
+                // Swallow; callers log on failure where needed.
             }
         }
     }
