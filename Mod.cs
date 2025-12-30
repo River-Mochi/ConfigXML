@@ -228,6 +228,23 @@ namespace ConfigXML
             }
         }
 
+        public static void Warn(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+            try
+            {
+                s_Log.Warn(message);
+            }
+            catch
+            {
+                // Swallow logging failures so they never surface to the player.
+            }
+        }
+
         private static void AddLocaleSource(string localeId, IDictionarySource source)
         {
             if (string.IsNullOrEmpty(localeId))

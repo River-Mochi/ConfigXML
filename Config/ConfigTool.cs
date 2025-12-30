@@ -11,37 +11,53 @@ namespace ConfigXML
 
     public static class ConfigTool
     {
-        // Will enable AddPrefab patch to process prefabs loaded AFTER mods are initialized (there are some).
+        // Enables late-prefab patch logic (if used elsewhere).
         public static bool isLatePrefabsActive = false;
 
         private static PrefabSystem? m_PrefabSystem;
         private static EntityManager m_EntityManager;
 
+        // -----------------------------------------
+        // DEBUG: dump component fields to log
+        // -----------------------------------------
         public static void DumpFields(PrefabBase prefab, ComponentBase component)
         {
             var className = component.GetType().Name;
             Mod.Log($"{prefab.name}.{component.name}.CLASS: {className}");
 
-            object obj = component;
-            Type type = obj.GetType();
-
-            FieldInfo[] fields = type.GetFields(
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            Type type = component.GetType();
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (FieldInfo field in fields)
             {
-                // field components: System.Collections.Generic.List`1[Game.Prefabs.ComponentBase]
-                if (field.Name != "isDirty" && field.Name != "active" && field.Name != "components")
+                // Skip noisy base fields.
+                if (field.Name == "isDirty" || field.Name == "active" || field.Name == "components")
                 {
-                    object? value = field.GetValue(obj);
-                    Mod.Log($"{prefab.name}.{component.name}.{field.Name}: {value}");
+                    continue;
                 }
+
+                object? value = field.GetValue(component);
+                Mod.Log($"{prefab.name}.{component.name}.{field.Name}: {value}");
             }
         }
 
-        /// <summary>
-        /// Configures a specific component within a specific prefab according to config data.
-        /// </summary>
+        // -----------------------------------------
+        // CORE: configure prefab + components
+        // -----------------------------------------
+        private static void ConfigurePrefab(PrefabBase prefab, PrefabXml prefabConfig, Entity entity, bool skipEntity = false)
+        {
+            Mod.LogIf($"{prefab.name}: valid {prefab.GetType().Name} entity {entity.Index} skipEntity={skipEntity}");
+
+            // Apply config to the root prefab instance.
+            ConfigureComponent(prefab, prefabConfig, prefab, entity, skipEntity);
+
+            // Apply config to each attached component.
+            foreach (ComponentBase component in prefab.components)
+            {
+                ConfigureComponent(prefab, prefabConfig, component, entity, skipEntity);
+            }
+        }
+
         private static void ConfigureComponent(
             PrefabBase prefab,
             PrefabXml prefabConfig,
@@ -58,20 +74,20 @@ namespace ConfigXML
             string compName = component.GetType().Name;
             bool isPatched = false;
 
-            // Structs within components are handled as separate components.
-            // TODO: When more structs are implemented, use reflection to create flexible code for all possible cases.
+            // -----------------------------
+            // Special-case: ProcessingCompany.process (struct)
+            // -----------------------------
             if (compName == "ProcessingCompany"
                 && prefabConfig.TryGetComponent("IndustrialProcess", out ComponentXml structConfig)
                 && component is ProcessingCompany comp)
             {
-                // IndustrialProcess - currently 2 fields are supported.
-                Mod.LogIf($"{prefab.name}.IndustrialProcess: valid");
                 IndustrialProcess oldProc = comp.process;
 
                 if (structConfig.TryGetField("m_MaxWorkersPerCell", out FieldXml mwpcField)
                     && mwpcField.ValueFloatSpecified)
                 {
                     comp.process.m_MaxWorkersPerCell = mwpcField.ValueFloat ?? oldProc.m_MaxWorkersPerCell;
+
                     Mod.LogIf(
                         $"{prefab.name}.IndustrialProcess.{mwpcField.Name}: {oldProc.m_MaxWorkersPerCell} -> {comp.process.m_MaxWorkersPerCell} " +
                         $"({comp.process.m_MaxWorkersPerCell.GetType()}, {mwpcField})");
@@ -81,15 +97,16 @@ namespace ConfigXML
                     && outamtField.ValueIntSpecified)
                 {
                     comp.process.m_Output.m_Amount = outamtField.ValueInt ?? oldProc.m_Output.m_Amount;
+
                     Mod.LogIf(
                         $"{prefab.name}.IndustrialProcess.{outamtField.Name}: {oldProc.m_Output.m_Amount} -> {comp.process.m_Output.m_Amount} " +
                         $"({comp.process.m_Output.m_Amount.GetType()}, {outamtField})");
                 }
 
+                // When verbose logging is OFF, emit one short summary line.
                 if (Mod.setting != null && !Mod.setting.Logging)
                 {
-                    // Single summary line when verbose logging is OFF.
-                    Mod.s_Log.Info(
+                    Mod.Log(
                         $"{prefab.name}.IndustrialProcess: workersPerCell={comp.process.m_MaxWorkersPerCell}, " +
                         $"output={comp.process.m_Output.m_Amount}");
                 }
@@ -97,7 +114,9 @@ namespace ConfigXML
                 isPatched = true;
             }
 
-            // Default processing using reflection.
+            // -----------------------------
+            // Default reflection-based patching
+            // -----------------------------
             if (prefabConfig.TryGetComponent(compName, out ComponentXml compConfig))
             {
                 Mod.LogIf($"{prefab.name}.{compName}: valid");
@@ -110,13 +129,13 @@ namespace ConfigXML
 
                     if (field == null)
                     {
-                        Mod.LogIf($"{prefab.name}.{compName}: Warning! Field {fieldConfig.Name} not found in the component.");
+                        Mod.LogIf($"{prefab.name}.{compName}: field not found: {fieldConfig.Name}");
                         continue;
                     }
 
                     object? oldValue = field.GetValue(component);
 
-                    // TODO: extend for other field types.
+                    // NOTE: ConfigXml rules: only ValueInt/ValueFloat are supported safely.
                     if (field.FieldType == typeof(int))
                     {
                         field.SetValue(component, fieldConfig.ValueInt ?? 0);
@@ -127,25 +146,22 @@ namespace ConfigXML
                     }
                     else if (field.FieldType == typeof(uint))
                     {
-                        field.SetValue(
-                            component,
-                            (uint)math.clamp(fieldConfig.ValueInt ?? 0, 0, int.MaxValue));
+                        field.SetValue(component, (uint)math.clamp(fieldConfig.ValueInt ?? 0, 0, int.MaxValue));
                     }
                     else if (field.FieldType == typeof(short))
                     {
-                        field.SetValue(
-                            component,
-                            (short)math.clamp(fieldConfig.ValueInt ?? 0, short.MinValue, short.MaxValue));
+                        field.SetValue(component, (short)math.clamp(fieldConfig.ValueInt ?? 0, short.MinValue, short.MaxValue));
                     }
                     else if (field.FieldType == typeof(byte))
                     {
-                        field.SetValue(
-                            component,
-                            (byte)math.clamp(fieldConfig.ValueInt ?? 0, 0, byte.MaxValue));
+                        field.SetValue(component, (byte)math.clamp(fieldConfig.ValueInt ?? 0, 0, byte.MaxValue));
                     }
                     else
                     {
-                        field.SetValue(component, fieldConfig.ValueInt ?? 0);
+                        // Unsupported field types are intentionally not handled.
+                        // Leave unchanged to avoid crashing or corrupting prefabs.
+                        Mod.LogIf($"{prefab.name}.{compName}.{field.Name}: unsupported field type {field.FieldType.Name}; skipped");
+                        continue;
                     }
 
                     if (Mod.setting != null && Mod.setting.Logging)
@@ -160,7 +176,7 @@ namespace ConfigXML
 
                 if (Mod.setting != null && Mod.setting.Logging)
                 {
-                    DumpFields(prefab, component); // debug
+                    DumpFields(prefab, component);
                 }
             }
 
@@ -170,7 +186,9 @@ namespace ConfigXML
                 return;
             }
 
-            // Modify Entity.
+            // -----------------------------
+            // Entity update hooks (Initialize/LateInitialize)
+            // -----------------------------
             Type componentType = component.GetType();
             MethodInfo? methodInit = componentType.GetMethod("Initialize");
             MethodInfo? methodLate = componentType.GetMethod("LateInitialize");
@@ -182,128 +200,53 @@ namespace ConfigXML
 
             Mod.LogIf(
                 prefab.name + "." + compName +
-                ": INIT " + hasInit + " " + (methodInit != null ? methodInit.DeclaringType!.Name : "none") +
-                " LATE " + hasLate + " " + (methodLate != null ? methodLate.DeclaringType!.Name : "none") +
-                " ARCH " + hasArch + " " + (methodArch != null ? methodArch.DeclaringType!.Name : "none"));
+                ": INIT " + hasInit +
+                " LATE " + hasLate +
+                " ARCH " + hasArch);
 
-            // If there is both Initialize and LateInitialize, log a warning and skip (unsupported).
+            // Both init paths present: skip to avoid unknown side-effects.
             if (hasInit && hasLate)
             {
-                Mod.s_Log.Warn($"DUALINIT: {prefab.name}.{compName} has both Init and LateInit; not supported.");
+                Mod.Warn($"DUALINIT: {prefab.name}.{compName} has both Init and LateInit; skipped.");
+                return;
             }
-            else if (hasLate)
+
+            // LateInitialize preferred when present.
+            if (hasLate)
             {
-                Mod.LogIf("... calling LateInitialize");
+                Mod.LogIf($"{prefab.name}.{compName}: calling LateInitialize");
                 component.LateInitialize(m_EntityManager, entity);
             }
             else if (hasInit)
             {
-                Mod.LogIf("... calling Initialize");
+                Mod.LogIf($"{prefab.name}.{compName}: calling Initialize");
                 component.Initialize(m_EntityManager, entity);
             }
             else
             {
+                // Some components do not require init hooks; keep warning minimal.
                 if (compName != "ResourcePrefab" && compName != "CompanyPrefab")
                 {
-                    Mod.s_Log.Warn($"ZEROINIT: {prefab.name}.{compName} has no Init and no LateInit; not supported.");
+                    Mod.Warn($"ZEROINIT: {prefab.name}.{compName} has no Init/LateInit; prefab may not refresh.");
                 }
             }
 
+            // RefreshArchetype exists on some components; not supported here.
             if (hasArch)
             {
-                Mod.s_Log.Warn($"ARCHETYPE: {prefab.name}.{compName} has RefreshArchetype; not supported.");
+                Mod.Warn($"ARCHETYPE: {prefab.name}.{compName} has RefreshArchetype; not supported.");
             }
         }
 
-        // Method to change the value of a field in an ECS component by name.
-        // NOT USED.
-        public static void SetFieldValue<T>(
-            ref T component,
-            string fieldName,
-            object newValue)
-            where T : struct, IComponentData
-        {
-            Type type = typeof(T);
-            FieldInfo? field = type.GetField(
-                fieldName,
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-            if (field != null)
-            {
-                object? oldValue = field.GetValue(component);
-                field.SetValueDirect(__makeref(component), newValue);
-                Mod.s_Log.Info($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
-            }
-            else
-            {
-                Mod.s_Log.Info($"Field '{fieldName}' not found in struct '{type.Name}'.");
-            }
-        }
-
-        // NOT USED - CRASHES THE GAME ATM.
-        public static void ConfigureComponentData<T>(ComponentXml compXml, ref T component)
-            where T : struct, IComponentData
-        {
-            Type type = typeof(T);
-
-            FieldInfo[] fields = type.GetFields(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-            foreach (FieldInfo field in fields)
-            {
-                object? oldValue = field.GetValue(component);
-
-                if (compXml.TryGetField(field.Name, out FieldXml fieldXml))
-                {
-                    // TODO: extend for other field types.
-                    if (field.FieldType == typeof(float))
-                    {
-                        field.SetValueDirect(__makeref(component), fieldXml.ValueFloat);
-                    }
-                    else
-                    {
-                        field.SetValueDirect(__makeref(component), fieldXml.ValueInt);
-                    }
-
-                    Mod.s_Log.Info(
-                        $"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
-                }
-                else
-                {
-                    Mod.LogIf($"{type.Name}.{field.Name}: {oldValue}");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Configures a specific prefab according to the config data.
-        /// </summary>
-        private static void ConfigurePrefab(
-            PrefabBase prefab,
-            PrefabXml prefabConfig,
-            Entity entity,
-            bool skipEntity = false)
-        {
-            Mod.LogIf($"{prefab.name}: valid {prefab.GetType().Name} entity {entity.Index} skipEntity={skipEntity}");
-
-            // Check first if the main prefab needs to be changed.
-            ConfigureComponent(prefab, prefabConfig, prefab, entity, skipEntity);
-
-            // Iterate through components and see which ones need to be changed.
-            foreach (ComponentBase component in prefab.components)
-            {
-                ConfigureComponent(prefab, prefabConfig, component, entity, skipEntity);
-            }
-        }
-
+        // -----------------------------------------
+        // APPLY: load config and patch PrefabSystem
+        // -----------------------------------------
         public static void ReadAndApply()
         {
-            // Use empty string when modAsset is unavailable; ConfigToolXml can fall back to assembly location.
-            string assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
+            // Resolve installed mod folder path (or empty => ConfigToolXml fallback).
+            string assetPath = Mod.GetAssetPathSafe();
 
-            bool useLocal =
-                Mod.setting != null &&
-                Mod.setting.UseLocalConfig;
+            bool useLocal = Mod.setting != null && Mod.setting.UseLocalConfig;
 
             ConfigurationXml? config = useLocal
                 ? ConfigToolXml.LoadLocalConfig(assetPath)
@@ -311,31 +254,29 @@ namespace ConfigXML
 
             if (config == null || config.Prefabs == null || config.Prefabs.Count == 0)
             {
-                Mod.s_Log.Warn("ConfigTool.ReadAndApply: No configuration data loaded or Prefabs list is empty; nothing to apply.");
+                Mod.Warn("ConfigTool.ReadAndApply: no configuration data loaded; nothing to apply.");
                 return;
             }
 
-            var sourceDescription = useLocal
-                ? "Apply LOCAL Config.xml (ModsData/ConfigXML)"
-                : "Apply PRESET Config.xml (shipped mod defaults)";
+            Mod.Log(useLocal
+                ? "ConfigXML: Apply LOCAL Config.xml (ModsData/ConfigXML)."
+                : "ConfigXML: Apply PRESET Config.xml (shipped mod defaults).");
 
-            Mod.Log($"ConfigXML: {sourceDescription}.");
-
-            // ECS / world safety: do nothing if there's no default world yet.
-            World world;
+            // Prefabs live in the default ECS world.
+            World? world;
             try
             {
                 world = World.DefaultGameObjectInjectionWorld;
             }
             catch (Exception ex)
             {
-                Mod.s_Log.Warn($"ConfigTool.ReadAndApply: Failed to get default world: {ex.GetType().Name}: {ex.Message}");
+                Mod.Warn($"ConfigTool.ReadAndApply: failed to get default world: {ex.GetType().Name}: {ex.Message}");
                 return;
             }
 
             if (world == null)
             {
-                Mod.s_Log.Warn("ConfigTool.ReadAndApply: Default ECS world not available; not in a game? Skip configuration.");
+                Mod.Warn("ConfigTool.ReadAndApply: default ECS world not available; skip configuration.");
                 return;
             }
 
@@ -346,7 +287,7 @@ namespace ConfigXML
             }
             catch (Exception ex)
             {
-                Mod.s_Log.Warn($"ConfigTool.ReadAndApply: Failed to get PrefabSystem / EntityManager: {ex.GetType().Name}: {ex.Message}");
+                Mod.Warn($"ConfigTool.ReadAndApply: failed to get PrefabSystem/EntityManager: {ex.GetType().Name}: {ex.Message}");
                 return;
             }
 
@@ -357,46 +298,45 @@ namespace ConfigXML
                 if (m_PrefabSystem.TryGetPrefab(prefabID, out PrefabBase prefab)
                     && m_PrefabSystem.TryGetEntity(prefab, out Entity entity))
                 {
-                    Mod.LogIf(prefabXml + " successfully retrieved from the PrefabSystem.");
+                    Mod.LogIf($"{prefabXml} found; applying.");
                     ConfigurePrefab(prefab, prefabXml, entity);
                 }
                 else
                 {
-                    // Only log missing prefabs when verbose logging is enabled.
-                    Mod.LogIf("Failed to retrieve " + prefabXml + " from the PrefabSystem.");
+                    Mod.LogIf($"{prefabXml} missing; skipped.");
                 }
             }
         }
 
-        /// <summary>
-        /// DEBUG helper: dump status for every Prefab listed in Config.xml
-        /// (FOUND / MISSING) to the log, without changing anything.
-        /// </summary>
+        // -----------------------------------------
+        // DEBUG helpers
+        // -----------------------------------------
+
         public static void DumpPrefabStatus()
         {
-            string assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
+            string assetPath = Mod.GetAssetPathSafe();
 
-            // Always check against the preset config – “source of truth”.
+            // Preset config is the reference list.
             ConfigurationXml? config = ConfigToolXml.LoadPresetConfig(assetPath);
             if (config == null || config.Prefabs == null || config.Prefabs.Count == 0)
             {
-                Mod.s_Log.Warn("DumpPrefabStatus: configuration has no Prefabs to check.");
+                Mod.Warn("DumpPrefabStatus: configuration has no Prefabs to check.");
                 return;
             }
 
-            World world = World.DefaultGameObjectInjectionWorld;
+            World? world = World.DefaultGameObjectInjectionWorld;
             if (world == null)
             {
-                Mod.s_Log.Warn("DumpPrefabStatus: no default world; are we in a game?");
+                Mod.Warn("DumpPrefabStatus: default ECS world not available; skip.");
                 return;
             }
 
             PrefabSystem prefabSystem = world.GetOrCreateSystemManaged<PrefabSystem>();
 
-            Mod.s_Log.Info($"{Mod.ModTag} PREFAB STATUS DUMP BEGIN");
+            Mod.Log($"{Mod.ModTag} PREFAB STATUS DUMP BEGIN");
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
-                var id = new PrefabID(prefabXml.Type, prefabXml.Name);
+                PrefabID id = new PrefabID(prefabXml.Type, prefabXml.Name);
 
                 string status;
                 if (!prefabSystem.TryGetPrefab(id, out PrefabBase prefab))
@@ -412,25 +352,76 @@ namespace ConfigXML
                     status = "OK";
                 }
 
-                Mod.s_Log.Info($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
+                Mod.Log($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
             }
-
-            Mod.s_Log.Info($"{Mod.ModTag} PREFAB STATUS DUMP END");
+            Mod.Log($"{Mod.ModTag} PREFAB STATUS DUMP END");
         }
 
-        // List components from entity.
         internal static void ListComponents(PrefabBase prefab, Entity entity)
         {
-            // If ReadAndApply never ran successfully, EntityManager may not be valid here.
-            if (m_PrefabSystem == null) // Debug helper can be called without initialization; avoid throwing.
+            // Requires ReadAndApply to have initialized EntityManager.
+            if (m_PrefabSystem == null)
             {
                 return;
             }
 
             foreach (ComponentType componentType in m_EntityManager.GetComponentTypes(entity))
             {
-                Mod.s_Log.Info(
-                    $"{prefab.GetType().Name}.{prefab.name}.{componentType.GetManagedType().Name}: {componentType}");
+                Mod.Log($"{prefab.GetType().Name}.{prefab.name}.{componentType.GetManagedType().Name}: {componentType}");
+            }
+        }
+
+        // -----------------------------------------
+        // NOT USED helpers (kept for future work)
+        // -----------------------------------------
+
+        public static void SetFieldValue<T>(ref T component, string fieldName, object newValue)
+            where T : struct, IComponentData
+        {
+            Type type = typeof(T);
+            FieldInfo? field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            if (field == null)
+            {
+                Mod.LogIf($"Field not found: {type.Name}.{fieldName}");
+                return;
+            }
+
+            object? oldValue = field.GetValue(component);
+            field.SetValueDirect(__makeref(component), newValue);
+
+            // Verbose only; avoid log spam.
+            Mod.LogIf($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
+        }
+
+        public static void ConfigureComponentData<T>(ComponentXml compXml, ref T component)
+            where T : struct, IComponentData
+        {
+            // Known to be unsafe currently; keep disabled unless explicitly re-enabled.
+            Type type = typeof(T);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            foreach (FieldInfo field in fields)
+            {
+                object? oldValue = field.GetValue(component);
+
+                if (compXml.TryGetField(field.Name, out FieldXml fieldXml))
+                {
+                    if (field.FieldType == typeof(float))
+                    {
+                        field.SetValueDirect(__makeref(component), fieldXml.ValueFloat);
+                    }
+                    else
+                    {
+                        field.SetValueDirect(__makeref(component), fieldXml.ValueInt);
+                    }
+
+                    Mod.LogIf($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
+                }
+                else
+                {
+                    Mod.LogIf($"{type.Name}.{field.Name}: {oldValue}");
+                }
             }
         }
     }
