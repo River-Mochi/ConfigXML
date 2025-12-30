@@ -49,11 +49,11 @@ SHORT GUIDE
 - Experiment with job education levels or worker numbers carefully :) at worst you can use the reset button to make fresh new copy of this file
 
 ====== Migration Notes ==========
-Old Settings file: recommended to delete with game OFF: ..\ModsSettings\RealCity
+Old "RealCity" Settings file: recommended to delete with game OFF: ..\ModsSettings\RealCity
 Full path usually here: C:\Users\YourName\AppData\LocalLow\Colossal Order\Cities Skylines II\ModsSettings\RealCity\
 When you start the game again, go to Options and you can reset the Checkbox [x] and it will be saved to the new settings location.
 
-Old Config.xml: this is the important file,
+Old "RealCity" Config.xml: this is the important file,
 a. By default, the Mod will look for the old folder \RealCity and copy (\ModsData\RealCity\Config.xml) into the new location for your convenience (..\ModsData\ConfigXML\Config.xml).
 b. If you customized the old one, then you could keep this older \RealCity file as a backup copy or delete the RealCity folder and config.xml.
 c. If you never customized it, then it's fine to delete \RealCity and just use the new Config.xml that comes with Presets when the Mod is installed.
