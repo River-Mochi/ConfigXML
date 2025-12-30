@@ -4,7 +4,7 @@
   - Renamed mod to **Config-XML**.
   - Added Japanese (日本語) and Traditional Chinese (繁體中文) translations.
   - One-time migration: existing **RealCity Config.xml** is automatically copied to the new **ConfigXML** folder if present.
-  - New README file added next to Config.xml with updated usage and migration notes.
+  - Adds README_Config.txt next to Config.xml (readme is auto-updated when the shipped README changes).
   - Improved Config.xml safety:
     - Creates Config.xml on first run if missing.
     - Automatically repairs missing or empty config files.

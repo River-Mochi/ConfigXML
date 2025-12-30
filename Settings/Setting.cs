@@ -1,4 +1,4 @@
-// File: Setting.cs
+// File: Settings/Setting.cs
 // Purpose: Options UI + Config.xml helpers for Config-XML.
 
 namespace ConfigXML
@@ -248,11 +248,22 @@ namespace ConfigXML
             }
         }
 
-        // Multiline help text (localized) under Config Usage group.
+        // ------------------------------------
+        // Actions tab: How to use Config.xml
+        // Multiline help text (localized).
+        // ------------------------------------
+
+        // Presets help text (only visible when UseLocalConfig is OFF)
+        [SettingsUIMultilineText]
+        [SettingsUISection(kSection, kConfigUsageGroup)]
+        [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), false)]
+        public string PresetUsageSteps => string.Empty;
+
+        // Custom help text (only visible  when UseLocalConfig is ON)
         [SettingsUIMultilineText]
         [SettingsUISection(kSection, kConfigUsageGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
-        public string ConfigUsageSteps => string.Empty;
+        public string CustomUsageSteps => string.Empty;
 
         // ---------------
         // Debug tab: Info

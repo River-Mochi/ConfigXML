@@ -89,7 +89,7 @@ namespace ConfigXML
             AddLocaleSource("pt-BR", new LocalePT_BR(s));
             AddLocaleSource("zh-HANS", new LocaleZH_CN(s));
             AddLocaleSource("zh-HANT", new LocaleZH_HANT(s));
-            // AddLocaleSource("vi-VN", new LocaleVI(s));
+            AddLocaleSource("vi-VN", new LocaleVI(s));
 
             // Load persisted settings (or defaults on first run).
             AssetDatabase.global.LoadSettings("ConfigSettings", s, new Setting(this));
@@ -224,7 +224,7 @@ namespace ConfigXML
             }
             catch
             {
-                // Swallow CO logger fails so they never surface to the player.
+                // catch CO logger fails so they don't surface to player.
             }
         }
 
@@ -241,7 +241,7 @@ namespace ConfigXML
             }
             catch
             {
-                // Swallow logging failures so they never surface to the player.
+                // catch CO logging fails so they don't surface.
             }
         }
 
