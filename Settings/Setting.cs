@@ -314,7 +314,7 @@ namespace ConfigXML
                 }
                 catch (Exception ex)
                 {
-                    Mod.s_Log?.Warn($"DumpPrefabStatus failed: {ex.GetType().Name}: {ex.Message}");
+                    Mod.Warn($"DumpPrefabStatus failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
@@ -335,30 +335,20 @@ namespace ConfigXML
             }
         }
 
-        // When enabled: writes Verbose per-prefab/per-field logs.
-        // Only visible in DEBUG BUILD UI.
+        // When enabled: writes Verbose logs per-prefab/per-field.
+        // Changed name VerboseLogs prevents old 'Logging=true' from doing anything in Release
+#if DEBUG
         [SettingsUISection(kDebugSection, kDebugGroup)]
-        [SettingsUIHideByCondition(typeof(Setting), nameof(_IsDebugBuild), true)]
-        public bool Logging
+        public bool VerboseLogs     
+        { get; set; }
+#else
+        [SettingsUIHidden]  // hide the checkbox
+        public bool VerboseLogs
         {
-            get; set;
+            get => false;
+            set { /* ignore in Release */ }
         }
-
-        // -------------------------
-        // Defaults
-        // -------------------------
-
-        public override void SetDefaults()
-        {
-            _Hidden = true;
-
-            // Default OFF: avoids log spam and avoids performance cost.
-            Logging = false;
-
-            // Default behavior: shipped presets (no local custom file).
-            m_UseModPresets = true;
-            m_UseLocalConfig = false;
-        }
+#endif
 
         // -------------------------------
         // Helpers
@@ -395,5 +385,23 @@ namespace ConfigXML
             {
             }
         }
+
+        // -----------------------------
+        // Defaults: 1st run or missing
+        // -----------------------------
+
+        public override void SetDefaults()
+        {
+            _Hidden = true;
+
+            // Default OFF: avoids log spam and performance cost.
+            VerboseLogs = false;
+
+            // Default behavior: shipped presets (no local custom file).
+            m_UseModPresets = true;
+            m_UseLocalConfig = false;
+        }
+
     }
 }
+

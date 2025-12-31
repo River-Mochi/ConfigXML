@@ -164,11 +164,11 @@ namespace ConfigXML
                 },
 
                 // Verbos Logging (strong warning about performance)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VerboseLogs)),
                     "詳細ログ (右の注意を読んで)"
                 },
                 {
-                    m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.VerboseLogs)),
                     "<普段はOFF推奨。>\n" +
                     "詳細ログは重くなり、ログも巨大になります。\n" +
                     "デバッグ時だけ **一時的に** ON。\n" +

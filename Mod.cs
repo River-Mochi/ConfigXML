@@ -11,7 +11,8 @@ namespace ConfigXML
     using Game.Modding;              // IMod
     using Game.SceneFlow;            // GameManager, ExecutableAsset
     using System;                    // Exception, Type
-    using System.Reflection;          // Assembly, FieldInfo, PropertyInfo
+    using System.Diagnostics;     
+    using System.Reflection;         // Assembly, FieldInfo, PropertyInfo
 
     public sealed class Mod : IMod
     {
@@ -184,7 +185,7 @@ namespace ConfigXML
         // -----------------------------------------------------------------
 
         /// <summary>
-        /// Always-on informational logging.
+        /// Always-on info logging.
         /// Routes through SafeLogInfo so logger failures cannot throw into gameplay/UI.
         /// </summary>
         public static void Log(string message)
@@ -193,18 +194,21 @@ namespace ConfigXML
         }
 
         /// <summary>
-        /// Verbose logging: only active when in-game Logging checkbox is enabled.
+        /// Verbose logs: debug only in-game checkbox.
         /// Use for per-prefab/per-field spam that would otherwise hurt performance.
         /// </summary>
+        [Conditional("DEBUG")]
         public static void LogIf(string message)
         {
-            if (setting == null || !setting.Logging)
+            if (setting == null || !setting.VerboseLogs)
             {
                 return;
             }
 
             SafeLogInfo(message);
+
         }
+
 
         /// <summary>
         /// Lowest-level log write with guard rails:
@@ -237,11 +241,11 @@ namespace ConfigXML
 
             try
             {
-                s_Log.Warn(message);
+                s_Log?.Warn(message);   // cheap guard just in case
             }
             catch
             {
-                // catch CO logging fails so they don't surface.
+                // catch CO logger fails so they don't surface.
             }
         }
 

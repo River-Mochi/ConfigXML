@@ -103,8 +103,8 @@ namespace ConfigXML
                         $"({comp.process.m_Output.m_Amount.GetType()}, {outamtField})");
                 }
 
-                // When verbose logging is OFF, emit one short summary line.
-                if (Mod.setting != null && !Mod.setting.Logging)
+                // When verbose VerboseLogs is OFF, emit one short summary line.
+                if (Mod.setting != null && !Mod.setting.VerboseLogs)
                 {
                     Mod.Log(
                         $"{prefab.name}.IndustrialProcess: workersPerCell={comp.process.m_MaxWorkersPerCell}, " +
@@ -164,7 +164,7 @@ namespace ConfigXML
                         continue;
                     }
 
-                    if (Mod.setting != null && Mod.setting.Logging)
+                    if (Mod.setting != null && Mod.setting.VerboseLogs)
                     {
                         Mod.Log(
                             $"{prefab.name}.{compName}.{field.Name}: {oldValue} -> {field.GetValue(component)} " +
@@ -174,7 +174,7 @@ namespace ConfigXML
                     isPatched = true;
                 }
 
-                if (Mod.setting != null && Mod.setting.Logging)
+                if (Mod.setting != null && Mod.setting.VerboseLogs)
                 {
                     DumpFields(prefab, component);
                 }
@@ -291,10 +291,10 @@ namespace ConfigXML
                 return;
             }
 
-            // DEBUG probe: confirm a few early prefabs are present when applying.
-            // Only runs when Verbose logging is enabled (and only in DEBUG builds).
+// DEBUG-only Probe: confirms PrefabSystem resolves a few Config.xml entries during Apply-Onload.
+// Helps catch timing/ID issues without pressing the Dump button.
 #if DEBUG
-if (Mod.s_Settings != null && Mod.s_Settings.Logging)
+if (Mod.setting != null && Mod.setting.VerboseLogs)
 {
     int probeCount = config.Prefabs.Count;
     if (probeCount > 3)
@@ -307,15 +307,15 @@ if (Mod.s_Settings != null && Mod.s_Settings.Logging)
         PrefabXml p = config.Prefabs[i];
         PrefabID id = new PrefabID(p.Type, p.Name);
 
-        bool hasPrefab = m_PrefabSystem.TryGetPrefab(id, out PrefabBase found);
+        bool hasPrefab = m_PrefabSystem.TryGetPrefab(id, out PrefabBase found); // Prefab exists.
         bool hasEntity = false;
 
         if (hasPrefab)
         {
-            hasEntity = m_PrefabSystem.TryGetEntity(found, out _);
+            hasEntity = m_PrefabSystem.TryGetEntity(found, out _);  // Prefab registered into ECS
         }
 
-        // INFO only — no stack trace spam.
+        // INFO only — avoids stack trace spam.
         Mod.Log($"[Probe] {id}: prefab={(hasPrefab ? "YES" : "NO")}, entity={(hasEntity ? "YES" : "NO")}");
     }
 }
@@ -342,32 +342,49 @@ if (Mod.s_Settings != null && Mod.s_Settings.Logging)
         // DEBUG helpers
         // -----------------------------------------
 
+        // Dump tests that the 'active' Config prefab items are valid.
+        // works pre-city load, no warn or stack spam. Counts + summary.
         public static void DumpPrefabStatus()
         {
             string assetPath = Mod.GetAssetPathSafe();
-            if (m_PrefabSystem == null)
-            {
-                Mod.Log("Dump Prefab status: PrefabSystem not ready yet. Load a city and try again.");
-                return;
-            }
-            // Preset config is the reference list.
-            ConfigurationXml? config = ConfigToolXml.LoadPresetConfig(assetPath);
+
+            bool useLocal = Mod.setting != null && Mod.setting.UseLocalConfig;
+
+            // Dump the config the player is actually using right now.
+            ConfigurationXml? config = useLocal
+                ? ConfigToolXml.LoadLocalConfig(assetPath)
+                : ConfigToolXml.LoadPresetConfig(assetPath);
+
             if (config == null || config.Prefabs == null || config.Prefabs.Count == 0)
             {
-                Mod.Warn("DumpPrefabStatus: configuration has no Prefabs to check.");
+                Mod.Log("DumpPrefabStatus: config has no Prefabs to check.");
                 return;
             }
 
             World? world = World.DefaultGameObjectInjectionWorld;
             if (world == null)
             {
-                Mod.Warn("DumpPrefabStatus: default ECS world not available; skip.");
+                Mod.Log("DumpPrefabStatus: default ECS world not available; skip.");
                 return;
             }
 
-            PrefabSystem prefabSystem = world.GetOrCreateSystemManaged<PrefabSystem>();
+            PrefabSystem prefabSystem;
+            try
+            {
+                prefabSystem = world.GetOrCreateSystemManaged<PrefabSystem>();
+            }
+            catch (Exception ex)
+            {
+                Mod.Log($"DumpPrefabStatus: failed to get PrefabSystem: {ex.GetType().Name}: {ex.Message}");
+                return;
+            }
 
-            Mod.Log($"{Mod.ModTag} PREFAB STATUS DUMP BEGIN");
+            int ok = 0;
+            int missing = 0;
+            int noEntity = 0;
+
+            Mod.Log($"{Mod.ModTag} === PREFAB STATUS DUMP BEGIN ({(useLocal ? "LOCAL" : "PRESET")}) ===");
+
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
                 PrefabID id = new PrefabID(prefabXml.Type, prefabXml.Name);
@@ -376,19 +393,25 @@ if (Mod.s_Settings != null && Mod.s_Settings.Logging)
                 if (!prefabSystem.TryGetPrefab(id, out PrefabBase prefab))
                 {
                     status = "MISSING";
+                    missing++;
                 }
                 else if (!prefabSystem.TryGetEntity(prefab, out _))
                 {
                     status = "NO_ENTITY";
+                    noEntity++;
                 }
                 else
                 {
                     status = "OK";
+                    ok++;
                 }
 
                 Mod.Log($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
             }
-            Mod.Log($"{Mod.ModTag} PREFAB STATUS DUMP END");
+
+            Mod.Log($"{Mod.ModTag} Summary: OK={ok}, NO_ENTITY={noEntity}, MISSING={missing}");
+            Mod.Log($"{Mod.ModTag} Note: 'missing' DLC prefabs you do not own is normal.");
+            Mod.Log($"{Mod.ModTag} === PREFAB STATUS DUMP END ===");
         }
 
         internal static void ListComponents(PrefabBase prefab, Entity entity)

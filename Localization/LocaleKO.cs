@@ -164,11 +164,11 @@ namespace ConfigXML
                 },
 
                 // Verbos Logging (strong warning about performance)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VerboseLogs)),
                     "자세한 로그 (오른쪽 경고 확인)"
                 },
                 {
-                    m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.VerboseLogs)),
                     "<일반 플레이에는 비추천.>\n" +
                     "자세한 로그는 게임을 느리게 하고 로그 파일이 커질 수 있습니다.\n" +
                     "디버깅할 때만 **잠깐** 켜세요.\n" +

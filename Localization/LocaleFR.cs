@@ -164,11 +164,11 @@ namespace ConfigXML
                 },
 
                 // Verbos Logging (strong warning about performance)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VerboseLogs)),
                     "Logs verbeux (lire les avertissements à droite)"
                 },
                 {
-                    m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.VerboseLogs)),
                     "<PAS pour jouer normalement.>\n" +
                     "Les logs verbeux peuvent ralentir le jeu et créer de gros fichiers.\n" +
                     "Activer uniquement **temporairement** pour le debug.\n" +

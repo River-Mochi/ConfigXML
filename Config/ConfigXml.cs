@@ -219,7 +219,7 @@ namespace ConfigXML
     public static class ConfigToolXml
     {
         private static readonly string _configFileName = "Config.xml";
-        private static readonly string _dumpFileName = "Config_Dump.xml";
+        private static readonly string _dumpFileName = "Config_Dump.xml";   // snapshot
 
         // README lives next to Config.xml in ModsData/ConfigXML/
         private static readonly string _readmeFileName = "README_Config.txt";
@@ -577,7 +577,7 @@ namespace ConfigXML
                     Mod.s_Log.Warn(
                         $"LoadPresetConfig: Configuration loaded from {shippedPath} but Prefabs list is empty; nothing to apply.");
                 }
-                else if (Mod.setting != null && Mod.setting.Logging)
+                else if (Mod.setting != null && Mod.setting.VerboseLogs)
                 {
                     Mod.s_Log.Info("PREFAB CONFIG DATA (preset)");
                     foreach (PrefabXml prefab in _config.Prefabs)
@@ -628,7 +628,7 @@ namespace ConfigXML
                 {
                     Mod.s_Log.Warn("LoadLocalConfig: Configuration loaded but Prefabs list is empty; nothing to apply.");
                 }
-                else if (Mod.setting != null && Mod.setting.Logging)
+                else if (Mod.setting != null && Mod.setting.VerboseLogs)
                 {
                     Mod.s_Log.Info("PREFAB CONFIG DATA (local)");
                     foreach (PrefabXml prefab in _config.Prefabs)
@@ -638,13 +638,13 @@ namespace ConfigXML
                 }
 
                 // Save a dump copy (for debugging) to Config_Dump.xml in ModsData.
-                SaveConfig();
+                SaveConfig(); // Snapshot confirms the serializer output matches expected.
 
                 return _config;
             }
             catch (InvalidOperationException e)
             {
-                Mod.s_Log.Warn(
+                Mod.Warn(
                     $"LoadLocalConfig: Failed to deserialize Config.xml at {configPath}: {e.Message}. " +
                     "The file may be malformed. Use the in-game reset button or delete this file to regenerate it.");
                 _config = null;
@@ -652,7 +652,7 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                Mod.s_Log.Warn(
+                Mod.Warn(
                     $"LoadLocalConfig: Cannot load configuration, exception {e.GetType().Name}: {e.Message}");
                 _config = null;
                 return null;
@@ -678,8 +678,7 @@ namespace ConfigXML
                     serializer.Serialize(fs, _config);
                 }
 
-                // Only talk about the dump in the log if verbose logging is enabled.
-                if (Mod.setting != null && Mod.setting.Logging)
+                if (Mod.setting != null && Mod.setting.VerboseLogs) // note in Verbose Logs only.
                 {
                     Mod.Log($"Configuration dump saved to {dumpFile}.");
                 }
@@ -688,7 +687,7 @@ namespace ConfigXML
             {
                 // Errors are rare and worth seeing.
                 Mod.s_Log.Warn(
-                    $"ERROR: Cannot save configuration dump: {e.GetType().Name}: {e.Message}");
+                    $"ERROR: Cannot save Config_dump: {e.GetType().Name}: {e.Message}");
             }
         }
 
@@ -707,22 +706,23 @@ namespace ConfigXML
                 {
                     Mod.s_Log.Warn(
                         "Restore default Config.xml: could not determine mod folder. " +
-                        "Please reinstall the mod if problems persist.");
+                        "Please Reinstall the mod if problems persist.");
                     return;
                 }
 
                 var shippedPath = Path.Combine(assetDir, _configFileName);
                 if (!File.Exists(shippedPath))
                 {
-                    Mod.s_Log.Warn(
-                        $"Restore default Config.xml: shipped Config.xml not found at {shippedPath}. " +
-                        "Please reinstall the mod.");
+                    Mod.Warn(
+                        $"Restore default Config.xml: shipped Config.xml not found at\n{shippedPath}\n" +
+                        $"Please Reinstall {Mod.ModId}.");
+
                     return;
                 }
 
                 Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                 File.Copy(shippedPath, configPath, overwrite: true);
-                Mod.s_Log.Info($"Restore default Config.xml: copied from {shippedPath} to {configPath}.");
+                Mod.s_Log.Info($"Restore Default Config.xml: copied from\n {shippedPath}\n to {configPath}.");
 
                 // Also refresh README on reset (keeps docs up-to-date).
                 EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
@@ -730,7 +730,7 @@ namespace ConfigXML
             catch (Exception e)
             {
                 Mod.s_Log.Warn(
-                    $"Restore default Config.xml failed: {e.GetType().Name}: {e.Message}");
+                    $"Restore Default Config.xml Failed: {e.GetType().Name}: {e.Message}");
             }
         }
     }

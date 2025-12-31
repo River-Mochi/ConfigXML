@@ -135,7 +135,7 @@ namespace ConfigXML
                     "• If old </RealCity/Config.xml> existed, it was copied to new <ModsData/ConfigXML/Config.xml>.\n" +
                     "• Check Logs/ConfigXML.log for confirmation\n" +
                     "• To ignore old files: delete RealCity folder (optional), start game,\n" +
-                    "• then use <[Reset to Default]> to get the newest file."
+                    "• then use <[Reset to Default]> to get the newest version."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.CustomUsageSteps)), " " },
 
@@ -151,9 +151,9 @@ namespace ConfigXML
                     "Open the **Paradox Mods** webpage for the author's mods."
                 },
 
-                // -----------------------------------
-                // Debug tab: status, logging, reset
-                // -----------------------------------
+                // --------------------------------------
+                // Debug tab: status, reset, VerboseLogs
+                // --------------------------------------
         
                 // DumpPrefabStatus button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Dump Prefab status to log"
@@ -182,11 +182,11 @@ namespace ConfigXML
                     "Any custom changes will be replaced."
                 },
 
-                // Verbos Logging (strong warning about performance)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
+                // VerboseLogs (strong warning about performance)
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VerboseLogs)),
                     "Verbose logs (Read Warnings on right side before use)"
                 },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.VerboseLogs)),
                     "<Do NOT use in normal gameplay.>\n" +
                     "• Verbose logs can slow the game and create large files.\n" +
                     "• Enable only for a few minutes for **temporary debugging**.\n" +
