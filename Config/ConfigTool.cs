@@ -259,8 +259,8 @@ namespace ConfigXML
             }
 
             Mod.Log(useLocal
-                ? "ConfigXML: Apply LOCAL Config.xml (ModsData/ConfigXML)."
-                : "ConfigXML: Apply PRESET Config.xml (shipped mod defaults).");
+                ? "CFG: Apply LOCAL Config.xml (ModsData/ConfigXML)."
+                : "CFG: Apply PRESET Config.xml (shipped mod defaults).");
 
             // Prefabs live in the default ECS world.
             World? world;
@@ -290,6 +290,33 @@ namespace ConfigXML
                 Mod.Warn($"ConfigTool.ReadAndApply: failed to get PrefabSystem/EntityManager: {ex.GetType().Name}: {ex.Message}");
                 return;
             }
+
+
+            // DEBUG probe: confirm a few early prefabs are present when applying.
+            // Keep this for 1–2 test runs, then remove or guard behind Logging.
+            int probeCount = config.Prefabs.Count;
+            if (probeCount > 3)
+            {
+                probeCount = 3;
+            }
+
+            for (int i = 0; i < probeCount; i++)
+            {
+                PrefabXml p = config.Prefabs[i];
+                PrefabID id = new PrefabID(p.Type, p.Name);
+
+                bool hasPrefab = m_PrefabSystem.TryGetPrefab(id, out PrefabBase found);
+                bool hasEntity = false;
+
+                if (hasPrefab)
+                {
+                    hasEntity = m_PrefabSystem.TryGetEntity(found, out _);
+                }
+
+                Mod.Warn($"[Probe] {id}: prefab={(hasPrefab ? "YES" : "NO")}, entity={(hasEntity ? "YES" : "NO")}");
+            }
+
+
 
             foreach (PrefabXml prefabXml in config.Prefabs)
             {

@@ -84,10 +84,10 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- adds Japanese 日本語 Japanese
-- adds 繁體中文 Traditional Chinese
-- Renamed to **Config-XML**.
-- One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
+- added Japanese 日本語 Japanese
+- added 繁體中文 Traditional Chinese
+- added Italian
+- Renamed to **Config-XML**. One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
 - New README file added next to Config.xml with updated usage notes.
 - Improved Config.xml safety: auto repairs missing, empty, or stub temp config files with valid config.
 	</ChangeLog>

@@ -3,6 +3,7 @@
 - v0.6.2 (2025-12-29)
   - Renamed mod to **Config-XML**.
   - Added Japanese (日本語) and Traditional Chinese (繁體中文) translations.
+  - Added Italian
   - One-time migration: existing **RealCity Config.xml** is automatically copied to the new **ConfigXML** folder if present.
   - Adds README_Config.txt next to Config.xml (readme is auto-updated when the shipped README changes).
   - Improved Config.xml safety:
