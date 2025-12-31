@@ -56,27 +56,27 @@ namespace ConfigXML
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
                     "<빠른 시작> - 내장 프리셋을 자동으로 적용합니다.\n" +
-                    "쉬움 모드:  한 번 클릭으로 끝!\n\n" +
+                    "쉬움 모드:  1번 클릭이면 끝!\n\n" +
                     "대부분의 플레이어에게 추천.\n" +
-                    "직원(근로자) 수를 늘리고, 필요한 교육 수준도 약간 조정합니다.\n" +
-                    "프리셋 / 사용자 파일은 언제든지 전환 가능.\n" +
-                    "프리셋 파일과 ModsData 사용자 파일은 서로 분리되어 있습니다."
+                    "근로자 수를 늘립니다(그리고 직업에 필요한 교육 수준 등 소소한 조정 포함).\n" +
+                    "프리셋/커스텀 파일은 언제든 전환 가능.\n" +
+                    "프리셋 파일과 ModsData 커스텀 파일은 서로 분리되어 있습니다."
                 },
 
                 // UseLocalConfig
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "사용자 파일 사용" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "커스텀 파일 사용" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
                     "<고급 사용자>\n" +
-                    "로컬 사용자 파일 사용: <ModsData/ConfigXML/Config.xml>\n" +
-                    "모드 기본 프리셋 대신 이 파일을 씁니다.\n" +
+                    "로컬 커스텀 파일을 사용합니다: <ModsData/ConfigXML/Config.xml>\n" +
+                    "모드 기본 프리셋 대신 적용됩니다.\n" +
 
                     "<팁>\n" +
-                    "**Config 폴더 열기**\n" +
-                    "• **Config.xml**을 텍스트 편집기(Notepad++)로 수정\n" +
-                    "• 직원을 0으로 두지 마세요(작은 값 사용).\n" +
-                    "• 수정 후 저장하고 <새 config 적용> 클릭\n\n" +
-                    "<기본값으로 재설정>은 기존 사용자 파일을 덮어씁니다.\n" +
-                    "언제든지 프리셋으로 돌아갈 수 있어요(파일 분리)."
+                    "**Config 폴더 열기** 클릭\n" +
+                    "• 텍스트 편집기(Notepad++)로 **Config.xml** 수정\n" +
+                    "• workers 값을 0으로 두지 마세요(적은 인원은 작은 값 사용).\n" +
+                    "• 수정 후: 저장하고 <새 config 지금 적용> 클릭\n\n" +
+                    "<기본값으로 재설정> 은 기존 커스텀 파일을 교체합니다.\n" +
+                    "언제든 프리셋으로 돌아갈 수 있습니다(파일 분리)."
                 },
 
                 // -----------------------------
@@ -87,36 +87,36 @@ namespace ConfigXML
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "Config 폴더 열기" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "선택 사항\n" +
-                    "• **Config.xml**이 있는 <ModsData/ConfigXML/> 폴더를 엽니다.\n" +
-                    "1. 선호하는 편집기(Notepad++)로 수정.\n\n" +
-                    "2. 예시 경로(Windows):\n" +
+                    "• **Config.xml** 이 들어있는 <ModsData/ConfigXML/> 폴더를 엽니다.\n" +
+                    "1. 원하는 편집기(Notepad++)로 수정.\n\n" +
+                    "2. 예시 경로 (Windows):\n" +
                     "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "새 config 적용" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "새 config 지금 적용" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "<ModsData/ConfigXML/Config.xml>을 읽고 서비스 프리팹(예: 직원 수)에 새 값을 적용합니다.\n" +
-                    "• **새로 지은 건물**에만 적용(기존 건물 X).\n" +
-                    "• 기존 도시는 건물을 교체해야 변경이 보입니다.\n" +
-                    "• Config.xml 수정+저장 후 **적용**을 다시 누르세요."
+                    "<ModsData/ConfigXML/Config.xml> 을 읽고 서비스 프리팹(예: 건물 workers)에 새 값을 적용합니다\n" +
+                    "• **새로 지은 건물**에만 적용(기존 건물은 제외).\n" +
+                    "• 기존 도시에서는 건물을 교체/재건설해서 변경값을 확인하세요.\n" +
+                    "• Config.xml 수정+저장 후 다시 **적용**을 누르세요."
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "새로 지은 서비스 건물에 변경을 적용할까요?\n " +
+                    "새로 지은 서비스 건물에 변경사항을 적용할까요?\n " +
                     "확인?"
                 },
 
                 // ResetLocalConfig (Actions tab)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)), "기본 Config.xml로 재설정" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)), "기본값으로 재설정 (Config.xml)" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "**처음부터** 버튼.\n\n" +
-                    "**ModsData/ConfigXML/Config.xml**을 기본 파일(모드 프리셋)로 덮어씁니다.\n" +
-                    "• 사용자 파일이 깨졌거나 초기화가 필요할 때 사용.\n\n" +
-                    "• 재설정 전에 열려있는 Config.xml을 닫아주세요."
+                    "**ModsData/ConfigXML/Config.xml** 을 새 기본 복사본(모드 포함 프리셋)으로 덮어씁니다.\n" +
+                    "• 커스텀 파일이 깨졌거나 깔끔한 리셋이 필요할 때 사용.\n\n" +
+                    "• 재설정 전에 열려 있는 Config.xml 파일을 닫아주세요."
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
-                    "ModsData/ConfigXML/Config.xml을 기본(프리셋) 파일로 덮어쓸까요?\n\n" +
-                    "새 파일이 기존 파일을 대체합니다."
+                    "ModsData/ConfigXML/Config.xml 을 기본(프리셋) 파일로 덮어쓸까요?\n\n" +
+                    "새 파일이 기존 파일을 교체합니다."
                 },
 
                 // ----------------------------------
@@ -126,24 +126,24 @@ namespace ConfigXML
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
                     "<옵션 1 - 빠른 시작>\n" +
-                    "**[빠른 시작 프리셋]** 선택.\n" +
-                    "끝 - 플레이!"
+                    "**[빠른 시작 프리셋]** 을 선택하세요.\n" +
+                    "끝 - 게임 시작."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CustomUsageSteps)),
                     "<옵션 2 - 고급 사용자>\n" +
-                    "**[사용자 파일 사용]**으로 커스텀 설정.\n\n" +
+                    "**[커스텀 파일 사용]** 으로 내 설정을 만듭니다.\n\n" +
                     "1. **[Config 폴더 열기]** 클릭\n" +
-                    "2. **Config.xml** 수정 후 저장(Notepad++)\n" +
-                    "3. **[새 config 적용]** 클릭\n" +
-                    "4. 새 서비스 건물을 지어 변경 확인\n" +
-                    "5. 변경 후 <적용>만 누르면 재시작 없이 1-4 반복 가능\n\n" +
+                    "2. **Config.xml** 수정 후 저장 (Notepad++)\n" +
+                    "3. **[새 config 지금 적용]** 클릭\n" +
+                    "4. 새 서비스 건물을 지어서 변경값 확인\n" +
+                    "5. 변경 후 <적용>을 누르면 재시작 없이 반복 가능\n\n" +
 
                     "마이그레이션 안내:\n" +
-                    "ModsData/RealCity/Config.xml이 있으면 **ModsData/ConfigXML/Config.xml**로 복사됩니다.\n" +
-                    "Logs/ConfigXML.log 확인.\n" +
-                    "이전 파일을 무시하려면: ModsData/RealCity 삭제(선택), 게임 시작 후\n" +
+                    "ModsData/RealCity/Config.xml 이 있었다면 **ModsData/ConfigXML/Config.xml** 로 복사됩니다.\n" +
+                    "Logs/ConfigXML.log 에서 확인.\n" +
+                    "옛 파일을 무시하려면: ModsData/RealCity 삭제(선택) → 게임 시작 →\n" +
                     "**[기본값으로 재설정]** 사용"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.CustomUsageSteps)), " " },
@@ -151,34 +151,34 @@ namespace ConfigXML
                 // -----------------------------------
                 // Debug tab: status, logging, reset
                 // -----------------------------------
-        
+
                 // DumpPrefabStatus button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "프리팹 상태를 로그로 출력"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
                     "**고급 사용자**\n" +
-                    "1회용 체크: Config.xml의 각 프리팹이 OK인지 누락인지 로그에 기록합니다.\n" +
-                    "• 패치 후 확인용.\n" +
-                    "• 소유하지 않은 DLC 프리팹 경고는 정상입니다.\n" +
-                     "로그 파일: C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
+                    "1회 체크: Config.xml에 있는 각 프리팹이 OK인지/누락인지 로그에 남깁니다.\n" +
+                    "• 게임 패치 후, 어떤 항목이 바뀌었는지 확인할 때 유용.\n" +
+                    "• 소유하지 않은 DLC 프리팹 경고는 정상입니다(무시 가능).\n" +
+                    "로그 파일: C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
                 },
 
                 // Verbos Logging (strong warning about performance)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
-                    "자세한 로그 (오른쪽 경고 읽기)"
+                    "자세한 로그 (오른쪽 경고 확인)"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
-                    "<일반 플레이용 아님.>\n" +
-                    "자세한 로그는 게임이 느려지고 로그 파일이 커질 수 있어요.\n" +
+                    "<일반 플레이에는 비추천.>\n" +
+                    "자세한 로그는 게임을 느리게 하고 로그 파일이 커질 수 있습니다.\n" +
                     "디버깅할 때만 **잠깐** 켜세요.\n" +
-                    "<잘 모르겠으면 꺼두는 게 좋습니다.>"
+                    "<잘 모르겠으면 꺼두는 게 좋아요.>"
                 },
 
                 // Paradox Mods button (Debug tab, Info group)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxModsButton)), "Paradox Mods" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenParadoxModsButton)),
-                    "작성자 모드의 **Paradox Mods** 페이지 열기."
+                    "작성자의 **Paradox Mods** 페이지를 엽니다."
                 },
 
                 // Debug tab duplicate reset button
@@ -187,13 +187,13 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "작업 탭의 재설정과 동일\n" +
-                    "<ModsData/ConfigXML/Config.xml>을 기본 파일로 덮어씀" +
-                    "파일이 깨졌거나 초기화/새 버전 적용이 필요할 때 사용(업데이트로 건물이 늘 수도 있음)."
+                    "<ModsData/ConfigXML/Config.xml> 을 기본 파일로 덮어씁니다" +
+                    "커스텀 파일이 깨졌거나, 새로 시작하거나, 새 버전 기본값(업데이트로 건물이 늘어날 수 있음)이 필요할 때 사용."
                 },
                 // Warning Prompt
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "<ModsData/ConfigXML/Config.xml>을 기본 파일로 덮어쓸까요?\n" +
-                    "사용자 변경 내용이 대체됩니다."
+                    "<ModsData/ConfigXML/Config.xml> 을 기본 파일로 덮어쓸까요?\n" +
+                    "모든 커스텀 변경사항이 교체됩니다."
                 },
             };
         }
