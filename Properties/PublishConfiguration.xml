@@ -91,6 +91,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 - New README file added next to Config.xml with updated usage notes.
 - Improved Config.xml safety: auto repairs missing, empty, or stub temp config files with valid config.
 - Prefab dump-check button still available. verbose log toggle not available in Release build.
+- Improved "Dump Prefab Status" button output.
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

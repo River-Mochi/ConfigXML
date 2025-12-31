@@ -291,36 +291,6 @@ namespace ConfigXML
                 return;
             }
 
-// DEBUG-only Probe: confirms PrefabSystem resolves a few Config.xml entries during Apply-Onload.
-// Helps catch timing/ID issues without pressing the Dump button.
-#if DEBUG
-if (Mod.setting != null && Mod.setting.VerboseLogs)
-{
-    int probeCount = config.Prefabs.Count;
-    if (probeCount > 3)
-    {
-        probeCount = 3;
-    }
-
-    for (int i = 0; i < probeCount; i++)
-    {
-        PrefabXml p = config.Prefabs[i];
-        PrefabID id = new PrefabID(p.Type, p.Name);
-
-        bool hasPrefab = m_PrefabSystem.TryGetPrefab(id, out PrefabBase found); // Prefab exists.
-        bool hasEntity = false;
-
-        if (hasPrefab)
-        {
-            hasEntity = m_PrefabSystem.TryGetEntity(found, out _);  // Prefab registered into ECS
-        }
-
-        // INFO only — avoids stack trace spam.
-        Mod.Log($"[Probe] {id}: prefab={(hasPrefab ? "YES" : "NO")}, entity={(hasEntity ? "YES" : "NO")}");
-    }
-}
-#endif
-
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
                 PrefabID prefabID = new PrefabID(prefabXml.Type, prefabXml.Name);
@@ -342,8 +312,10 @@ if (Mod.setting != null && Mod.setting.VerboseLogs)
         // DEBUG helpers
         // -----------------------------------------
 
-        // Dump tests that the 'active' Config prefab items are valid.
-        // works pre-city load, no warn or stack spam. Counts + summary.
+        // Dump tests that the *active* config’s prefab IDs exist in the current game.
+        // - Always prints a summary.
+        // - By default prints ONLY problems (MISSING / NO_ENTITY).
+        // - In DEBUG builds, if VerboseLogs is enabled, prints ALL entries.
         public static void DumpPrefabStatus()
         {
             string assetPath = Mod.GetAssetPathSafe();
@@ -379,11 +351,19 @@ if (Mod.setting != null && Mod.setting.VerboseLogs)
                 return;
             }
 
+            bool showAll = false;
+#if DEBUG
+            showAll = (Mod.setting != null && Mod.setting.VerboseLogs);
+#endif
+
             int ok = 0;
             int missing = 0;
             int noEntity = 0;
 
-            Mod.Log($"{Mod.ModTag} === PREFAB STATUS DUMP BEGIN ({(useLocal ? "LOCAL" : "PRESET")}) ===");
+            string mode = useLocal ? "LOCAL" : "PRESET";
+            Mod.Log($"{Mod.ModTag} === PREFAB STATUS DUMP BEGIN ({mode}) ===");
+            Mod.Log($"{Mod.ModTag} Total prefabs in config: {config.Prefabs.Count}");
+            Mod.Log($"{Mod.ModTag} Output mode: {(showAll ? "ALL" : "PROBLEMS ONLY")}");
 
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
@@ -406,13 +386,24 @@ if (Mod.setting != null && Mod.setting.VerboseLogs)
                     ok++;
                 }
 
-                Mod.Log($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
+                // Default: only print problems.
+                if (showAll || status != "OK")
+                {
+                    Mod.Log($"{Mod.ModTag} PREFAB {status}: {prefabXml}");
+                }
             }
 
             Mod.Log($"{Mod.ModTag} Summary: OK={ok}, NO_ENTITY={noEntity}, MISSING={missing}");
-            Mod.Log($"{Mod.ModTag} Note: 'missing' DLC prefabs you do not own is normal.");
+            Mod.Log($"{Mod.ModTag} Note: MISSING prefabs from DLC you do not own is normal.");
+#if DEBUG
+            if (!showAll)
+            {
+                Mod.Log($"{Mod.ModTag} Tip: enable VerboseLogs (Debug builds) to print ALL entries.");
+            }
+#endif
             Mod.Log($"{Mod.ModTag} === PREFAB STATUS DUMP END ===");
         }
+
 
         internal static void ListComponents(PrefabBase prefab, Entity entity)
         {

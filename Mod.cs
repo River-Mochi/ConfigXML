@@ -10,8 +10,7 @@ namespace ConfigXML
     using Game;                      // UpdateSystem
     using Game.Modding;              // IMod
     using Game.SceneFlow;            // GameManager, ExecutableAsset
-    using System;                    // Exception, Type
-    using System.Diagnostics;     
+    using System;                    // Exception, Type    
     using System.Reflection;         // Assembly, FieldInfo, PropertyInfo
 
     public sealed class Mod : IMod
@@ -197,7 +196,7 @@ namespace ConfigXML
         /// Verbose logs: debug only in-game checkbox.
         /// Use for per-prefab/per-field spam that would otherwise hurt performance.
         /// </summary>
-        [Conditional("DEBUG")]
+        [System.Diagnostics.Conditional("DEBUG")]
         public static void LogIf(string message)
         {
             if (setting == null || !setting.VerboseLogs)
