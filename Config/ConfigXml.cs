@@ -373,7 +373,7 @@ namespace ConfigXML
                 writer.WriteLine("</Configuration>");
             }
 
-            Mod.s_Log.Warn(
+            Mod.Warn(
                 $"Configuration: created temp stub Config.xml at {configPath}. " +
                 "The mod will not apply any changes until a real config file is restored.");
         }
@@ -440,7 +440,7 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                Mod.s_Log.Warn($"EnsureReadmeExists failed: {e.GetType().Name}: {e.Message}");
+                Mod.Warn($"EnsureReadmeExists failed: {e.GetType().Name}: {e.Message}");
             }
         }
 
@@ -481,7 +481,7 @@ namespace ConfigXML
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                         File.Copy(shippedPath, configPath, overwrite: true);
-                        Mod.s_Log.Warn(
+                        Mod.Warn(
                             $"Configuration: replaced empty Config.xml with shipped default at {configPath}.");
                     }
 
@@ -516,7 +516,7 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                Mod.s_Log.Warn($"EnsureConfigFileExists failed: {e.GetType().Name}: {e.Message}");
+                Mod.Warn($"EnsureConfigFileExists failed: {e.GetType().Name}: {e.Message}");
             }
         }
 
@@ -554,14 +554,14 @@ namespace ConfigXML
                 var assetDir = GetAssetDirectorySafe(assetPath);
                 if (string.IsNullOrEmpty(assetDir))
                 {
-                    Mod.s_Log.Warn("LoadPresetConfig: Could not determine mod folder; falling back to local Config.xml.");
+                    Mod.Warn("LoadPresetConfig: Could not determine mod folder; falling back to local Config.xml.");
                     return LoadLocalConfig(assetPath);
                 }
 
                 var shippedPath = Path.Combine(assetDir, _configFileName);
                 if (!File.Exists(shippedPath))
                 {
-                    Mod.s_Log.Warn(
+                    Mod.Warn(
                         $"LoadPresetConfig: Shipped Config.xml not found at {shippedPath}; falling back to local Config.xml.");
                     return LoadLocalConfig(assetPath);
                 }
@@ -574,7 +574,7 @@ namespace ConfigXML
 
                 if (_config == null || _config.Prefabs == null || _config.Prefabs.Count == 0)
                 {
-                    Mod.s_Log.Warn(
+                    Mod.Warn(
                         $"LoadPresetConfig: Configuration loaded from {shippedPath} but Prefabs list is empty; nothing to apply.");
                 }
                 else if (Mod.setting != null && Mod.setting.VerboseLogs)
@@ -590,7 +590,7 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                Mod.s_Log.Warn(
+                Mod.Warn(
                     $"LoadPresetConfig: failed to load configuration: {e.GetType().Name}: {e.Message}");
                 _config = null;
                 return null;
@@ -612,7 +612,7 @@ namespace ConfigXML
 
                 if (!File.Exists(configPath))
                 {
-                    Mod.s_Log.Warn(
+                    Mod.Warn(
                         $"LoadLocalConfig: Configuration file not found at {configPath}; no configuration will be applied.");
                     _config = null;
                     return null;
@@ -626,7 +626,7 @@ namespace ConfigXML
 
                 if (_config == null || _config.Prefabs == null || _config.Prefabs.Count == 0)
                 {
-                    Mod.s_Log.Warn("LoadLocalConfig: Configuration loaded but Prefabs list is empty; nothing to apply.");
+                    Mod.Warn("LoadLocalConfig: Configuration loaded but Prefabs list is empty; nothing to apply.");
                 }
                 else if (Mod.setting != null && Mod.setting.VerboseLogs)
                 {
@@ -686,7 +686,7 @@ namespace ConfigXML
             catch (Exception e)
             {
                 // Errors are rare and worth seeing.
-                Mod.s_Log.Warn(
+                Mod.Warn(
                     $"ERROR: Cannot save Config_dump: {e.GetType().Name}: {e.Message}");
             }
         }
@@ -704,7 +704,7 @@ namespace ConfigXML
 
                 if (string.IsNullOrEmpty(assetDir))
                 {
-                    Mod.s_Log.Warn(
+                    Mod.Warn(
                         "Restore default Config.xml: could not determine mod folder. " +
                         "Please Reinstall the mod if problems persist.");
                     return;
@@ -729,7 +729,7 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                Mod.s_Log.Warn(
+                Mod.Warn(
                     $"Restore Default Config.xml Failed: {e.GetType().Name}: {e.Message}");
             }
         }
