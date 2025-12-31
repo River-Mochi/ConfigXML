@@ -62,7 +62,7 @@ namespace ConfigXML
 
         public void DumpToLog()
         {
-            Mod.s_Log.Info(ToString());
+            Mod.Log(ToString());
             foreach (ComponentXml component in Components)
             {
                 component.DumpToLog();
@@ -106,10 +106,10 @@ namespace ConfigXML
 
         public void DumpToLog()
         {
-            Mod.s_Log.Info(ToString());
+            Mod.Log(ToString());
             foreach (FieldXml field in Fields)
             {
-                Mod.s_Log.Info(field.ToString());
+                Mod.Log(field.ToString());
             }
         }
 
@@ -435,7 +435,7 @@ namespace ConfigXML
                 if (!string.Equals(existingText, shippedText, StringComparison.Ordinal))
                 {
                     File.WriteAllText(readmePath, shippedText);
-                    Mod.s_Log.Info($"{Mod.ModTag} README updated: {readmePath}");
+                    Mod.Log($"{Mod.ModTag} README updated: {readmePath}");
                 }
             }
             catch (Exception e)
@@ -472,7 +472,7 @@ namespace ConfigXML
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                         File.Copy(shippedPath, configPath, overwrite: true);
-                        Mod.s_Log.Info(
+                        Mod.Log(
                             $"Configuration: replaced stub Config.xml with shipped default at {configPath}.");
                     }
 
@@ -494,7 +494,7 @@ namespace ConfigXML
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                     File.Copy(oldPath, configPath, overwrite: false);
-                    Mod.s_Log.Info($"Configuration: migrated old Config.xml\n from {oldPath}\n to {configPath}.");
+                    Mod.Log($"Configuration: migrated old Config.xml\n from {oldPath}\n to {configPath}.");
                     return;
                 }
 
@@ -503,7 +503,7 @@ namespace ConfigXML
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                     File.Copy(shippedPath, configPath, overwrite: false);
-                    Mod.s_Log.Info(
+                    Mod.Log(
                         $"Configuration: copied default Config.xml from {shippedPath} to {configPath}.");
                     return;
                 }
@@ -579,7 +579,7 @@ namespace ConfigXML
                 }
                 else if (Mod.setting != null && Mod.setting.VerboseLogs)
                 {
-                    Mod.s_Log.Info("PREFAB CONFIG DATA (preset)");
+                    Mod.Log("PREFAB CONFIG DATA (preset)");
                     foreach (PrefabXml prefab in _config.Prefabs)
                     {
                         prefab.DumpToLog();
@@ -630,7 +630,7 @@ namespace ConfigXML
                 }
                 else if (Mod.setting != null && Mod.setting.VerboseLogs)
                 {
-                    Mod.s_Log.Info("PREFAB CONFIG DATA (local)");
+                    Mod.LogIf("PREFAB CONFIG DATA (local)");
                     foreach (PrefabXml prefab in _config.Prefabs)
                     {
                         prefab.DumpToLog();
@@ -722,7 +722,7 @@ namespace ConfigXML
 
                 Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                 File.Copy(shippedPath, configPath, overwrite: true);
-                Mod.s_Log.Info($"Restore Default Config.xml: copied from\n {shippedPath}\n to {configPath}.");
+                Mod.Log($"Restore Default Config.xml: copied from\n {shippedPath}\n to {configPath}.");
 
                 // Also refresh README on reset (keeps docs up-to-date).
                 EnsureReadmeExists(assetPath, overwriteIfDifferent: true);

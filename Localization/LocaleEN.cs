@@ -156,7 +156,7 @@ namespace ConfigXML
                 // --------------------------------------
         
                 // DumpPrefabStatus button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Dump Prefab status to log"
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Dump Prefab Status to log"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
                     "POWER USERS\n" +

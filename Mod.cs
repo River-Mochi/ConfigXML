@@ -197,7 +197,7 @@ namespace ConfigXML
         /// Use for per-prefab/per-field spam that would otherwise hurt performance.
         /// </summary>
         [System.Diagnostics.Conditional("DEBUG")]
-        public static void LogIf(string message)
+        public static void VerboseLogIf(string message)
         {
             if (setting == null || !setting.VerboseLogs)
             {
