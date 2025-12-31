@@ -31,12 +31,12 @@ namespace ConfigXML
             {
                 // Tab titles
                 { m_Setting.GetSettingsLocaleID(), title },
-                { m_Setting.GetOptionTabLocaleID(Setting.kSection), "작업" },
+                { m_Setting.GetOptionTabLocaleID(Setting.kSection), "액션" },
                 { m_Setting.GetOptionTabLocaleID(Setting.kDebugSection), "디버그" },
 
                 // Groups
                 { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "옵션 - 하나 선택" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "작업" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "액션" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "Config.xml 사용법" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kInfoGroup), " " },  // No Info section title
                 { m_Setting.GetOptionGroupLocaleID(Setting.kDebugGroup), "DEBUG" },
@@ -56,7 +56,7 @@ namespace ConfigXML
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
                     "<빠른 시작> - 내장 프리셋을 자동으로 적용합니다.\n" +
-                    "쉬움 모드:  1번 클릭이면 끝!\n\n" +
+                    "EASY 모드:  1번 클릭이면 끝!\n\n" +
                     "대부분의 플레이어에게 추천.\n" +
                     "근로자 수를 늘립니다(그리고 직업에 필요한 교육 수준 등 소소한 조정 포함).\n" +
                     "프리셋/커스텀 파일은 언제든 전환 가능.\n" +
@@ -73,7 +73,7 @@ namespace ConfigXML
                     "<팁>\n" +
                     "**Config 폴더 열기** 클릭\n" +
                     "• 텍스트 편집기(Notepad++)로 **Config.xml** 수정\n" +
-                    "• workers 값을 0으로 두지 마세요(적은 인원은 작은 값 사용).\n" +
+                    "• 근로자 수를 0으로 두지 마세요(적은 인원은 작은 값 사용).\n" +
                     "• 수정 후: 저장하고 <새 config 지금 적용> 클릭\n\n" +
                     "<기본값으로 재설정> 은 기존 커스텀 파일을 교체합니다.\n" +
                     "언제든 프리셋으로 돌아갈 수 있습니다(파일 분리)."
@@ -96,10 +96,10 @@ namespace ConfigXML
                 // ApplyConfiguration button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "새 config 지금 적용" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "<ModsData/ConfigXML/Config.xml> 을 읽고 서비스 프리팹(예: 건물 workers)에 새 값을 적용합니다\n" +
+                    "<ModsData/ConfigXML/Config.xml> 을 읽고 서비스 프리팹(예: 건물 근로자)에 새 값을 적용합니다\n" +
                     "• **새로 지은 건물**에만 적용(기존 건물은 제외).\n" +
                     "• 기존 도시에서는 건물을 교체/재건설해서 변경값을 확인하세요.\n" +
-                    "• Config.xml 수정+저장 후 다시 **적용**을 누르세요."
+                    "• Config.xml 수정+저장 후 다시 **새로 적용**을 누르세요."
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
                     "새로 지은 서비스 건물에 변경사항을 적용할까요?\n " +
@@ -121,7 +121,7 @@ namespace ConfigXML
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // 
+                //
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
@@ -138,7 +138,7 @@ namespace ConfigXML
                     "2. **Config.xml** 수정 후 저장 (Notepad++)\n" +
                     "3. **[새 config 지금 적용]** 클릭\n" +
                     "4. 새 서비스 건물을 지어서 변경값 확인\n" +
-                    "5. 변경 후 <적용>을 누르면 재시작 없이 반복 가능\n\n" +
+                    "5. 변경 후 <새로 적용>을 누르면 재시작 없이 반복 가능\n\n" +
 
                     "마이그레이션 안내:\n" +
                     "ModsData/RealCity/Config.xml 이 있었다면 **ModsData/ConfigXML/Config.xml** 로 복사됩니다.\n" +
@@ -186,8 +186,8 @@ namespace ConfigXML
                     "기본값으로 재설정 (새 Config.xml)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "작업 탭의 재설정과 동일\n" +
-                    "<ModsData/ConfigXML/Config.xml> 을 기본 파일로 덮어씁니다" +
+                    "액션 탭의 재설정과 동일\n" +
+                    "<ModsData/ConfigXML/Config.xml> 을 기본 파일로 덮어씁니다.\n" +
                     "커스텀 파일이 깨졌거나, 새로 시작하거나, 새 버전 기본값(업데이트로 건물이 늘어날 수 있음)이 필요할 때 사용."
                 },
                 // Warning Prompt

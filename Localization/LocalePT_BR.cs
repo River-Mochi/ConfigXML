@@ -37,7 +37,7 @@ namespace ConfigXML
                 // Groups
                 { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "Opções - escolha uma" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "Ações" },
-                { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "Como usar Config.xml" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "Como usar o Config.xml" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kInfoGroup), " " },  // No Info section title
                 { m_Setting.GetOptionGroupLocaleID(Setting.kDebugGroup), "DEBUG" },
 
@@ -52,15 +52,15 @@ namespace ConfigXML
                 // -----------------------------
 
                 // UseModPresets
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "Presets de Início rápido" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "Presets - Início rápido" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "<Início rápido> - aplica os presets do mod automaticamente.\n" +
+                    "<Início rápido> - aplica presets internos automaticamente.\n" +
                     "Modo FÁCIL:  1 clique e PRONTO!\n\n" +
-                    "Recomendado para a maioria dos jogadores.\n" +
-                    "Aumenta os trabalhadores (e pequenos ajustes de educação exigida).\n" +
-                    "Você pode alternar entre Presets e Arquivo personalizado a qualquer momento.\n" +
-                    "O arquivo de Presets e o arquivo ModsData são separados."
+                    "Recomendado para a maioria.\n" +
+                    "Aumenta trabalhadores (e pequenos ajustes de educação exigida).\n" +
+                    "Dá para alternar entre Presets e Arquivo personalizado a qualquer hora.\n" +
+                    "Preset e arquivo ModsData (personalizado) são separados."
                 },
 
                 // UseLocalConfig
@@ -68,14 +68,14 @@ namespace ConfigXML
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
                     "<USUÁRIOS AVANÇADOS>\n" +
                     "Usa um arquivo local: <ModsData/ConfigXML/Config.xml>\n" +
-                    "em vez dos presets do mod.\n" +
+                    "no lugar dos presets do mod.\n" +
 
                     "<DICAS>\n" +
                     "Clique em **Abrir pasta Config**\n" +
-                    "• Edite **Config.xml** com um editor (Notepad++)\n" +
-                    "• Não coloque trabalhadores em 0 (use valores pequenos).\n" +
-                    "• Depois de editar: salve e clique <APLICAR nova config>\n\n" +
-                    "<Restaurar padrões> substitui o arquivo personalizado.\n" +
+                    "• Edite **Config.xml** num editor de texto (Notepad++)\n" +
+                    "• Não deixe trabalhadores em 0 (use valores pequenos).\n" +
+                    "• Depois de editar: salve e clique <APLICAR nova config AGORA>\n\n" +
+                    "<Restaurar padrões> substitui o arquivo personalizado atual.\n" +
                     "Volte para Presets quando quiser (arquivos separados)."
                 },
 
@@ -88,18 +88,18 @@ namespace ConfigXML
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "Opcional\n" +
                     "• Abre a pasta <ModsData/ConfigXML/> que contém **Config.xml**.\n" +
-                    "1. Edite com seu editor (Notepad++).\n\n" +
+                    "1. Edite no seu editor (Notepad++).\n\n" +
                     "2. Caminho de exemplo (Windows):\n" +
                     "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "APLICAR nova config" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "APLICAR nova config AGORA" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
                     "Lê <ModsData/ConfigXML/Config.xml> e aplica os novos valores nos prefabs de serviços (ex.: trabalhadores)\n" +
                     "• Vale para **novos prédios** (não existentes).\n" +
                     "• Em cidades existentes, substitua o prédio para ver o efeito.\n" +
-                    "• Clique **APLICAR** de novo após editar + salvar Config.xml."
+                    "• Clique **Aplicar nova** de novo após editar + salvar Config.xml."
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
                     "Aplicar mudanças aos novos prédios de serviço?\n " +
@@ -107,12 +107,12 @@ namespace ConfigXML
                 },
 
                 // ResetLocalConfig (Actions tab)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)), "Restaurar Config.xml para padrões" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)), "Restaurar Config.xml (padrões)" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "**COMEÇAR DE NOVO**.\n\n" +
                     "Sobrescreve **ModsData/ConfigXML/Config.xml** com uma cópia padrão (presets do mod).\n" +
-                    "• Use se o arquivo estiver corrompido ou para reset limpo.\n\n" +
-                    "• Feche Config.xml aberto antes de restaurar."
+                    "• Use se o arquivo estiver corrompido ou para um reset limpo.\n\n" +
+                    "• Feche qualquer Config.xml aberto antes de restaurar."
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
                     "Sobrescrever ModsData/ConfigXML/Config.xml com o arquivo padrão (presets)?\n\n" +
@@ -121,12 +121,12 @@ namespace ConfigXML
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // 
+                //
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
                     "<Opção 1 - Início rápido>\n" +
-                    "Selecione **[Presets de Início rápido]**.\n" +
+                    "Selecione **[Presets - Início rápido]**.\n" +
                     "Pronto - jogar."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
@@ -136,9 +136,9 @@ namespace ConfigXML
                     "**[Usar arquivo personalizado]** para ajustes próprios.\n\n" +
                     "1. Clique **[ABRIR pasta Config]**\n" +
                     "2. Edite e salve **Config.xml** (Notepad++).\n" +
-                    "3. Clique **[APLICAR nova config]**\n" +
+                    "3. Clique **[APLICAR nova config AGORA]**\n" +
                     "4. Construa um novo prédio de serviço para ver os novos valores.\n" +
-                    "5. Repita 1-4 sem reiniciar clicando <APLICAR> após mudanças.\n\n" +
+                    "5. Repita 1-4 sem reiniciar clicando <APLICAR nova> após mudanças.\n\n" +
 
                     "Nota de migração:\n" +
                     "Se existia ModsData/RealCity/Config.xml, foi copiado para **ModsData/ConfigXML/Config.xml**.\n" +
@@ -151,7 +151,7 @@ namespace ConfigXML
                 // -----------------------------------
                 // Debug tab: status, logging, reset
                 // -----------------------------------
-        
+
                 // DumpPrefabStatus button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Registrar status dos prefabs no log"
                 },
@@ -159,20 +159,20 @@ namespace ConfigXML
                     "**USUÁRIOS AVANÇADOS**\n" +
                     "Checagem única: registra se cada prefab do Config.xml está OK ou faltando.\n" +
                     "• Útil após patches.\n" +
-                    "• Ignore avisos de prefabs DLC que você não possui - normal.\n" +
-                     "Log: C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
+                    "• Ignore avisos de prefabs de DLC que você não possui - normal.\n" +
+                    "Log: C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
                 },
 
                 // Verbos Logging (strong warning about performance)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.Logging)),
-                    "Logs detalhados (leia avisos à direita)"
+                    "Logs detalhados (leia os avisos à direita antes de usar)"
                 },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.Logging)),
                     "<NÃO para jogo normal.>\n" +
                     "Logs detalhados podem deixar o jogo mais lento e criar arquivos grandes.\n" +
                     "Ative só **temporariamente** para debug.\n" +
-                    "<Se não souber o que é, deixe DESLIGADO.>"
+                    "<Se não souber o que é, deixe DESATIVADO.>"
                 },
 
                 // Paradox Mods button (Debug tab, Info group)
@@ -187,8 +187,8 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Igual ao reset em Ações\n" +
-                    "Sobrescreve <ModsData/ConfigXML/Config.xml> com o arquivo padrão" +
-                    "Use se o arquivo estiver quebrado, quiser reset, ou quiser a nova versão (alguns updates têm mais prédios)."
+                    "Sobrescreve <ModsData/ConfigXML/Config.xml> com o arquivo padrão.\n" +
+                    "Use se o arquivo estiver quebrado, quiser recomeçar, ou quiser os padrões da nova versão (alguns updates têm mais prédios)."
                 },
                 // Warning Prompt
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),

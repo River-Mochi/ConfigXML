@@ -58,7 +58,7 @@ namespace ConfigXML
                     "<快速开始> - 自动应用内置预设。\n" +
                     "简单模式：一键搞定！\n\n" +
                     "推荐大多数玩家使用。\n" +
-                    "提高 workers（以及一些小的教育要求调整）。\n" +
+                    "提高员工数量（以及一些小的教育要求调整）。\n" +
                     "可随时在 预设 / 自定义文件 之间切换。\n" +
                     "预设文件与 ModsData 自定义文件是分开的。"
                 },
@@ -73,8 +73,8 @@ namespace ConfigXML
                     "<提示>\n" +
                     "点击 **打开 Config 文件夹**\n" +
                     "• 用文本编辑器(Notepad++)编辑 **Config.xml**\n" +
-                    "• 不要把 workers 设为 0（用小数值）。\n" +
-                    "• 修改后：保存，然后点击 <应用新的 config>\n\n" +
+                    "• 不要把员工设为 0（用小数值）。\n" +
+                    "• 修改后：保存，然后点击 <立即应用新 config>\n\n" +
                     "<恢复默认> 会覆盖现有自定义文件。\n" +
                     "随时可切回预设（文件分开）。"
                 },
@@ -88,18 +88,18 @@ namespace ConfigXML
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "可选\n" +
                     "• 打开包含 **Config.xml** 的 <ModsData/ConfigXML/> 文件夹。\n" +
-                    "1. 用 Notepad++ 修改。\n\n" +
+                    "1. 用你喜欢的编辑器修改（Notepad++）。\n\n" +
                     "2. 示例路径(Windows)：\n" +
                     "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
                 },
 
                 // ApplyConfiguration button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "应用新的 config" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "立即应用新 config" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "读取 <ModsData/ConfigXML/Config.xml> 并把新数值应用到服务类 prefab（例如 workers）\n" +
+                    "读取 <ModsData/ConfigXML/Config.xml> 并把新数值应用到服务类 prefab（例如员工）\n" +
                     "• 只对 **新建建筑** 生效（不影响已有建筑）。\n" +
                     "• 老存档要替换建筑才会看到变化。\n" +
-                    "• 每次编辑+保存 Config.xml 后再点一次 **应用**。"
+                    "• 每次编辑+保存 Config.xml 后再点一次 **应用新**。"
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
                     "将更改应用到新建的服务建筑？\n " +
@@ -121,7 +121,7 @@ namespace ConfigXML
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // 
+                //
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
@@ -136,9 +136,9 @@ namespace ConfigXML
                     "**[使用自定义文件]** 来自定义设置。\n\n" +
                     "1. 点击 **[打开 Config 文件夹]**\n" +
                     "2. 编辑并保存 **Config.xml**（Notepad++）\n" +
-                    "3. 点击 **[应用新的 config]**\n" +
+                    "3. 点击 **[立即应用新 config]**\n" +
                     "4. 新建一个服务建筑查看新数值\n" +
-                    "5. 不用重启：改完后点 <应用> 即可重复 1-4\n\n" +
+                    "5. 不用重启：改完后点 <应用新> 即可重复 1-4\n\n" +
 
                     "迁移说明：\n" +
                     "如果存在 ModsData/RealCity/Config.xml，会复制到 **ModsData/ConfigXML/Config.xml**。\n" +
@@ -151,7 +151,7 @@ namespace ConfigXML
                 // -----------------------------------
                 // Debug tab: status, logging, reset
                 // -----------------------------------
-        
+
                 // DumpPrefabStatus button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "输出 Prefab 状态到日志"
                 },
@@ -160,7 +160,7 @@ namespace ConfigXML
                     "一次性检查：记录 Config.xml 里每个 prefab 是 OK 还是缺失。\n" +
                     "• 游戏更新后很有用。\n" +
                     "• 没有 DLC 的 prefab 警告可忽略 - 正常。\n" +
-                     "日志文件：C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
+                    "日志文件：C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
                 },
 
                 // Verbos Logging (strong warning about performance)
@@ -187,7 +187,7 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "与操作页的重置相同\n" +
-                    "用默认文件覆盖 <ModsData/ConfigXML/Config.xml>" +
+                    "用默认文件覆盖 <ModsData/ConfigXML/Config.xml>\n" +
                     "文件坏了/想重来/想拿到新版本默认值时用（有些更新会增加建筑）。"
                 },
                 // Warning Prompt
