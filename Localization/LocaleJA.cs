@@ -187,7 +187,7 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "アクションのResetと同じ\n" +
-                    "<ModsData/ConfigXML/Config.xml> をデフォルトで上書き" +
+                    "<ModsData/ConfigXML/Config.xml> をデフォルトで上書き 。\n" +
                     "カスタムが壊れた/最初からやりたい/新バージョンのデフォルトが欲しい時に（更新で建物が増える場合あり）。"
                 },
                 // Warning Prompt

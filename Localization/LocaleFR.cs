@@ -187,7 +187,7 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Identique au bouton Actions\n" +
-                    "Écrase <ModsData/ConfigXML/Config.xml> avec le fichier par défaut" +
+                    "Écrase <ModsData/ConfigXML/Config.xml> avec le fichier par défaut.\n" +
                     "À utiliser si le fichier est cassé, pour repartir de zéro, ou pour récupérer la nouvelle version (certaines mises à jour ajoutent des bâtiments)."
                 },
                 // Warning Prompt

@@ -187,7 +187,7 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Uguale al reset in Azioni\n" +
-                    "Sovrascrive <ModsData/ConfigXML/Config.xml> con il file predefinito" +
+                    "Sovrascrive <ModsData/ConfigXML/Config.xml> con il file predefinito.\n" +
                     "Usalo se il file è rotto, vuoi ripartire, o vuoi la nuova versione (alcuni update aggiungono edifici)."
                 },
                 // Warning Prompt

@@ -303,13 +303,6 @@ namespace ConfigXML
         // Debug tab: Debug
         // ----------------
 
-        // When enabled: writes detailed per-prefab/per-field logs.
-        [SettingsUISection(kDebugSection, kDebugGroup)]
-        public bool Logging
-        {
-            get; set;
-        }
-
         // Dumps prefab presence status vs shipped preset config.
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
@@ -351,9 +344,17 @@ namespace ConfigXML
             }
         }
 
-        // ----------------
+        // When enabled: writes Verbose per-prefab/per-field logs.
+        [SettingsUISection(kDebugSection, kDebugGroup)]
+        public bool Logging
+        {
+            get; set;
+        }
+
+
+        // -------------------------
         // Defaults
-        // ----------------
+        // -------------------------
 
         public override void SetDefaults()
         {
@@ -371,7 +372,7 @@ namespace ConfigXML
         // Helpers
         // -------------------------------
 
-        // Shared reset implementation used by both reset buttons.
+        // Shared: used by both reset buttons.
         private static void ResetLocalConfigInternal()
         {
             try
