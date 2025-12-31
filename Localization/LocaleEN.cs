@@ -50,10 +50,9 @@ namespace ConfigXML
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
                     "**Quick Start** - applies built-in **presets** automatically.\n" +
                     "EASY Mode:  1-Click and DONE!\n\n" +
-                    "<Recommended for most players>.\n" +
-                    "• Increases worker numbers (and other minor tweaks to education levels required for a job).\n\n" +
-                    "• You can switch between Presets and Custom file at any time.\n" +
-                    "    • Preset file and ModsData custom file are separate."
+                    "<Recommended for most players to increase workers>.\n" +
+                    "• Can switch between Presets and Custom file at any time.\n" +
+                    "• Preset file and ModsData custom file are separate."
                 },
 
                 // UseLocalConfig
@@ -120,26 +119,23 @@ namespace ConfigXML
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
-                    "Option 1\n" +
-                    "1. <[Quick-Start Presets] for built-in defaults (workers ↑).>\n" +
-                    "2. <Done - play game.>"
+                    "1. <[Quick-Start]> for defaults (workers ↑). Done - play game."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CustomUsageSteps)),
                     "**Option 2 - Power Users**\n" +
                     "<[Use CUSTOM File]> to make custom settings.\n\n" +
-                    "1. <Click [OPEN Config folder]>\n" +
-                    "2. <Edit + save **Config.xml** (Notepad++).>\n" +
-                    "3. <Click [APPLY New Config Now]>\n" +
-                    "4. Build new service buildings to see new values.\n" +
-                    "5. Steps 1-4 can be repeated; no restart needed.\n\n" +
-                    "============================\n" +
-                    "Migration Notes:\n" +
+                    "1. Click <[OPEN Config folder]>\n" +
+                    "2. <Edit + save **Config.xml**>.\n" +
+                    "3. Click <[APPLY New Config Now]>\n" +
+                    "4. Steps 1-3 can be repeated with no restart.\n\n" +
+                    "===============================\n" +
+                    "Migration from Old mod:\n" +
                     "• If old </RealCity/Config.xml> existed, it was copied to new <ModsData/ConfigXML/Config.xml>.\n" +
                     "• Check Logs/ConfigXML.log for confirmation\n" +
-                    "• To ignore old files: delete RealCity folder (optional), start game, and\n" +
-                    "• Use <[Reset to Defaults]> to get the newest file."
+                    "• To ignore old files: delete RealCity folder (optional), start game,\n" +
+                    "• then use <[Reset to Default]> to get the newest file."
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.CustomUsageSteps)), " " },
 
@@ -164,7 +160,7 @@ namespace ConfigXML
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
                     "POWER USERS\n" +
-                    "**One-Time** check-up: logs whether each prefab listed in Config.xml is OK or Missing.\n" +
+                    "• **One-Time check-up**: logs whether each prefab listed in Config.xml is OK or Missing.\n" +
                     "• Useful after game patches to see which entries no longer match the game.\n" +
                     "• Ignore warnings for prefabs of DLC buildings you do not own - it's normal.\n\n" +
                     "• Log File: <C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log>"
@@ -177,8 +173,8 @@ namespace ConfigXML
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "**Same** Reset button that is on Actions tab.\n" +
                     "**Overwrites Config.xml** with the default file.\n" +
-                    "Use this if your custom file is broken, you want a fresh start, or want the new mod version (some updates have more buildings).\n" +
-                    "File Location: ModsData/ConfigXML/Config.xml"
+                    "• Use this if your custom file is broken, you want a fresh start, or want the new mod file (some updates have added buildings).\n" +
+                    "• File Reset copied here: <ModsData/ConfigXML/Config.xml>"
                 },
                 // Warning Prompt
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),

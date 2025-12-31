@@ -291,32 +291,35 @@ namespace ConfigXML
                 return;
             }
 
-
             // DEBUG probe: confirm a few early prefabs are present when applying.
-            // Keep this for 1–2 test runs, then remove or guard behind Logging.
-            int probeCount = config.Prefabs.Count;
-            if (probeCount > 3)
-            {
-                probeCount = 3;
-            }
+            // Only runs when Verbose logging is enabled (and only in DEBUG builds).
+#if DEBUG
+if (Mod.s_Settings != null && Mod.s_Settings.Logging)
+{
+    int probeCount = config.Prefabs.Count;
+    if (probeCount > 3)
+    {
+        probeCount = 3;
+    }
 
-            for (int i = 0; i < probeCount; i++)
-            {
-                PrefabXml p = config.Prefabs[i];
-                PrefabID id = new PrefabID(p.Type, p.Name);
+    for (int i = 0; i < probeCount; i++)
+    {
+        PrefabXml p = config.Prefabs[i];
+        PrefabID id = new PrefabID(p.Type, p.Name);
 
-                bool hasPrefab = m_PrefabSystem.TryGetPrefab(id, out PrefabBase found);
-                bool hasEntity = false;
+        bool hasPrefab = m_PrefabSystem.TryGetPrefab(id, out PrefabBase found);
+        bool hasEntity = false;
 
-                if (hasPrefab)
-                {
-                    hasEntity = m_PrefabSystem.TryGetEntity(found, out _);
-                }
+        if (hasPrefab)
+        {
+            hasEntity = m_PrefabSystem.TryGetEntity(found, out _);
+        }
 
-                Mod.Warn($"[Probe] {id}: prefab={(hasPrefab ? "YES" : "NO")}, entity={(hasEntity ? "YES" : "NO")}");
-            }
-
-
+        // INFO only — no stack trace spam.
+        Mod.Log($"[Probe] {id}: prefab={(hasPrefab ? "YES" : "NO")}, entity={(hasEntity ? "YES" : "NO")}");
+    }
+}
+#endif
 
             foreach (PrefabXml prefabXml in config.Prefabs)
             {
@@ -342,7 +345,11 @@ namespace ConfigXML
         public static void DumpPrefabStatus()
         {
             string assetPath = Mod.GetAssetPathSafe();
-
+            if (m_PrefabSystem == null)
+            {
+                Mod.Log("Dump Prefab status: PrefabSystem not ready yet. Load a city and try again.");
+                return;
+            }
             // Preset config is the reference list.
             ConfigurationXml? config = ConfigToolXml.LoadPresetConfig(assetPath);
             if (config == null || config.Prefabs == null || config.Prefabs.Count == 0)

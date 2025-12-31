@@ -70,15 +70,24 @@ namespace ConfigXML
             get; set;
         }
 
+        // Build flag for UI (hidden). Used to show some controls only in DEBUG builds.
+        [SettingsUIHidden]
+        public bool _IsDebugBuild
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
         // --------------------
         // Actions tab: Options
         // --------------------
 
-        /// <summary>
-        /// Uses the Config.xml that ships with the mod (preset).
-        /// Mutually exclusive with UseLocalConfig.
-        /// Changing this applies immediately.
-        /// </summary>
         [SettingsUISection(kSection, kToggleGroup)]
         public bool UseModPresets
         {
@@ -119,11 +128,6 @@ namespace ConfigXML
             }
         }
 
-        /// <summary>
-        /// Uses ModsData/ConfigXML/Config.xml as a local custom file.
-        /// Mutually exclusive with UseModPresets.
-        /// Changing this applies immediately.
-        /// </summary>
         [SettingsUISection(kSection, kToggleGroup)]
         public bool UseLocalConfig
         {
@@ -169,7 +173,6 @@ namespace ConfigXML
         // Only visible when UseLocalConfig is enabled.
         // -----------------------------------------
 
-        // Opens the folder that contains ModsData/ConfigXML/Config.xml.
         [SettingsUIButtonGroup(kCustomButtonsRow)]
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
@@ -185,7 +188,6 @@ namespace ConfigXML
 
                 try
                 {
-                    // Ensures Config.xml exists before opening the folder.
                     string configPath = ConfigToolXml.GetConfigFilePathForUI();
                     string? modsDataDir = Path.GetDirectoryName(configPath);
 
@@ -199,18 +201,15 @@ namespace ConfigXML
                         Directory.CreateDirectory(modsDataDir);
                     }
 
-                    // Opens the folder; editor selection is up to the player.
                     OpenWithUnityFileUrl(modsDataDir, isDirectory: true);
                 }
                 catch (Exception ex)
                 {
-                    // Never throw from Options UI callbacks.
                     Mod.Log($"OpenConfigFile failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
-        // Applies current ModsData/ConfigXML/Config.xml (local custom).
         [SettingsUIButtonGroup(kCustomButtonsRow)]
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
@@ -230,7 +229,6 @@ namespace ConfigXML
             }
         }
 
-        // Restores ModsData/ConfigXML/Config.xml from shipped Config.xml (Actions tab).
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
@@ -250,16 +248,13 @@ namespace ConfigXML
 
         // ------------------------------------
         // Actions tab: How to use Config.xml
-        // Multiline help text (localized).
         // ------------------------------------
 
-        // Presets help text (only visible when UseLocalConfig is OFF)
         [SettingsUIMultilineText]
         [SettingsUISection(kSection, kConfigUsageGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), false)]
         public string PresetUsageSteps => string.Empty;
 
-        // Custom help text (only visible  when UseLocalConfig is ON)
         [SettingsUIMultilineText]
         [SettingsUISection(kSection, kConfigUsageGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
@@ -275,7 +270,6 @@ namespace ConfigXML
         [SettingsUISection(kDebugSection, kInfoGroup)]
         public string VersionDisplay => Mod.ModVersion;
 
-        // Paradox Mods link button.
         [SettingsUIButtonGroup("SocialLinks")]
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kInfoGroup)]
@@ -303,7 +297,6 @@ namespace ConfigXML
         // Debug tab: Debug
         // ----------------
 
-        // Dumps prefab presence status vs shipped preset config.
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         public bool DumpPrefabStatus
@@ -321,13 +314,11 @@ namespace ConfigXML
                 }
                 catch (Exception ex)
                 {
-                    // Avoid throwing from Options UI callbacks.
                     Mod.s_Log?.Warn($"DumpPrefabStatus failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 
-        // Restores ModsData/ConfigXML/Config.xml from shipped Config.xml (Debug tab).
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         [SettingsUIConfirmation]
@@ -345,12 +336,13 @@ namespace ConfigXML
         }
 
         // When enabled: writes Verbose per-prefab/per-field logs.
+        // Only visible in DEBUG BUILD UI.
         [SettingsUISection(kDebugSection, kDebugGroup)]
+        [SettingsUIHideByCondition(typeof(Setting), nameof(_IsDebugBuild), true)]
         public bool Logging
         {
             get; set;
         }
-
 
         // -------------------------
         // Defaults
@@ -372,33 +364,25 @@ namespace ConfigXML
         // Helpers
         // -------------------------------
 
-        // Shared: used by both reset buttons.
         private static void ResetLocalConfigInternal()
         {
             try
             {
-                // Installed mod folder path when available; empty string otherwise.
                 string assetPath = Mod.GetAssetPathSafe();
-
-                // Copies shipped Config.xml into ModsData/ConfigXML/Config.xml when available.
                 ConfigToolXml.RestoreDefaultConfigForUI(assetPath);
             }
             catch (Exception ex)
             {
-                // Avoid throwing from Options UI callbacks.
                 Mod.Log($"ResetLocalConfig failed: {ex.GetType().Name}: {ex.Message}");
             }
         }
 
-        // Opens a file or folder via Unity using a file:/// URI.
         private static void OpenWithUnityFileUrl(string path, bool isDirectory = false)
         {
             try
             {
-                // Normalize to forward slashes for URI.
                 string normalized = path.Replace('\\', '/');
 
-                // Some platforms prefer trailing slash for directories.
                 if (isDirectory && !normalized.EndsWith("/", StringComparison.Ordinal))
                 {
                     normalized += "/";
@@ -409,7 +393,6 @@ namespace ConfigXML
             }
             catch
             {
-                // Swallow; callers log on failure where needed.
             }
         }
     }

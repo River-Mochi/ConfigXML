@@ -494,7 +494,7 @@ namespace ConfigXML
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                     File.Copy(oldPath, configPath, overwrite: false);
-                    Mod.s_Log.Info($"Configuration: migrated old Config.xml from {oldPath} to {configPath}.");
+                    Mod.s_Log.Info($"Configuration: migrated old Config.xml\n from {oldPath}\n to {configPath}.");
                     return;
                 }
 
