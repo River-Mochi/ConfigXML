@@ -10,7 +10,7 @@ namespace ConfigXML
     using Game;                      // UpdateSystem
     using Game.Modding;              // IMod
     using Game.SceneFlow;            // GameManager, ExecutableAsset
-    using System;                    // Exception, Type    
+    using System;                    // Exception, Type
     using System.Reflection;         // Assembly, FieldInfo, PropertyInfo
 
     public sealed class Mod : IMod
@@ -39,7 +39,7 @@ namespace ConfigXML
         {
             instance = this;
 
-            if (!s_BannerLogged)    // one-time banner
+            if (!s_BannerLogged) // one-time banner
             {
                 s_BannerLogged = true;
                 s_Log.Info($"{ModName} {ModTag} v{ModVersion} OnLoad");
@@ -147,7 +147,6 @@ namespace ConfigXML
 
         /// <summary>
         /// Debug helper: logs fields + properties of an object via reflection.
-        /// For diagnosing game objects/components without a debugger.
         /// </summary>
         public static void DumpObjectData(object? objectToDump)
         {
@@ -161,7 +160,6 @@ namespace ConfigXML
 
             Type type = objectToDump.GetType();
 
-            // Includes private fields because game types often hide useful state there.
             FieldInfo[] fields = type.GetFields(
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -169,7 +167,7 @@ namespace ConfigXML
             {
                 SafeLogInfo(" " + field.Name + ": " + field.GetValue(objectToDump));
             }
-            // Same for properties (some game types expose state via properties only).
+
             PropertyInfo[] properties = type.GetProperties(
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -183,48 +181,11 @@ namespace ConfigXML
         // Log Helpers
         // --------------------------------------------------------------
 
-        /// <summary>
-        /// Always-on info logging.
-        /// Routes through SafeLogInfo so logger failures cannot throw into gameplay/UI.
-        /// </summary>
         public static void Log(string message)
         {
             SafeLogInfo(message);
         }
 
-        /// <summary>
-        /// True only in DEBUG builds when in-game VerboseLogs checkbox is enabled.
-        /// </summary>
-        public static bool IsVerboseEnabled
-        {
-#if DEBUG
-            get => setting != null && setting.VerboseLogs;
-#else
-    get => false;
-#endif
-        }
-
-        /// <summary>
-        /// Verbose logs: DEBUG-build only, OptionsUI toggle.
-        /// Use for per-prefab/per-field spam that would otherwise hurt performance.
-        /// </summary>
-        public static void LogIfVerbose(string message)
-        {
-#if DEBUG
-            if (!IsVerboseEnabled)
-            {
-                return;
-            }
-
-            SafeLogInfo(message);
-#endif
-        }
-
-        /// <summary>
-        /// Lowest-level log write with guard rails:
-        /// - ignores empty strings
-        /// - catches logger exceptions (rare but real in CS2)
-        /// </summary>
         private static void SafeLogInfo(string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -238,7 +199,6 @@ namespace ConfigXML
             }
             catch
             {
-                // CO logger fails don't surface to player.
             }
         }
 
@@ -255,7 +215,6 @@ namespace ConfigXML
             }
             catch
             {
-                // CO logger fails don't surface.
             }
         }
 

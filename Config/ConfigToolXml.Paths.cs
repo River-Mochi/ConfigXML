@@ -60,5 +60,34 @@ namespace ConfigXML
             var dir = GetConfigDirectory();
             return Path.Combine(dir, _dumpFileName);
         }
+
+        // --------------------------------------------
+        // Resolved path helpers (match load behavior)
+        // --------------------------------------------
+
+        internal static string GetLocalConfigPathResolved(string assetPath)
+        {
+            EnsureModsDataSeeded(assetPath);
+            return GetConfigFilePath();
+        }
+
+        internal static string GetPresetConfigPathResolved(string assetPath)
+        {
+            // Mirrors LoadPresetConfig(): if we can't find shipped, we fall back to local.
+            var assetDir = GetAssetDirectorySafe(assetPath);
+            if (string.IsNullOrEmpty(assetDir))
+            {
+                return GetLocalConfigPathResolved(assetPath);
+            }
+
+            var shippedPath = Path.Combine(assetDir, _configFileName);
+            if (!File.Exists(shippedPath))
+            {
+                return GetLocalConfigPathResolved(assetPath);
+            }
+
+            return shippedPath;
+        }
+
     }
 }

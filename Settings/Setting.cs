@@ -70,6 +70,15 @@ namespace ConfigXML
             get; set;
         }
 
+        // Back-compat only: keep the property so older settings files deserialize cleanly.
+        // This is intentionally inert and never shown.
+        [SettingsUIHidden]
+        public bool VerboseLogs
+        {
+            get => false;
+            set { /* ignored */ }
+        }
+
         // --------------------
         // Actions tab: Options
         // --------------------
@@ -268,7 +277,7 @@ namespace ConfigXML
 #if DEBUG
                 return Mod.ModVersion + " +DEBUG";
 #else
-        return Mod.ModVersion;
+                return Mod.ModVersion;
 #endif
             }
         }
@@ -326,7 +335,7 @@ namespace ConfigXML
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         [SettingsUIConfirmation]
-        public bool DumpConfiguredPrefabFieldsToFile
+        public bool DumpComponentFields
         {
             set
             {
@@ -337,16 +346,15 @@ namespace ConfigXML
 
                 try
                 {
-                    ConfigTool.DumpConfiguredPrefabComponentFieldsToFile();
+                    ConfigTool.DumpXMLComponentFields();
                 }
                 catch (Exception ex)
                 {
-                    Mod.Warn($"DumpConfiguredPrefabFieldsToFile failed: {ex.GetType().Name}: {ex.Message}");
+                    Mod.Warn($"DumpXMLComponentFields failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
 #endif
-
 
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
@@ -363,21 +371,6 @@ namespace ConfigXML
                 ResetLocalConfigInternal();
             }
         }
-
-        // When enabled: writes Verbose logs per-prefab/per-field.
-        // Changed name VerboseLogs prevents old 'Logging=true' from doing anything in Release
-#if DEBUG
-        [SettingsUISection(kDebugSection, kDebugGroup)]
-        public bool VerboseLogs     
-        { get; set; }
-#else
-        [SettingsUIHidden]  // hide the checkbox
-        public bool VerboseLogs
-        {
-            get => false;
-            set { /* ignore in Release */ }
-        }
-#endif
 
         // -------------------------------
         // Helpers
@@ -423,14 +416,9 @@ namespace ConfigXML
         {
             _Hidden = true;
 
-            // Default OFF: avoids log spam and performance cost.
-            VerboseLogs = false;
-
             // Default behavior: shipped presets (no local custom file).
             m_UseModPresets = true;
             m_UseLocalConfig = false;
         }
-
     }
 }
-

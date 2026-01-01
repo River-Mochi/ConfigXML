@@ -1,7 +1,7 @@
 // File: Config/ConfigToolXml.IO.cs
 // Purpose: ConfigToolXml IO + migration + load/save helpers for Config-XML.
 // Notes:
-// - IMPORTANT FIX: do not dump the entire config (all prefabs/components/fields) to the CO logger on every load.
+// - Do not dump the entire config (all prefabs/components/fields) to the logger on load.
 
 namespace ConfigXML
 {
@@ -61,7 +61,6 @@ namespace ConfigXML
             }
             catch (Exception)
             {
-                // Treat as non-stub if it cannot be read; do not destroy user data.
             }
 
             return false;
@@ -93,7 +92,6 @@ namespace ConfigXML
             }
             catch
             {
-                // Do NOT assume it's empty if it cannot be read.
                 return false;
             }
         }
@@ -132,7 +130,6 @@ namespace ConfigXML
 
                 Directory.CreateDirectory(Path.GetDirectoryName(readmePath)!);
 
-                // If missing: create from shipped, else small fallback.
                 if (!File.Exists(readmePath))
                 {
                     if (!string.IsNullOrEmpty(shippedReadme) && File.Exists(shippedReadme))
@@ -194,7 +191,6 @@ namespace ConfigXML
 
                 if (File.Exists(configPath))
                 {
-                    // If stub and shipped exists, replace.
                     if (!string.IsNullOrEmpty(shippedPath) && File.Exists(shippedPath) && IsStubConfig(configPath))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
@@ -202,7 +198,6 @@ namespace ConfigXML
                         Mod.Log($"Configuration: replaced stub Config.xml with shipped default at {configPath}.");
                     }
 
-                    // If file exists but is empty/whitespace, replace with shipped default (safe repair).
                     if (!string.IsNullOrEmpty(shippedPath) && File.Exists(shippedPath) && IsFileEmptyOrWhitespace(configPath))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
@@ -213,7 +208,6 @@ namespace ConfigXML
                     return;
                 }
 
-                // One-time migration: old RealCity config -> new ConfigXML location (as-is).
                 var oldPath = GetOldConfigFilePath();
                 if (File.Exists(oldPath))
                 {
@@ -223,7 +217,6 @@ namespace ConfigXML
                     return;
                 }
 
-                // Copy shipped default if available.
                 if (!string.IsNullOrEmpty(shippedPath) && File.Exists(shippedPath))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
@@ -284,15 +277,6 @@ namespace ConfigXML
                 {
                     Mod.Warn($"LoadPresetConfig: configuration loaded from {shippedPath} but Prefabs list is empty; nothing to apply.");
                 }
-                else
-                {
-                    // IMPORTANT CHANGE: do not dump all prefabs/components/fields here.
-                    // One summary line is enough; deep dumps belong on a one-shot debug button.
-                    if (Mod.IsVerboseEnabled)
-                    {
-                        Mod.LogIfVerbose($"Loaded PRESET Config.xml: {_config.Prefabs.Count} prefabs.");
-                    }
-                }
 
                 return _config;
             }
@@ -329,17 +313,8 @@ namespace ConfigXML
                 {
                     Mod.Warn("LoadLocalConfig: configuration loaded but Prefabs list is empty; nothing to apply.");
                 }
-                else
-                {
-                    // IMPORTANT CHANGE: do not dump all prefabs/components/fields here.
-                    if (Mod.IsVerboseEnabled)
-                    {
-                        Mod.LogIfVerbose($"Loaded LOCAL Config.xml: {_config.Prefabs.Count} prefabs.");
-                    }
-                }
 
-                // Keep the dump snapshot, but don't spam the logger about it.
-                SaveConfig();
+                SaveConfig(); // keep dump snapshot, but do not log it
 
                 return _config;
             }
@@ -377,11 +352,6 @@ namespace ConfigXML
                 using (var fs = new FileStream(dumpFile, FileMode.Create))
                 {
                     serializer.Serialize(fs, _config);
-                }
-
-                if (Mod.IsVerboseEnabled)
-                {
-                    Mod.LogIfVerbose($"Configuration dump saved to {dumpFile}.");
                 }
             }
             catch (Exception e)

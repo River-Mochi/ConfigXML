@@ -56,25 +56,6 @@ namespace ConfigXML
             return $"PrefabXml: {Type}.{Name}";
         }
 
-        /// <summary>
-        /// Verbose-only dump (DEBUG + VerboseLogs).
-        /// Early-out prevents loops + ToString allocations when verbose is off.
-        /// </summary>
-        public void DumpToLog()
-        {
-            if (!Mod.IsVerboseEnabled)
-            {
-                return;
-            }
-
-            Mod.LogIfVerbose(ToString());
-
-            foreach (ComponentXml component in Components)
-            {
-                component.DumpToLog();
-            }
-        }
-
         internal bool TryGetComponent(string name, out ComponentXml component)
         {
             component = default!;
@@ -108,25 +89,6 @@ namespace ConfigXML
         public override string ToString()
         {
             return $"ComponentXml: {Name}";
-        }
-
-        /// <summary>
-        /// Verbose-only dump (DEBUG + VerboseLogs).
-        /// Early-out prevents loops/allocs when verbose is off.
-        /// </summary>
-        public void DumpToLog()
-        {
-            if (!Mod.IsVerboseEnabled)
-            {
-                return;
-            }
-
-            Mod.LogIfVerbose(ToString());
-
-            foreach (FieldXml field in Fields)
-            {
-                Mod.LogIfVerbose(field.ToString());
-            }
         }
 
         internal bool TryGetField(string name, out FieldXml field)
