@@ -34,8 +34,8 @@ Number of configured buildings and extensions: **222**.
 - Conversly, when the mod is deactivated, the buildings will retain their modded params. New buildings will have again vanilla params.
 - This mod is Safe for city saves and can be removed at any time.
 
-### 10 Languages
-* English, Français French, Deutsch German, Español Spanish
+### 11 Languages
+* English, Français French, Deutsch German, Español Spanish, Italian
 * 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
 * 한국어 Korean, 日本語 Japanese, 繁體中文 Traditional Chinese
 

@@ -48,11 +48,10 @@ namespace ConfigXML
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "RECOMMENDED PRESETS" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "**RECOMMENDED** - applies built-in **presets**.\n" +
+                    "**Quick Start** - apply all built-in **preset** settings.\n" +
                     "EASY Mode:  1-Click and DONE!\n\n" +
-                    "• Best for most players to increase workers.\n" +
-                    "• Can switch between <Presets> and <Custom file> at any time.\n" +
-                    "  (Preset file and ModsData custom file are separate.)"
+                    "• Best for most players - already has curated tweaks (e.g. worker numbers/wages that differ from game defaults.\n\n" +
+                    "• You can switch between <Presets> and <Custom file> any time.\n" +
                 },
 
                 // UseLocalConfig
@@ -67,7 +66,7 @@ namespace ConfigXML
                     "• Edit and Save **Config.xml** with a text editor (Notepad++)\n" +
                     "• Then click **[APPLY New Config Now]**\n\n" +
                     "• Note: don't set workers to 0.\n" +
-                    "• Switch back to default presets any time (separate files)."
+                    "• Switch back to default presets any time (it's a separate file)."
                 },
 
                 // -----------------------------

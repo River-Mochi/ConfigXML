@@ -1,15 +1,17 @@
 ﻿## Changelog
 
-- v0.6.2 (2025-12-29)
+- v0.6.2 (2025-12-31)
   - Renamed mod to **Config-XML**.
   - Added Japanese (日本語) and Traditional Chinese (繁體中文) translations.
   - Added Italian
+  - Update all Languages to align.
   - One-time migration: existing **RealCity Config.xml** is automatically copied to the new **ConfigXML** folder if present.
   - Adds README_Config.txt next to Config.xml (readme is auto-updated when the shipped README changes).
   - Improved Config.xml safety:
     - Creates Config.xml on first run if missing.
     - Automatically repairs missing or empty config files.
     - Stub configs are replaced with a valid default when available.
+ - Split ConfigXml.cs into 3 files: ConfigXml.Models.cs, ConfigXml.IO.cs, ConfigXml.Paths.cs
 
  
 - v0.5.0 (2025-11-23)
