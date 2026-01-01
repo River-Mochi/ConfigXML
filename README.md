@@ -6,7 +6,7 @@
 - In the long term this can serve as a foundation for **tuning and balancing any parameter**.
 - I encourage contribution to the mod by raising issues and/or PRs on GitHub with proposed changes and rationale behind such changes.
 
-Number of configured buildings and extensions: **221**.
+Number of configured buildings and extensions: **222**.
 
 
 ## Features

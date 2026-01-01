@@ -144,12 +144,12 @@ namespace ConfigXML
 
                 try
                 {
-                    Mod.Log("UseLocalConfig enabled; applying local configuration.");
+                    Mod.Log("Custom enabled; applying local custom file.");
                     ConfigTool.ReadAndApply();
                 }
                 catch (Exception ex)
                 {
-                    Mod.Log($"UseLocalConfig apply failed: {ex.GetType().Name}: {ex.Message}");
+                    Mod.Log($"Use Custom apply failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }

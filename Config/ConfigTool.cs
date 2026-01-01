@@ -259,8 +259,8 @@ namespace ConfigXML
             }
 
             Mod.Log(useLocal
-                ? "CFG: Apply LOCAL Config.xml (ModsData/ConfigXML)."
-                : "CFG: Apply PRESET Config.xml (shipped mod defaults).");
+                ? $"{Mod.ModTag} Apply LOCAL Config.xml (ModsData/ConfigXML)."
+                : $"{Mod.ModTag} Apply PRESET Config.xml (shipped mod defaults).");
 
             // Prefabs live in the default ECS world.
             World? world;

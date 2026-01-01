@@ -230,7 +230,7 @@ namespace ConfigXML
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                     File.Copy(oldPath, configPath, overwrite: false);
-                    Mod.Log($"Configuration: migrated old Config.xml\nfrom {oldPath}\nto {configPath}.");
+                    Mod.Log($"{Mod.ModTag} Migrated old Config.xml\nfrom {oldPath}\nto {configPath}.");
                     return;
                 }
 
