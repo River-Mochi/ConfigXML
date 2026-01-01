@@ -7,7 +7,6 @@ namespace ConfigXML
     using System.IO;                // Path, File, Directory, FileStream
     using System.Reflection;        // Assembly
     using System.Xml.Serialization; // XmlSerializer
-    using UnityEngine;              // Application (persistentDataPath already used in Paths, but safe)
 
     public static partial class ConfigToolXml
     {

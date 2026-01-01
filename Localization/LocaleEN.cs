@@ -67,8 +67,7 @@ namespace ConfigXML
                     "• Edit and Save **Config.xml** with a text editor (Notepad++)\n" +
                     "• Then click **[APPLY New Config Now]**\n\n" +
                     "• Note: don't set workers to 0.\n" +
-                    "• Switch back to default presets any time (separate files).\n" +
-                    "• When needed, **[Reset to Default]** completely replaces existing custom file."
+                    "• Switch back to default presets any time (separate files)."
                 },
 
                 // -----------------------------
@@ -92,11 +91,11 @@ namespace ConfigXML
                     "• Replace the old buildings to see new values.\n" +
                     "• Click **Apply New** after any Edits + Save to Config.xml.\n" +
                     "• Game restart also applies the chosen config file.\n" +
-                    "• Apply works on ModsData/ConfigXML/Config.xml file."
+                    "• Apply works on <ModsData/ConfigXML/Config.xml> file."
 
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "Apply changes to newly built service buildings?\n " +
+                    "Apply changes to any *new* service building?\n " +
                     "Are you sure?"
                 },
 
@@ -107,7 +106,7 @@ namespace ConfigXML
                     "**Overwrite Config.xml** with a fresh default file (includes all presets).\n" +
                     "• Use this if the custom file is corrupt or a clean reset is needed.\n\n" +
                     "• Close any open Config.xml files before trying to Reset.\n" +
-                    "• Restores file to: <ModsData/ConfigXML/Config.xml>"
+                    "• Copies a new file to: <ModsData/ConfigXML/Config.xml>"
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
                     "Overwrite ModsData/ConfigXML/Config.xml with default (presets) file?\n\n" +
@@ -119,7 +118,7 @@ namespace ConfigXML
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
-                    "<RECOMMENDED> for defaults (workers ↑↑) - Done, play game:)"
+                    "<RECOMMENDED> for defaults (workers ↑↑) - Done, play game :)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
 
@@ -127,7 +126,7 @@ namespace ConfigXML
                     "**Option 2 - Power Users**\n" +
                     "<[Use CUSTOM File]> to make custom settings.\n\n" +
                     "1. Click <[OPEN Config folder]>\n" +
-                    "2. <Edit + save **Config.xml**>.\n" +
+                    "2. <Edit + Save **Config.xml**>.\n" +
                     "3. Click <[APPLY New Config Now]>\n" +
                     "4. Steps 1-3 can be repeated with no restart.\n\n" +
                     "===============================\n" +
