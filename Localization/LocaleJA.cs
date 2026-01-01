@@ -59,15 +59,15 @@ namespace ConfigXML
                 // UseLocalConfig
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "カスタムファイルを使う" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
-                    "**POWER USERS**\n" +
+                    "**上級者向け**\n" +
                     "ローカルのカスタムファイル: <ModsData/ConfigXML/Config.xml>\n" +
                     "を使います（Modのプリセットの代わり）。\n" +
 
-                    "<Steps>\n" +
-                    "**[CONFIGフォルダを開く]** をクリック\n" +
+                    "<手順>\n" +
+                    "**[Configフォルダを開く]** をクリック\n" +
                     "• テキストエディタで **Config.xml** を編集して保存（Notepad++）\n" +
                     "• その後 **[今すぐ新しいConfigを適用]** をクリック\n\n" +
-                    "• 注意: workersを0にしないでください。\n" +
+                    "• 注意: 労働者数を0にしないでください。\n" +
                     "• いつでもプリセットへ戻せます（別ファイル）。"
                 },
 
@@ -76,7 +76,7 @@ namespace ConfigXML
                 // -----------------------------
 
                 // OpenConfigFile button (now: folder)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "CONFIGフォルダを開く" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "Configフォルダを開く" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
                     "• **Config.xml** があるフォルダを開きます。\n" +
                     "1. テキストエディタで編集（**Notepad++**）。\n\n" +
@@ -87,12 +87,12 @@ namespace ConfigXML
                 // ApplyConfiguration button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "今すぐ新しいConfigを適用" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "**Config.xml** を読み込み、サービス系Prefab（例: 建物のworkers）へ反映します\n" +
+                    "**Config.xml** を読み込み、サービス系Prefab（例: 建物の労働者数）へ反映します\n" +
                     "• **新しく建てた建物** に反映（既存には反映しません）。\n" +
                     "• 古い建物を建て替えると新しい値が見えます。\n" +
                     "• Config.xmlを編集して保存したら **適用** をクリック。\n" +
                     "• ゲーム再起動でも選択したConfigを適用します。\n" +
-                    "• Applyは <ModsData/ConfigXML/Config.xml> を使います。"
+                    "• **適用** は <ModsData/ConfigXML/Config.xml> を使います。"
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
                     "*新しく建てる* サービス建物へ変更を適用しますか？\n" +
@@ -105,7 +105,7 @@ namespace ConfigXML
                     "**やり直し** ボタン。\n\n" +
                     "**Config.xmlを上書き**して、Mod付属の新しいデフォルト（プリセット込み）に戻します。\n" +
                     "• カスタムファイルが壊れた／きれいにリセットしたい時に。\n\n" +
-                    "• Reset前に開いているConfig.xmlを閉じてください。\n" +
+                    "• リセット前に開いているConfig.xmlを閉じてください。\n" +
                     "• 新しいファイルをここへコピー: <ModsData/ConfigXML/Config.xml>"
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
@@ -118,14 +118,14 @@ namespace ConfigXML
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
-                    "<おすすめ> デフォルト（workers ↑↑） - これでOK、遊ぼう :)"
+                    "<おすすめ> デフォルト（労働者数 ↑↑） - これでOK、遊ぼう :)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CustomUsageSteps)),
-                    "**オプション 2 - Power Users**\n" +
+                    "**オプション 2 - 上級者向け**\n" +
                     "<[カスタムファイルを使う]> で自分用に調整。\n\n" +
-                    "1. <[CONFIGフォルダを開く]>\n" +
+                    "1. <[Configフォルダを開く]>\n" +
                     "2. <**Config.xml** を編集して保存>\n" +
                     "3. <[今すぐ新しいConfigを適用]>\n" +
                     "4. 1-3は再起動なしで繰り返しOK。\n\n" +
@@ -134,7 +134,7 @@ namespace ConfigXML
                     "• 旧 </RealCity/Config.xml> があった場合、新しい <ModsData/ConfigXML/Config.xml> にコピーされています。\n" +
                     "• Logs/ConfigXML.log で確認\n" +
                     "• 古いファイルを無視する: RealCityフォルダを削除（任意）→ゲーム起動→\n" +
-                    "• <[デフォルトに戻す]> で最新版に更新。"
+                    "• <[デフォルトConfigに戻す]> で最新版に更新。"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.CustomUsageSteps)), " " },
 
@@ -157,7 +157,7 @@ namespace ConfigXML
                 // DumpPrefabStatus button
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Prefab状態をログに出す" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
-                    "POWER USERS\n" +
+                    "上級者向け\n" +
                     "• **一回だけチェック**: Config.xmlの各PrefabがOK/不足かをログ出力。\n" +
                     "• ゲーム更新後に、どのエントリが合わなくなったか確認に便利。\n" +
                     "• 未所持DLCのPrefab警告は普通なので無視OK。\n\n" +
@@ -169,7 +169,7 @@ namespace ConfigXML
                     "デフォルトに戻す (新Config.xml)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "**同じ** Resetボタン（Actionsタブと同じ）。\n" +
+                    "**同じ** リセットボタン（Actionsタブと同じ）。\n" +
                     "**Config.xmlを上書き**してデフォルトに戻します。\n" +
                     "• ファイルが壊れた／最初からやりたい／新しいModのデフォルトが欲しい時に（更新で建物が増える場合あり）。\n" +
                     "• ファイルはここへ: <ModsData/ConfigXML/Config.xml>"
