@@ -129,8 +129,8 @@ namespace ConfigXML
                     "2. <Edit + Save **Config.xml**>.\n" +
                     "3. Click <[APPLY New Config Now]>\n" +
                     "4. Steps 1-3 can be repeated with no restart.\n\n" +
-                    "===============================\n" +
-                    "Migration from Old mod:\n" +
+                    "<--------------------------->\n" +
+                    "Migration from old mod:\n" +
                     "• If old </RealCity/Config.xml> existed, it was copied to new <ModsData/ConfigXML/Config.xml>.\n" +
                     "• Check Logs/ConfigXML.log for confirmation\n" +
                     "• To ignore old files: delete RealCity folder (optional), start game,\n" +

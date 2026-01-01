@@ -35,48 +35,40 @@ namespace ConfigXML
                 { m_Setting.GetOptionTabLocaleID(Setting.kDebugSection), "デバッグ" },
 
                 // Groups
-                { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "オプション - どちらか選択" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "アクション" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kToggleGroup), "どちらか選択" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kConfigUsageGroup), "Config.xmlの使い方" },
                 { m_Setting.GetOptionGroupLocaleID(Setting.kInfoGroup), " " },  // No Info section title
                 { m_Setting.GetOptionGroupLocaleID(Setting.kDebugGroup), "DEBUG" },
-
-                // Debug tab: Info group
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.NameDisplay)), "Mod" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.NameDisplay)), "このModの表示名。" },
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VersionDisplay)), "バージョン" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.VersionDisplay)), "現在のバージョン番号。" },
 
                 // -----------------------------
                 // Actions tab: Options toggles
                 // -----------------------------
 
                 // UseModPresets
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "クイックスタート プリセット" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "おすすめプリセット" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "<クイックスタート> - 内蔵プリセットを自動で適用。\n" +
+                    "**おすすめ** - 内蔵 **プリセット** を適用します。\n" +
                     "かんたんモード:  1クリックでOK！\n\n" +
-                    "ほとんどの人におすすめ。\n" +
-                    "労働者数を増やします（＋仕事に必要な教育レベルの小さな調整など）。\n" +
-                    "プリセット/カスタムはいつでも切替OK。\n" +
-                    "プリセットとModsDataのカスタムは別ファイルです。"
+                    "• ほとんどのプレイヤー向け：労働者数を増やします。\n" +
+                    "• <プリセット> と <カスタムファイル> はいつでも切替OK。\n" +
+                    "  （プリセットとModsDataカスタムは別ファイルです。）"
                 },
 
                 // UseLocalConfig
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "カスタムファイルを使う" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
-                    "<パワーユーザー>\n" +
+                    "**POWER USERS**\n" +
                     "ローカルのカスタムファイル: <ModsData/ConfigXML/Config.xml>\n" +
                     "を使います（Modのプリセットの代わり）。\n" +
 
-                    "<ヒント>\n" +
-                    "**Configフォルダを開く** をクリック\n" +
-                    "• **Config.xml** をテキストエディタで編集（Notepad++）\n" +
-                    "• workersを0にしない（少人数なら小さい値を使う）。\n" +
-                    "• 編集後: 保存してから <今すぐ新しいconfigを適用> をクリック\n\n" +
-                    "<デフォルトに戻す> は既存のカスタムファイルを置き換えます。\n" +
-                    "いつでもプリセットへ戻せます（別ファイル）。"
+                    "<Steps>\n" +
+                    "**[CONFIGフォルダを開く]** をクリック\n" +
+                    "• テキストエディタで **Config.xml** を編集して保存（Notepad++）\n" +
+                    "• その後 **[今すぐ新しいConfigを適用]** をクリック\n\n" +
+                    "• 注意: workersを0にしないでください。\n" +
+                    "• いつでもプリセットへ戻せます（別ファイル）。"
                 },
 
                 // -----------------------------
@@ -84,35 +76,37 @@ namespace ConfigXML
                 // -----------------------------
 
                 // OpenConfigFile button (now: folder)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "Configフォルダを開く" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenConfigFile)), "CONFIGフォルダを開く" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenConfigFile)),
-                    "任意\n" +
-                    "• **Config.xml** が入っている <ModsData/ConfigXML/> を開きます。\n" +
-                    "1. 好きなエディタで編集（Notepad++）。\n\n" +
-                    "2. 例（Windows）:\n" +
-                    "C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml"
+                    "• **Config.xml** があるフォルダを開きます。\n" +
+                    "1. テキストエディタで編集（**Notepad++**）。\n\n" +
+                    "2. 例（Windows）:\n\n" +
+                    "<C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/ModsData/ConfigXML/Config.xml>"
                 },
 
                 // ApplyConfiguration button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "今すぐ新しいconfigを適用" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ApplyConfiguration)), "今すぐ新しいConfigを適用" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "<ModsData/ConfigXML/Config.xml> を読み込み、サービス系Prefab（例: 建物のworkers）へ反映します\n" +
+                    "**Config.xml** を読み込み、サービス系Prefab（例: 建物のworkers）へ反映します\n" +
                     "• **新しく建てた建物** に反映（既存には反映しません）。\n" +
-                    "• 既存都市は建物を建て直すと反映されます。\n" +
-                    "• Config.xmlを編集して保存したら、もう一度 **適用** をクリック。"
+                    "• 古い建物を建て替えると新しい値が見えます。\n" +
+                    "• Config.xmlを編集して保存したら **適用** をクリック。\n" +
+                    "• ゲーム再起動でも選択したConfigを適用します。\n" +
+                    "• Applyは <ModsData/ConfigXML/Config.xml> を使います。"
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ApplyConfiguration)),
-                    "新しく建てるサービス建物へ変更を適用しますか？\n " +
+                    "*新しく建てる* サービス建物へ変更を適用しますか？\n" +
                     "よろしいですか？"
                 },
 
                 // ResetLocalConfig (Actions tab)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)), "デフォルトのConfig.xmlに戻す" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfig)), "デフォルトConfigに戻す" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfig)),
                     "**やり直し** ボタン。\n\n" +
-                    "**ModsData/ConfigXML/Config.xml** を、Mod付属のデフォルト（プリセット）で上書きします。\n" +
-                    "• カスタムファイルが壊れた/きれいにリセットしたい時に。\n\n" +
-                    "• Reset前にConfig.xmlを閉じてください。"
+                    "**Config.xmlを上書き**して、Mod付属の新しいデフォルト（プリセット込み）に戻します。\n" +
+                    "• カスタムファイルが壊れた／きれいにリセットしたい時に。\n\n" +
+                    "• Reset前に開いているConfig.xmlを閉じてください。\n" +
+                    "• 新しいファイルをここへコピー: <ModsData/ConfigXML/Config.xml>"
                 },
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfig)),
                     "ModsData/ConfigXML/Config.xml をデフォルト（プリセット）で上書きしますか？\n\n" +
@@ -121,59 +115,34 @@ namespace ConfigXML
 
                 // ----------------------------------
                 // Actions tab: How to use Config.xml
-                // 
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
-                    "<オプション 1 - クイックスタート>\n" +
-                    "内蔵プリセットなら **[クイックスタート プリセット]** を選択。\n" +
-                    "これでOK。"
+                    "<おすすめ> デフォルト（workers ↑↑） - これでOK、遊ぼう :)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.CustomUsageSteps)),
-                    "<オプション 2 - パワーユーザー>\n" +
-                    "**[カスタムファイルを使う]** で自分用に調整。\n\n" +
-                    "1. **[Configフォルダを開く]**\n" +
-                    "2. **Config.xml** を編集して保存（Notepad++）\n" +
-                    "3. **[今すぐ新しいconfigを適用]**\n" +
-                    "4. 新しいサービス建物を建てて確認\n" +
-                    "5. 変更後は <適用> を押せば再起動なしで繰り返しOK\n\n" +
-
-                    "移行メモ:\n" +
-                    "ModsData/RealCity/Config.xml がある場合、**ModsData/ConfigXML/Config.xml** にコピーされています。\n" +
-                    "Logs/ConfigXML.log を確認。\n" +
-                    "古いファイルを無視する: ModsData/RealCity を削除（任意）→ゲーム起動→\n" +
-                    "**[デフォルトに戻す]**"
+                    "**オプション 2 - Power Users**\n" +
+                    "<[カスタムファイルを使う]> で自分用に調整。\n\n" +
+                    "1. <[CONFIGフォルダを開く]>\n" +
+                    "2. <**Config.xml** を編集して保存>\n" +
+                    "3. <[今すぐ新しいConfigを適用]>\n" +
+                    "4. 1-3は再起動なしで繰り返しOK。\n\n" +
+                    "<--------------------------->\n" +
+                    "旧Modからの移行:\n" +
+                    "• 旧 </RealCity/Config.xml> があった場合、新しい <ModsData/ConfigXML/Config.xml> にコピーされています。\n" +
+                    "• Logs/ConfigXML.log で確認\n" +
+                    "• 古いファイルを無視する: RealCityフォルダを削除（任意）→ゲーム起動→\n" +
+                    "• <[デフォルトに戻す]> で最新版に更新。"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.CustomUsageSteps)), " " },
 
-                // -----------------------------------
-                // Debug tab: status, logging, reset
-                // -----------------------------------
-        
-                // DumpPrefabStatus button
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Prefab状態をログに出す"
-                },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
-                    "**パワーユーザー**\n" +
-                    "1回だけチェック: Config.xmlの各PrefabがOK/不足かをログ出力。\n" +
-                    "• ゲーム更新後の確認に便利。\n" +
-                    "• 未所持DLCのPrefab警告は普通なので無視OK。\n" +
-                     "ログ: C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log"
-                },
-
-                // Verbos Logging (strong warning about performance)
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VerboseLogs)),
-                    "詳細ログ (右の注意を読んで)"
-                },
-                {
-                    m_Setting.GetOptionDescLocaleID(nameof(Setting.VerboseLogs)),
-                    "<普段はOFF推奨。>\n" +
-                    "詳細ログは重くなり、ログも巨大になります。\n" +
-                    "デバッグ時だけ **一時的に** ON。\n" +
-                    "<よく分からなければOFFのまま。>"
-                },
+                // Debug tab: Info group
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.NameDisplay)), "Mod" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.NameDisplay)), "このModの表示名。" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VersionDisplay)), "バージョン" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.VersionDisplay)), "現在のバージョン番号。" },
 
                 // Paradox Mods button (Debug tab, Info group)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenParadoxModsButton)), "Paradox Mods" },
@@ -181,19 +150,46 @@ namespace ConfigXML
                     "作者のMod一覧（**Paradox Mods**）を開きます。"
                 },
 
-                // Debug tab duplicate reset button
+                // --------------------------------------
+                // Debug tab: status, reset, VerboseLogs
+                // --------------------------------------
+
+                // DumpPrefabStatus button
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpPrefabStatus)), "Prefab状態をログに出す" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
+                    "POWER USERS\n" +
+                    "• **一回だけチェック**: Config.xmlの各PrefabがOK/不足かをログ出力。\n" +
+                    "• ゲーム更新後に、どのエントリが合わなくなったか確認に便利。\n" +
+                    "• 未所持DLCのPrefab警告は普通なので無視OK。\n\n" +
+                    "• ログ: <C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log>"
+                },
+
+                // Debug tab reset button (duplicate)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "デフォルトに戻す (新Config.xml)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "アクションのResetと同じ\n" +
-                    "<ModsData/ConfigXML/Config.xml> をデフォルトで上書き 。\n" +
-                    "カスタムが壊れた/最初からやりたい/新バージョンのデフォルトが欲しい時に（更新で建物が増える場合あり）。"
+                    "**同じ** Resetボタン（Actionsタブと同じ）。\n" +
+                    "**Config.xmlを上書き**してデフォルトに戻します。\n" +
+                    "• ファイルが壊れた／最初からやりたい／新しいModのデフォルトが欲しい時に（更新で建物が増える場合あり）。\n" +
+                    "• ファイルはここへ: <ModsData/ConfigXML/Config.xml>"
                 },
                 // Warning Prompt
                 { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "<ModsData/ConfigXML/Config.xml> をデフォルトで上書きしますか？\n" +
                     "カスタム変更は置き換えられます。"
+                },
+
+                // VerboseLogs (strong warning about performance)
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.VerboseLogs)),
+                    "詳細ログ (右の注意を読んでから使ってください)"
+                },
+                {
+                    m_Setting.GetOptionDescLocaleID(nameof(Setting.VerboseLogs)),
+                    "<普段のプレイでは使わないでください。>\n" +
+                    "• 詳細ログは重くなり、ログも巨大になります。\n" +
+                    "• デバッグ時だけ、数分だけ **一時的に** ON。\n" +
+                    "• <よく分からなければOFFのままがおすすめ。>"
                 },
             };
         }
