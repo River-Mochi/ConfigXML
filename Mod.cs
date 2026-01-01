@@ -179,9 +179,9 @@ namespace ConfigXML
             }
         }
 
-        // -----------------------------------------------------------------
+        // --------------------------------------------------------------
         // Log Helpers
-        // -----------------------------------------------------------------
+        // --------------------------------------------------------------
 
         /// <summary>
         /// Always-on info logging.
@@ -193,21 +193,32 @@ namespace ConfigXML
         }
 
         /// <summary>
-        /// Verbose logs: debug only in-game checkbox.
+        /// True only in DEBUG builds when in-game VerboseLogs checkbox is enabled.
+        /// </summary>
+        public static bool IsVerboseEnabled
+        {
+#if DEBUG
+            get => setting != null && setting.VerboseLogs;
+#else
+    get => false;
+#endif
+        }
+
+        /// <summary>
+        /// Verbose logs: DEBUG-build only, OptionsUI toggle.
         /// Use for per-prefab/per-field spam that would otherwise hurt performance.
         /// </summary>
-        [System.Diagnostics.Conditional("DEBUG")]
-        public static void VerboseLogIf(string message)
+        public static void LogIfVerbose(string message)
         {
-            if (setting == null || !setting.VerboseLogs)
+#if DEBUG
+            if (!IsVerboseEnabled)
             {
                 return;
             }
 
             SafeLogInfo(message);
-
+#endif
         }
-
 
         /// <summary>
         /// Lowest-level log write with guard rails:
@@ -227,7 +238,7 @@ namespace ConfigXML
             }
             catch
             {
-                // catch CO logger fails so they don't surface to player.
+                // CO logger fails don't surface to player.
             }
         }
 
@@ -240,11 +251,11 @@ namespace ConfigXML
 
             try
             {
-                s_Log?.Warn(message);   // cheap guard just in case
+                s_Log.Warn(message);
             }
             catch
             {
-                // catch CO logger fails so they don't surface.
+                // CO logger fails don't surface.
             }
         }
 

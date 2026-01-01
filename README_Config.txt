@@ -1,6 +1,6 @@
 Config.xml - Service Building Changes
 
-README_Config.txt last update: Dec. 30, 2025
+README_Config.txt last update: Jan 1, 2026
 SHORT GUIDE
 
 ======= EASY START =========

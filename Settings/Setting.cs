@@ -70,20 +70,6 @@ namespace ConfigXML
             get; set;
         }
 
-        // Build flag for UI (hidden). Used to show some controls only in DEBUG builds.
-        [SettingsUIHidden]
-        public bool _IsDebugBuild
-        {
-            get
-            {
-#if DEBUG
-                return true;
-#else
-                return false;
-#endif
-            }
-        }
-
         // --------------------
         // Actions tab: Options
         // --------------------
@@ -224,8 +210,15 @@ namespace ConfigXML
                     return;
                 }
 
-                Mod.Log("ApplyConfiguration clicked.");
-                ConfigTool.ReadAndApply();
+                try
+                {
+                    Mod.Log("Apply Config clicked.");
+                    ConfigTool.ReadAndApply();
+                }
+                catch (Exception ex)
+                {
+                    Mod.Warn($"Apply Config failed: {ex.GetType().Name}: {ex.Message}");
+                }
             }
         }
 
@@ -268,7 +261,17 @@ namespace ConfigXML
         public string NameDisplay => Mod.ModName;
 
         [SettingsUISection(kDebugSection, kInfoGroup)]
-        public string VersionDisplay => Mod.ModVersion;
+        public string VersionDisplay
+        {
+            get
+            {
+#if DEBUG
+                return Mod.ModVersion + " +DEBUG";
+#else
+        return Mod.ModVersion;
+#endif
+            }
+        }
 
         [SettingsUIButtonGroup("SocialLinks")]
         [SettingsUIButton]

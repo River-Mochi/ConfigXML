@@ -49,7 +49,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
   in Services buildings and does other small adjustments. I encourage contribution to the mod and PRs on GitHub with proposed changes and rationale.
 
 ### 10 Languages
-* English, Français French, Deutsch German, Español Spanish
+* English, Français French, Deutsch German, Español, Italian
 * 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
 * 한국어 Korean, 日本語 Japanese, 繁體中文 Traditional Chinese
 
@@ -84,14 +84,11 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- added Japanese 日本語 Japanese
-- added 繁體中文 Traditional Chinese
-- added Italian
+- added Japanese 日本語, added 繁體中文 Traditional Chinese, and Italian
 - Renamed to **Config-XML**. One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
 - New README file added next to Config.xml with updated usage notes.
-- Improved Config.xml safety: auto repairs missing, empty, or stub temp config files with valid config.
-- Prefab dump-check button still available. verbose log toggle not available in Release build.
-- Improved "Dump Prefab Status" button output.
+- Refactor: improved Config.xml safety: auto repairs missing files with valid config, 
+improved "Dump Status" button output, verbose log toggle not available in Release build. 
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

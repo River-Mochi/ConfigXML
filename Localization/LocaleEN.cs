@@ -45,20 +45,20 @@ namespace ConfigXML
                 // -----------------------------
 
                 // UseModPresets
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "QUICK-START Presets" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseModPresets)), "RECOMMENDED PRESETS" },
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.UseModPresets)),
-                    "**Quick Start** - applies built-in **presets** automatically.\n" +
+                    "**RECOMMENDED** - applies built-in **presets**.\n" +
                     "EASY Mode:  1-Click and DONE!\n\n" +
-                    "<Recommended for most players to increase workers>.\n" +
-                    "• Can switch between Presets and Custom file at any time.\n" +
-                    "• Preset file and ModsData custom file are separate."
+                    "• Best for most players to increase workers.\n" +
+                    "• Can switch between <Presets> and <Custom file> at any time.\n" +
+                    "  (Preset file and ModsData custom file are separate.)"
                 },
 
                 // UseLocalConfig
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.UseLocalConfig)), "Use Custom File" },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.UseLocalConfig)),
-                    "<POWER USERS>\n" +
+                    "**POWER USERS**\n" +
                     "Uses a local custom file: <ModsData/ConfigXML/Config.xml>\n" +
                     "instead of the Mod provided presets.\n" +
 
@@ -68,7 +68,7 @@ namespace ConfigXML
                     "• Then click **[APPLY New Config Now]**\n\n" +
                     "• Note: don't set workers to 0.\n" +
                     "• Switch back to default presets any time (separate files).\n" +
-                    "• When needed, **[Reset to Defaults]** completely replaces existing custom file."
+                    "• When needed, **[Reset to Default]** completely replaces existing custom file."
                 },
 
                 // -----------------------------
@@ -119,7 +119,7 @@ namespace ConfigXML
                 // ----------------------------------
 
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.PresetUsageSteps)),
-                    "1. <[Quick-Start]> for defaults (workers ↑). Done - play game."
+                    "<RECOMMENDED> for defaults (workers ↑↑) - Done, play game:)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.PresetUsageSteps)), " " },
 
@@ -168,7 +168,7 @@ namespace ConfigXML
 
                 // Debug tab reset button (duplicate)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
-                    "Reset to Defaults (make new Config.xml)"
+                    "Reset to Default (make new Config.xml)"
                 },
                 { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "**Same** Reset button that is on Actions tab.\n" +

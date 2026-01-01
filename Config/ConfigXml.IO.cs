@@ -1,276 +1,16 @@
-// File: Config/ConfigXml.cs
-// Purpose: XML model + load/save helpers for Config-XML.
+// File: Config/ConfigToolXml.IO.cs
+// Purpose: ConfigToolXml IO + migration + load/save helpers for Config-XML.
 
 namespace ConfigXML
 {
-    using System;                     // Exception
-    using System.Collections.Generic; // List<T>
-    using System.IO;                  // Path, File, Directory, FileStream
-    using System.Reflection;          // Assembly
-    using System.Xml.Serialization;   // XmlSerializer, Xml* attributes
-    using UnityEngine;                // Application.persistentDataPath
+    using System;                   // Exception, InvalidOperationException, StringComparison
+    using System.IO;                // Path, File, Directory, FileStream
+    using System.Reflection;        // Assembly
+    using System.Xml.Serialization; // XmlSerializer
+    using UnityEngine;              // Application (persistentDataPath already used in Paths, but safe)
 
-    [XmlRoot("Configuration")]
-    public class ConfigurationXml
+    public static partial class ConfigToolXml
     {
-        [XmlElement("Prefab")]
-        public List<PrefabXml> Prefabs
-        {
-            get; set;
-        } = new List<PrefabXml>();
-
-        public bool TryGetPrefab(string name, out PrefabXml prefab)
-        {
-            prefab = default!;
-            foreach (PrefabXml item in Prefabs)
-            {
-                if (item.Name == name)
-                {
-                    prefab = item;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }
-
-    public class PrefabXml
-    {
-        [XmlAttribute("type")]
-        public string Type
-        {
-            get; set;
-        } = string.Empty;
-
-        [XmlAttribute("name")]
-        public string Name
-        {
-            get; set;
-        } = string.Empty;
-
-        [XmlElement("Component")]
-        public List<ComponentXml> Components
-        {
-            get; set;
-        } = new List<ComponentXml>();
-
-        public override string ToString()
-        {
-            return $"PrefabXml: {Type}.{Name}";
-        }
-
-        public void DumpToLog()
-        {
-            Mod.Log(ToString());
-            foreach (ComponentXml component in Components)
-            {
-                component.DumpToLog();
-            }
-        }
-
-        internal bool TryGetComponent(string name, out ComponentXml component)
-        {
-            component = default!;
-            foreach (ComponentXml item in Components)
-            {
-                if (item.Name == name)
-                {
-                    component = item;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }
-
-    public class ComponentXml
-    {
-        [XmlAttribute("name")]
-        public string Name
-        {
-            get; set;
-        } = string.Empty;
-
-        [XmlElement("Field")]
-        public List<FieldXml> Fields
-        {
-            get; set;
-        } = new List<FieldXml>();
-
-        public override string ToString()
-        {
-            return $"ComponentXml: {Name}";
-        }
-
-        public void DumpToLog()
-        {
-            Mod.Log(ToString());
-            foreach (FieldXml field in Fields)
-            {
-                Mod.Log(field.ToString());
-            }
-        }
-
-        internal bool TryGetField(string name, out FieldXml field)
-        {
-            field = default!;
-            foreach (FieldXml item in Fields)
-            {
-                if (item.Name == name)
-                {
-                    field = item;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-    }
-
-    public class FieldXml
-    {
-        [XmlAttribute("name")]
-        public string Name
-        {
-            get; set;
-        } = string.Empty;
-
-        // STRING is the default value.
-        [XmlAttribute(AttributeName = "value", DataType = "string")]
-        public string Value
-        {
-            get; set;
-        } = string.Empty;
-
-        // INTEGER
-
-        [XmlIgnore]
-        public bool ValueIntSpecified
-        {
-            get; set;
-        }
-
-        [XmlIgnore]
-        public int? ValueInt
-        {
-            get; set;
-        }
-
-        [XmlAttribute("valueInt")]
-        public int XmlValueInt
-        {
-            get => ValueInt.GetValueOrDefault();
-            set
-            {
-                ValueInt = value;
-                ValueIntSpecified = true;
-            }
-        }
-
-        // FLOAT
-
-        [XmlIgnore]
-        public bool ValueFloatSpecified
-        {
-            get; set;
-        }
-
-        [XmlIgnore]
-        public float? ValueFloat
-        {
-            get; set;
-        }
-
-        [XmlAttribute(AttributeName = "valueFloat", DataType = "float")]
-        public float XmlValueFloat
-        {
-            get => ValueFloat.GetValueOrDefault();
-            set
-            {
-                ValueFloat = value;
-                ValueFloatSpecified = true;
-            }
-        }
-
-        public override string ToString()
-        {
-            var res = $"{Name}=";
-            if (ValueInt.HasValue)
-            {
-                res += $" {ValueInt} (int)";
-            }
-
-            if (ValueFloat.HasValue)
-            {
-                res += $" {ValueFloat} (float)";
-            }
-
-            if (!string.IsNullOrEmpty(Value))
-            {
-                res += $" {Value}";
-            }
-
-            return res;
-        }
-    }
-
-    public static class ConfigToolXml
-    {
-        private static readonly string _configFileName = "Config.xml";
-        private static readonly string _dumpFileName = "Config_Dump.xml";   // snapshot
-
-        // README lives next to Config.xml in ModsData/ConfigXML/
-        private static readonly string _readmeFileName = "README_Config.txt";
-
-        // One-time migration from old mod folder.
-        private const string OldModId = "RealCity";
-
-        private const string StubMarker = "CFG-STUB";
-
-        private static ConfigurationXml? _config;
-
-        public static ConfigurationXml? Config => _config;
-
-        // --------------------
-        // Path helpers
-        // --------------------
-
-        private static string GetConfigDirectory()
-        {
-            // Equivalent to EnvPath.kUserDataPath but without needing Colossal.PSI:
-            //   C:\Users\<user>\AppData\LocalLow\Colossal Order\Cities Skylines II
-            var root = Application.persistentDataPath;
-            var dir = Path.Combine(root, "ModsData", Mod.ModId);
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        internal static string GetConfigFilePath()
-        {
-            var dir = GetConfigDirectory();
-            return Path.Combine(dir, _configFileName);
-        }
-
-        private static string GetOldConfigFilePath()
-        {
-            var root = Application.persistentDataPath;
-            return Path.Combine(root, "ModsData", OldModId, _configFileName);
-        }
-
-        private static string GetReadmeFilePath()
-        {
-            var dir = GetConfigDirectory();
-            return Path.Combine(dir, _readmeFileName);
-        }
-
-        private static string GetConfigDumpFilePath()
-        {
-            var dir = GetConfigDirectory();
-            return Path.Combine(dir, _dumpFileName);
-        }
-
         private static string? GetAssetDirectorySafe(string assetPath)
         {
             var basePath = assetPath;
@@ -292,8 +32,7 @@ namespace ConfigXML
                 return null;
             }
 
-            var assetDir = Path.GetDirectoryName(basePath);
-            return assetDir;
+            return Path.GetDirectoryName(basePath);
         }
 
         private static bool IsStubConfig(string path)
@@ -321,7 +60,7 @@ namespace ConfigXML
             }
             catch (Exception)
             {
-                // Treat as non-stub if it can't be read; do not destroy user data.
+                // Treat as non-stub if it cannot be read; do not destroy user data.
             }
 
             return false;
@@ -353,7 +92,7 @@ namespace ConfigXML
             }
             catch
             {
-                // Do NOT assume it's empty if it can not be read.
+                // Do NOT assume it's empty if it cannot be read.
                 return false;
             }
         }
@@ -361,6 +100,7 @@ namespace ConfigXML
         private static void CreateStubConfig(string configPath)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
+
             using (var fs = new FileStream(configPath, FileMode.CreateNew))
             using (var writer = new StreamWriter(fs))
             {
@@ -410,14 +150,13 @@ namespace ConfigXML
                     return;
                 }
 
-                // If shipped README can not be located, nothing to compare/update.
+                // If shipped README cannot be located, nothing to compare/update.
                 if (!overwriteIfDifferent || string.IsNullOrEmpty(shippedReadme) || !File.Exists(shippedReadme))
                 {
                     return;
                 }
 
                 // Compare contents; only write if actually different.
-                // README is small, a full read is fine and avoids repeated writes.
                 string shippedText;
                 string existingText;
 
@@ -472,8 +211,7 @@ namespace ConfigXML
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                         File.Copy(shippedPath, configPath, overwrite: true);
-                        Mod.Log(
-                            $"Configuration: replaced stub Config.xml with shipped default at {configPath}.");
+                        Mod.Log($"Configuration: replaced stub Config.xml with shipped default at {configPath}.");
                     }
 
                     // If file exists but is empty/whitespace, replace with shipped default (safe repair).
@@ -481,8 +219,7 @@ namespace ConfigXML
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                         File.Copy(shippedPath, configPath, overwrite: true);
-                        Mod.Warn(
-                            $"Configuration: replaced empty Config.xml with shipped default at {configPath}.");
+                        Mod.Warn($"Configuration: replaced empty Config.xml with shipped default at {configPath}.");
                     }
 
                     return;
@@ -494,7 +231,7 @@ namespace ConfigXML
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                     File.Copy(oldPath, configPath, overwrite: false);
-                    Mod.Log($"Configuration: migrated old Config.xml\n from {oldPath}\n to {configPath}.");
+                    Mod.Log($"Configuration: migrated old Config.xml\nfrom {oldPath}\nto {configPath}.");
                     return;
                 }
 
@@ -503,8 +240,7 @@ namespace ConfigXML
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                     File.Copy(shippedPath, configPath, overwrite: false);
-                    Mod.Log(
-                        $"Configuration: copied default Config.xml from {shippedPath} to {configPath}.");
+                    Mod.Log($"Configuration: copied default Config.xml from {shippedPath} to {configPath}.");
                     return;
                 }
 
@@ -554,15 +290,14 @@ namespace ConfigXML
                 var assetDir = GetAssetDirectorySafe(assetPath);
                 if (string.IsNullOrEmpty(assetDir))
                 {
-                    Mod.Warn("LoadPresetConfig: Could not determine mod folder; falling back to local Config.xml.");
+                    Mod.Warn("LoadPresetConfig: could not determine mod folder; falling back to local Config.xml.");
                     return LoadLocalConfig(assetPath);
                 }
 
                 var shippedPath = Path.Combine(assetDir, _configFileName);
                 if (!File.Exists(shippedPath))
                 {
-                    Mod.Warn(
-                        $"LoadPresetConfig: Shipped Config.xml not found at {shippedPath}; falling back to local Config.xml.");
+                    Mod.Warn($"LoadPresetConfig: shipped Config.xml not found at {shippedPath}; falling back to local Config.xml.");
                     return LoadLocalConfig(assetPath);
                 }
 
@@ -574,12 +309,11 @@ namespace ConfigXML
 
                 if (_config == null || _config.Prefabs == null || _config.Prefabs.Count == 0)
                 {
-                    Mod.Warn(
-                        $"LoadPresetConfig: Configuration loaded from {shippedPath} but Prefabs list is empty; nothing to apply.");
+                    Mod.Warn($"LoadPresetConfig: configuration loaded from {shippedPath} but Prefabs list is empty; nothing to apply.");
                 }
-                else if (Mod.setting != null && Mod.setting.VerboseLogs)
+                else if (Mod.IsVerboseEnabled)
                 {
-                    Mod.Log("PREFAB CONFIG DATA (preset)");
+                    Mod.LogIfVerbose("PREFAB CONFIG DATA (preset)");
                     foreach (PrefabXml prefab in _config.Prefabs)
                     {
                         prefab.DumpToLog();
@@ -590,8 +324,7 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                Mod.Warn(
-                    $"LoadPresetConfig: failed to load configuration: {e.GetType().Name}: {e.Message}");
+                Mod.Warn($"LoadPresetConfig: failed to load configuration: {e.GetType().Name}: {e.Message}");
                 _config = null;
                 return null;
             }
@@ -612,8 +345,7 @@ namespace ConfigXML
 
                 if (!File.Exists(configPath))
                 {
-                    Mod.Warn(
-                        $"LoadLocalConfig: Configuration file not found at {configPath}; no configuration will be applied.");
+                    Mod.Warn($"LoadLocalConfig: configuration file not found at {configPath}; no configuration will be applied.");
                     _config = null;
                     return null;
                 }
@@ -626,34 +358,36 @@ namespace ConfigXML
 
                 if (_config == null || _config.Prefabs == null || _config.Prefabs.Count == 0)
                 {
-                    Mod.Warn("LoadLocalConfig: Configuration loaded but Prefabs list is empty; nothing to apply.");
+                    Mod.Warn("LoadLocalConfig: configuration loaded but Prefabs list is empty; nothing to apply.");
                 }
-                else if (Mod.setting != null && Mod.setting.VerboseLogs)
+                else if (Mod.IsVerboseEnabled)
                 {
-                    Mod.LogIf("PREFAB CONFIG DATA (local)");
+                    Mod.LogIfVerbose("PREFAB CONFIG DATA (custom local)");
                     foreach (PrefabXml prefab in _config.Prefabs)
                     {
                         prefab.DumpToLog();
                     }
                 }
 
-                // Save a dump copy (for debugging) to Config_Dump.xml in ModsData.
-                SaveConfig(); // Snapshot confirms the serializer output matches expected.
+                // Save a dump copy (debug snapshot) to Config_Dump.xml in ModsData.
+                SaveConfig();
 
                 return _config;
             }
             catch (InvalidOperationException e)
             {
                 Mod.Warn(
-                    $"LoadLocalConfig: Failed to deserialize Config.xml at {configPath}: {e.Message}. " +
-                    "The file may be malformed. Use the in-game reset button or delete this file to regenerate it.");
+                    $"LoadLocalConfig: failed to deserialize Config.xml at {configPath}: {e.Message}. " +
+                    "File may be malformed. Options:\n" +
+                    "1) Use the mod Reset Default button\n" +
+                    "2) Delete this Config.xml to regenerate on next start\n" +
+                    "3) Reinstall the mod.");
                 _config = null;
                 return null;
             }
             catch (Exception e)
             {
-                Mod.Warn(
-                    $"LoadLocalConfig: Cannot load configuration, exception {e.GetType().Name}: {e.Message}");
+                Mod.Warn($"LoadLocalConfig: cannot load configuration: {e.GetType().Name}: {e.Message}");
                 _config = null;
                 return null;
             }
@@ -673,21 +407,22 @@ namespace ConfigXML
 
                 var dumpFile = GetConfigDumpFilePath();
                 var serializer = new XmlSerializer(typeof(ConfigurationXml));
+
                 using (var fs = new FileStream(dumpFile, FileMode.Create))
                 {
                     serializer.Serialize(fs, _config);
                 }
 
-                if (Mod.setting != null && Mod.setting.VerboseLogs) // note in Verbose Logs only.
+                // Verbose-only confirmation line.
+                if (Mod.IsVerboseEnabled)
                 {
-                    Mod.Log($"Configuration dump saved to {dumpFile}.");
+                    Mod.LogIfVerbose($"Configuration dump saved to {dumpFile}.");
                 }
             }
             catch (Exception e)
             {
                 // Errors are rare and worth seeing.
-                Mod.Warn(
-                    $"ERROR: Cannot save Config_dump: {e.GetType().Name}: {e.Message}");
+                Mod.Warn($"ERROR: cannot save Config_Dump.xml: {e.GetType().Name}: {e.Message}");
             }
         }
 
@@ -706,7 +441,7 @@ namespace ConfigXML
                 {
                     Mod.Warn(
                         "Restore default Config.xml: could not determine mod folder. " +
-                        "Please Reinstall the mod if problems persist.");
+                        "Please reinstall the mod if problems persist.");
                     return;
                 }
 
@@ -715,22 +450,20 @@ namespace ConfigXML
                 {
                     Mod.Warn(
                         $"Restore default Config.xml: shipped Config.xml not found at\n{shippedPath}\n" +
-                        $"Please Reinstall {Mod.ModId}.");
-
+                        $"Please reinstall {Mod.ModId}.");
                     return;
                 }
 
                 Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                 File.Copy(shippedPath, configPath, overwrite: true);
-                Mod.Log($"Restore Default Config.xml: copied from\n {shippedPath}\n to {configPath}.");
+                Mod.Log($"Restore Default Config.xml: copied from\n{shippedPath}\nto {configPath}.");
 
                 // Also refresh README on reset (keeps docs up-to-date).
                 EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
             }
             catch (Exception e)
             {
-                Mod.Warn(
-                    $"Restore Default Config.xml Failed: {e.GetType().Name}: {e.Message}");
+                Mod.Warn($"Restore Default Config.xml failed: {e.GetType().Name}: {e.Message}");
             }
         }
     }

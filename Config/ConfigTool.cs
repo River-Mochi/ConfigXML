@@ -46,7 +46,7 @@ namespace ConfigXML
         // -----------------------------------------
         private static void ConfigurePrefab(PrefabBase prefab, PrefabXml prefabConfig, Entity entity, bool skipEntity = false)
         {
-            Mod.LogIf($"{prefab.name}: valid {prefab.GetType().Name} entity {entity.Index} skipEntity={skipEntity}");
+            Mod.LogIfVerbose($"{prefab.name}: valid {prefab.GetType().Name} entity {entity.Index} skipEntity={skipEntity}");
 
             // Apply config to the root prefab instance.
             ConfigureComponent(prefab, prefabConfig, prefab, entity, skipEntity);
@@ -67,7 +67,7 @@ namespace ConfigXML
         {
             if (skipEntity)
             {
-                Mod.LogIf($"{prefab.name}.{component.name}: skipEntity flag set, skipping configuration.");
+                Mod.LogIfVerbose($"{prefab.name}.{component.name}: skipEntity flag set, skipping configuration.");
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace ConfigXML
                 {
                     comp.process.m_MaxWorkersPerCell = mwpcField.ValueFloat ?? oldProc.m_MaxWorkersPerCell;
 
-                    Mod.LogIf(
+                    Mod.LogIfVerbose(
                         $"{prefab.name}.IndustrialProcess.{mwpcField.Name}: {oldProc.m_MaxWorkersPerCell} -> {comp.process.m_MaxWorkersPerCell} " +
                         $"({comp.process.m_MaxWorkersPerCell.GetType()}, {mwpcField})");
                 }
@@ -98,7 +98,7 @@ namespace ConfigXML
                 {
                     comp.process.m_Output.m_Amount = outamtField.ValueInt ?? oldProc.m_Output.m_Amount;
 
-                    Mod.LogIf(
+                    Mod.LogIfVerbose(
                         $"{prefab.name}.IndustrialProcess.{outamtField.Name}: {oldProc.m_Output.m_Amount} -> {comp.process.m_Output.m_Amount} " +
                         $"({comp.process.m_Output.m_Amount.GetType()}, {outamtField})");
                 }
@@ -119,7 +119,7 @@ namespace ConfigXML
             // -----------------------------
             if (prefabConfig.TryGetComponent(compName, out ComponentXml compConfig))
             {
-                Mod.LogIf($"{prefab.name}.{compName}: valid");
+                Mod.LogIfVerbose($"{prefab.name}.{compName}: valid");
 
                 foreach (FieldXml fieldConfig in compConfig.Fields)
                 {
@@ -129,7 +129,7 @@ namespace ConfigXML
 
                     if (field == null)
                     {
-                        Mod.LogIf($"{prefab.name}.{compName}: field not found: {fieldConfig.Name}");
+                        Mod.LogIfVerbose($"{prefab.name}.{compName}: field not found: {fieldConfig.Name}");
                         continue;
                     }
 
@@ -160,7 +160,7 @@ namespace ConfigXML
                     {
                         // Unsupported field types are intentionally not handled.
                         // Leave unchanged to avoid crashing or corrupting prefabs.
-                        Mod.LogIf($"{prefab.name}.{compName}.{field.Name}: unsupported field type {field.FieldType.Name}; skipped");
+                        Mod.LogIfVerbose($"{prefab.name}.{compName}.{field.Name}: unsupported field type {field.FieldType.Name}; skipped");
                         continue;
                     }
 
@@ -182,7 +182,7 @@ namespace ConfigXML
 
             if (!isPatched)
             {
-                Mod.LogIf($"{prefab.name}.{compName}: SKIP");
+                Mod.LogIfVerbose($"{prefab.name}.{compName}: SKIP");
                 return;
             }
 
@@ -198,7 +198,7 @@ namespace ConfigXML
             bool hasLate = methodLate != null && methodLate.DeclaringType == componentType;
             bool hasArch = methodArch != null;
 
-            Mod.LogIf(
+            Mod.LogIfVerbose(
                 prefab.name + "." + compName +
                 ": INIT " + hasInit +
                 " LATE " + hasLate +
@@ -214,12 +214,12 @@ namespace ConfigXML
             // LateInitialize preferred when present.
             if (hasLate)
             {
-                Mod.LogIf($"{prefab.name}.{compName}: calling LateInitialize");
+                Mod.LogIfVerbose($"{prefab.name}.{compName}: calling LateInitialize");
                 component.LateInitialize(m_EntityManager, entity);
             }
             else if (hasInit)
             {
-                Mod.LogIf($"{prefab.name}.{compName}: calling Initialize");
+                Mod.LogIfVerbose($"{prefab.name}.{compName}: calling Initialize");
                 component.Initialize(m_EntityManager, entity);
             }
             else
@@ -298,12 +298,12 @@ namespace ConfigXML
                 if (m_PrefabSystem.TryGetPrefab(prefabID, out PrefabBase prefab)
                     && m_PrefabSystem.TryGetEntity(prefab, out Entity entity))
                 {
-                    Mod.LogIf($"{prefabXml} found; applying.");
+                    Mod.LogIfVerbose($"{prefabXml} found; applying.");
                     ConfigurePrefab(prefab, prefabXml, entity);
                 }
                 else
                 {
-                    Mod.LogIf($"{prefabXml} missing; skipped.");
+                    Mod.LogIfVerbose($"{prefabXml} missing; skipped.");
                 }
             }
         }
@@ -431,7 +431,7 @@ namespace ConfigXML
 
             if (field == null)
             {
-                Mod.LogIf($"Field not found: {type.Name}.{fieldName}");
+                Mod.LogIfVerbose($"Field not found: {type.Name}.{fieldName}");
                 return;
             }
 
@@ -439,7 +439,7 @@ namespace ConfigXML
             field.SetValueDirect(__makeref(component), newValue);
 
             // Verbose only; avoid log spam.
-            Mod.LogIf($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
+            Mod.LogIfVerbose($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
         }
 
         public static void ConfigureComponentData<T>(ComponentXml compXml, ref T component)
@@ -464,11 +464,11 @@ namespace ConfigXML
                         field.SetValueDirect(__makeref(component), fieldXml.ValueInt);
                     }
 
-                    Mod.LogIf($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
+                    Mod.LogIfVerbose($"{type.Name}.{field.Name}: {oldValue} -> {field.GetValue(component)} ({field.FieldType})");
                 }
                 else
                 {
-                    Mod.LogIf($"{type.Name}.{field.Name}: {oldValue}");
+                    Mod.LogIfVerbose($"{type.Name}.{field.Name}: {oldValue}");
                 }
             }
         }
