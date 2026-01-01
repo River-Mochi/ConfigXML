@@ -455,7 +455,7 @@ namespace ConfigXML
 
                 Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
                 File.Copy(shippedPath, configPath, overwrite: true);
-                Mod.Log($"Restore Default Config.xml: copied from\n{shippedPath}\nto {configPath}.");
+                Mod.Log($"Restore Default Config.xml: copied\nfrom {shippedPath}\nto {configPath}.");
 
                 // Also refresh README on reset (keeps docs up-to-date).
                 EnsureReadmeExists(assetPath, overwriteIfDifferent: true);

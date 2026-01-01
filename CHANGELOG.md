@@ -1,6 +1,6 @@
 ﻿## Changelog
 
-- v0.6.2 (2025-12-31)
+- v0.7.0 (2025-12-31)
   - Renamed mod to **Config-XML**.
   - Added Japanese (日本語) and Traditional Chinese (繁體中文) translations.
   - Added Italian

@@ -76,7 +76,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/config-xml.1878625/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.6.2" />
+	<ModVersion Value="0.7.0" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the mod, can be set multiple times-->
@@ -84,9 +84,9 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- added Japanese 日本語, added 繁體中文 Traditional Chinese, and Italian
-- Renamed to **Config-XML**. One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
+- added Japanese 日本語, 繁體中文 Traditional Chinese, and Italian
 - New README file added next to Config.xml with updated usage notes.
+- Renamed to **Config-XML**. One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
 - Refactor: improved Config.xml safety: auto repairs missing files with valid config, 
 improved "Dump Status" button output, verbose log toggle not available in Release build. 
 	</ChangeLog>

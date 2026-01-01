@@ -51,7 +51,7 @@ namespace ConfigXML
                     "**Quick Start** - apply all built-in **preset** settings.\n" +
                     "EASY Mode:  1-Click and DONE!\n\n" +
                     "• Best for most players - already has curated tweaks (e.g. worker numbers/wages that differ from game defaults.\n\n" +
-                    "• You can switch between <Presets> and <Custom file> any time.\n" +
+                    "• You can switch between <Presets> and <Custom file> any time."
                 },
 
                 // UseLocalConfig
