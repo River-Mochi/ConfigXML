@@ -1,5 +1,5 @@
 // File: Config/ConfigToolXml.Paths.cs
-// Purpose: ConfigToolXml shared fields + path helpers for Config-XML.
+// Purpose: ConfigXml shared fields + path helpers for Config-XML.
 
 namespace ConfigXML
 {

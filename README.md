@@ -31,11 +31,11 @@ Number of configured buildings and extensions: **222**.
 ### Turning the mod on/off on existing cities
 - Service buildings have some of their params set when plopped (e.g. workplaces). The new params will be applied to new buildings.
 - You need to rebuild existing buildings in order to fully apply new params.
-- Conversly, when the mod is deactivated, the buildings will retain their modded params. New buildings will have again vanilla params.
+- When the mod is deactivated, the buildings will retain their modded params. New buildings will have again vanilla params.
 - This mod is Safe for city saves and can be removed at any time.
 
 ### 11 Languages
-* English, Français French, Deutsch German, Español Spanish, Italian
+* English, French (Français), Deutsch German, Español Spanish, Italian
 * 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
 * 한국어 Korean, 日本語 Japanese, 繁體中文 Traditional Chinese
 
@@ -49,7 +49,7 @@ Number of configured buildings and extensions: **222**.
 ### [Changelog](./CHANGELOG.md)
 
 ### Support
-- Mod can be installed from [Paradox Mods]("https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime")
+- Mod can be installed from [Paradox Mods](https://mods.paradoxplaza.com/authors/River-mochi/cities_skylines_2?games=cities_skylines_2&orderBy=desc&sortBy=best&time=alltime)
 - Please report bugs and issues on [GitHub](https://github.com/River-Mochi/ConfigXML).
 - There is also [Paradox Forum](https://forum.paradoxplaza.com/forum/threads/config-xml.1878625/)
 - or [Discord](https://discord.gg/HTav7ARPs2)

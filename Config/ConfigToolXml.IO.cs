@@ -1,5 +1,7 @@
 // File: Config/ConfigToolXml.IO.cs
 // Purpose: ConfigToolXml IO + migration + load/save helpers for Config-XML.
+// Notes:
+// - IMPORTANT FIX: do not dump the entire config (all prefabs/components/fields) to the CO logger on every load.
 
 namespace ConfigXML
 {
@@ -149,13 +151,11 @@ namespace ConfigXML
                     return;
                 }
 
-                // If shipped README cannot be located, nothing to compare/update.
                 if (!overwriteIfDifferent || string.IsNullOrEmpty(shippedReadme) || !File.Exists(shippedReadme))
                 {
                     return;
                 }
 
-                // Compare contents; only write if actually different.
                 string shippedText;
                 string existingText;
 
@@ -166,7 +166,6 @@ namespace ConfigXML
                 }
                 catch
                 {
-                    // If reading fails for any reason, do not overwrite user file.
                     return;
                 }
 
@@ -182,16 +181,6 @@ namespace ConfigXML
             }
         }
 
-        /// <summary>
-        /// Ensure that Config.xml exists in ModsData/ConfigXML.
-        /// Migration rules:
-        /// - If ConfigXML/Config.xml exists:
-        ///     - If it's a stub and shipped config exists => replace stub.
-        ///     - If it's empty/whitespace and shipped config exists => replace empty file.
-        /// - Else if old RealCity/Config.xml exists => copy old as-is to new location.
-        /// - Else if shipped Config.xml exists => copy shipped.
-        /// - Else create stub.
-        /// </summary>
         private static void EnsureConfigFileExists(string assetPath)
         {
             var configPath = GetConfigFilePath();
@@ -243,7 +232,6 @@ namespace ConfigXML
                     return;
                 }
 
-                // If a file is still not available, create a minimal shell stub for safety.
                 if (!File.Exists(configPath))
                 {
                     CreateStubConfig(configPath);
@@ -255,22 +243,12 @@ namespace ConfigXML
             }
         }
 
-        /// <summary>
-        /// Ensure ModsData/ConfigXML contains Config.xml and README.
-        /// Call on startup if the folder should be present even for preset-only players.
-        /// </summary>
         public static void EnsureModsDataSeeded(string assetPath)
         {
             EnsureConfigFileExists(assetPath);
-
-            // Ensure README exists; update only if shipped README content has changed.
             EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
         }
 
-        /// <summary>
-        /// Used by the Options UI button to open the active Config.xml.
-        /// Ensures the file exists first (and README is present/up-to-date).
-        /// </summary>
         public static string GetConfigFilePathForUI()
         {
             var assetPath = Mod.modAsset != null ? Mod.modAsset.path : string.Empty;
@@ -278,10 +256,6 @@ namespace ConfigXML
             return GetConfigFilePath();
         }
 
-        /// <summary>
-        /// Loads prefab config data from the shipped Config.xml next to the mod DLL.
-        /// Falls back to local Config.xml if needed.
-        /// </summary>
         public static ConfigurationXml? LoadPresetConfig(string assetPath)
         {
             try
@@ -310,12 +284,13 @@ namespace ConfigXML
                 {
                     Mod.Warn($"LoadPresetConfig: configuration loaded from {shippedPath} but Prefabs list is empty; nothing to apply.");
                 }
-                else if (Mod.IsVerboseEnabled)
+                else
                 {
-                    Mod.LogIfVerbose("PREFAB CONFIG DATA (preset)");
-                    foreach (PrefabXml prefab in _config.Prefabs)
+                    // IMPORTANT CHANGE: do not dump all prefabs/components/fields here.
+                    // One summary line is enough; deep dumps belong on a one-shot debug button.
+                    if (Mod.IsVerboseEnabled)
                     {
-                        prefab.DumpToLog();
+                        Mod.LogIfVerbose($"Loaded PRESET Config.xml: {_config.Prefabs.Count} prefabs.");
                     }
                 }
 
@@ -329,11 +304,6 @@ namespace ConfigXML
             }
         }
 
-        /// <summary>
-        /// Loads prefab config data from ModsData/ConfigXML/Config.xml (local custom file).
-        /// Ensures the file exists, migrating from old RealCity config, copying shipped config,
-        /// or creating a stub if needed.
-        /// </summary>
         public static ConfigurationXml? LoadLocalConfig(string assetPath)
         {
             var configPath = GetConfigFilePath();
@@ -359,16 +329,16 @@ namespace ConfigXML
                 {
                     Mod.Warn("LoadLocalConfig: configuration loaded but Prefabs list is empty; nothing to apply.");
                 }
-                else if (Mod.IsVerboseEnabled)
+                else
                 {
-                    Mod.LogIfVerbose("PREFAB CONFIG DATA (custom local)");
-                    foreach (PrefabXml prefab in _config.Prefabs)
+                    // IMPORTANT CHANGE: do not dump all prefabs/components/fields here.
+                    if (Mod.IsVerboseEnabled)
                     {
-                        prefab.DumpToLog();
+                        Mod.LogIfVerbose($"Loaded LOCAL Config.xml: {_config.Prefabs.Count} prefabs.");
                     }
                 }
 
-                // Save a dump copy (debug snapshot) to Config_Dump.xml in ModsData.
+                // Keep the dump snapshot, but don't spam the logger about it.
                 SaveConfig();
 
                 return _config;
@@ -392,9 +362,6 @@ namespace ConfigXML
             }
         }
 
-        /// <summary>
-        /// Saves a dump copy of the currently loaded configuration to Config_Dump.xml in ModsData.
-        /// </summary>
         public static void SaveConfig()
         {
             try
@@ -412,7 +379,6 @@ namespace ConfigXML
                     serializer.Serialize(fs, _config);
                 }
 
-                // Verbose-only confirmation line.
                 if (Mod.IsVerboseEnabled)
                 {
                     Mod.LogIfVerbose($"Configuration dump saved to {dumpFile}.");
@@ -420,15 +386,10 @@ namespace ConfigXML
             }
             catch (Exception e)
             {
-                // Errors are rare and worth seeing.
                 Mod.Warn($"ERROR: cannot save Config_Dump.xml: {e.GetType().Name}: {e.Message}");
             }
         }
 
-        /// <summary>
-        /// Overwrite ModsData/ConfigXML/Config.xml with the shipped Config.xml next to the DLL, if available.
-        /// Used by the in-game reset buttons.
-        /// </summary>
         public static void RestoreDefaultConfigForUI(string assetPath)
         {
             try
@@ -457,7 +418,6 @@ namespace ConfigXML
                 File.Copy(shippedPath, configPath, overwrite: true);
                 Mod.Log($"Restore Default Config.xml: copied\nfrom {shippedPath}\nto {configPath}.");
 
-                // Also refresh README on reset (keeps docs up-to-date).
                 EnsureReadmeExists(assetPath, overwriteIfDifferent: true);
             }
             catch (Exception e)

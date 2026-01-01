@@ -322,6 +322,32 @@ namespace ConfigXML
             }
         }
 
+#if DEBUG
+        [SettingsUIButton]
+        [SettingsUISection(kDebugSection, kDebugGroup)]
+        [SettingsUIConfirmation]
+        public bool DumpConfiguredPrefabFieldsToFile
+        {
+            set
+            {
+                if (!value)
+                {
+                    return;
+                }
+
+                try
+                {
+                    ConfigTool.DumpConfiguredPrefabComponentFieldsToFile();
+                }
+                catch (Exception ex)
+                {
+                    Mod.Warn($"DumpConfiguredPrefabFieldsToFile failed: {ex.GetType().Name}: {ex.Message}");
+                }
+            }
+        }
+#endif
+
+
         [SettingsUIButton]
         [SettingsUISection(kDebugSection, kDebugGroup)]
         [SettingsUIConfirmation]

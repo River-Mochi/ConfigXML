@@ -1128,7 +1128,7 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Server Farm -->
   <Prefab type="BuildingPrefab" name="ServerFarm01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="55" valueFloat="0" /> <!-- 40 -->
+      <Field name="m_Workplaces" valueInt="75" valueFloat="0" /> <!-- 40 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>
@@ -1140,7 +1140,7 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Small Coal Power Plant -->
   <Prefab type="BuildingPrefab" name="SmallCoalPowerPlant01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="45" valueFloat="0" /> <!-- 37 -->
+      <Field name="m_Workplaces" valueInt="50" valueFloat="0" /> <!-- 37 -->
       <Field name="m_Complexity" valueInt="1" valueFloat="0" /> <!-- Simple => ok -->
     </Component>
   </Prefab>
@@ -1164,7 +1164,7 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Space Center -->
   <Prefab type="BuildingPrefab" name="SpaceCenter01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="150" valueFloat="0" /> <!-- 100 -->
+      <Field name="m_Workplaces" valueInt="200" valueFloat="0" /> <!-- 100 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>
@@ -1226,7 +1226,7 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingPrefab" name="TaxiDepot01 Taxi Garage"> <!-- small -->
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="18" valueFloat="0" /> <!-- 10, 10 taxis -->
+      <Field name="m_Workplaces" valueInt="20" valueFloat="0" /> <!-- 10, 10 taxis -->
     </Component>
   </Prefab>
 
@@ -1240,24 +1240,24 @@ This mod is best for changing the number of workers or education level of worker
   <!-- Technical University -->
   <Prefab type="BuildingPrefab" name="TechnicalUniversity01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="160" valueFloat="0" /> <!-- 150-->
+      <Field name="m_Workplaces" valueInt="300" valueFloat="0" /> <!-- 150-->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TechnicalUniversity01 Extension Wing">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="60" valueFloat="0" /> <!-- 50 -->
+      <Field name="m_Workplaces" valueInt="75" valueFloat="0" /> <!-- 50 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TechnicalUniversity01 Workshop Upgrade">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="50" valueFloat="0" /> <!-- 40 -->
+      <Field name="m_Workplaces" valueInt="75" valueFloat="0" /> <!-- 40 -->
     </Component>
   </Prefab>
   <!-- Telecom Tower -->
   <Prefab type="BuildingPrefab" name="TelecomTower01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="35" valueFloat="0" /> <!-- 30 -->
+      <Field name="m_Workplaces" valueInt="40" valueFloat="0" /> <!-- 30 -->
       <Field name="m_Complexity" valueInt="3" valueFloat="0" /> <!-- Hitech => ok -->
     </Component>
   </Prefab>
@@ -1271,7 +1271,7 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TrainStation01 Extra Platforms">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="4" valueFloat="0" /> <!-- 2 -->
+      <Field name="m_Workplaces" valueInt="6" valueFloat="0" /> <!-- 2 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TrainStation01 Services">
@@ -1286,7 +1286,7 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TrainStation01 Taxi Stop">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="5" valueFloat="0" /> <!-- 4 -->
+      <Field name="m_Workplaces" valueInt="6" valueFloat="0" /> <!-- 4 -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="TrainStation03">
@@ -1305,19 +1305,19 @@ This mod is best for changing the number of workers or education level of worker
   </Prefab>
   <Prefab type="BuildingExtensionPrefab" name="TramDepot01 Garage Extension">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="16" valueFloat="0" /> <!-- 12, 5 vehicles -->
+      <Field name="m_Workplaces" valueInt="18" valueFloat="0" /> <!-- 12, 5 vehicles -->
     </Component>
   </Prefab>
   <!-- Wastewater Treatment Plant -->
   <Prefab type="BuildingPrefab" name="WastewaterTreatmentPlant01">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="60" valueFloat="0" /> <!-- 50 -->
+      <Field name="m_Workplaces" valueInt="70" valueFloat="0" /> <!-- 50 -->
       <Field name="m_Complexity" valueInt="2" valueFloat="0" /> <!-- Complex => ok -->
     </Component>
   </Prefab>
   <Prefab type="BuildingPrefab" name="WastewaterTreatmentPlant01 Extra Processing Unit">
     <Component name="Workplace">
-      <Field name="m_Workplaces" valueInt="30" valueFloat="0" /> <!-- 20 -->
+      <Field name="m_Workplaces" valueInt="35" valueFloat="0" /> <!-- 20 -->
     </Component>
   </Prefab>
   <!-- Water Park -->

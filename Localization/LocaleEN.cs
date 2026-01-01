@@ -164,6 +164,13 @@ namespace ConfigXML
                     "• Log File: <C:/Users/YourName/AppData/LocalLow/Colossal Order/Cities Skylines II/Logs/ConfigXML.log>"
                 },
 
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.DumpConfiguredPrefabFieldsToFile)), "Dump Component Fields (one-shot)"
+                },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpConfiguredPrefabFieldsToFile)),
+                    "Writes a one-time dump of component fields for configured prefabs to ModsData/ConfigXML/ConfiguredPrefabFields.txt."
+                },
+
+
                 // Debug tab reset button (duplicate)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetLocalConfigDebug)),
                     "Reset to Default (make new Config.xml)"
