@@ -6,26 +6,28 @@
 	<!--Short description of the mod-->
 	<ShortDescription Value="Increases number of workers and other small adjustments for Service Buildings." />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
-	<LongDescription>**Config-XML**
+	<LongDescription>
+**Config-XML**
 
-Tweak and modify Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration.
+Tweak and modify Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration. 
+Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is included).
 
 ### Quick-Start
 
-- ✅ Just select "PRESETS" and play, done (list of changes already included).
+- ✅ Just select "PRESETS" and done.
 - Curated presets increase the **number of workers** and a few other small adjustments (details below).
-- Wages are scaled up/down based on the number of workers - done automatically by the game (we just tweak worker counts).
-- Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is included).
+- Wages are scaled up/down automatically by the game (we tweak worker counts).
 - Change is applied before any city is loaded, so there is no performance impact.
 
 Number of **preset** buildings and extensions: **222**.
 
-### Curated Presets
-- All buildings have more workplaces. The required education level for jobs is also adjusted in 'some' buildings, and other allowed tweaks.
-- Presets design: some have only a few more workers (2), and some have many. This better utilizes large buildings that previously had few workers, and may help reduce unemployment.
-- Examples: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students.
+### Details - Curated Presets
+- All buildings have more workers. The required education level for jobs is adjusted in 'some' buildings, and other allowed tweaks.
+- Presets design: some have only a few more workers, and some have many.
+- Better utilize large buildings that previously had few workers, and may help reduce unemployment.
+- Example: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students.
 - Existing buildings need to be rebuilt to see new config changes.
-		
+
 - Add these companion mods to also <a href="https://mods.paradoxplaza.com/mods/123887/Windows">Increase Students</a> or <a href="https://mods.paradoxplaza.com/mods/123738/Windows">Transit Passengers</a>
 - See Power Users if you want to adjust the presets yourself.
 
@@ -46,7 +48,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 - <a href="https://mods.paradoxplaza.com/mods/123497/Windows">Magic Hearse</a> and <a href="https://mods.paradoxplaza.com/mods/121256/Windows">Achievement Fixer</a> also works with this.
 - Pretty much any mod that doesn't also adjust worker numbers should be good.
 - Technically, this mod allows for virtually any changes to Service buildings. At the moment, it mainly increases number of workers
-  in Services buildings and does other small adjustments. I encourage contribution to the mod and PRs on GitHub with proposed changes and rationale.
+  in Services buildings and other small adjustments. I encourage contribution to the mod and PRs on GitHub to expand the mod config abilities.
 
 ### 11 Languages
 * English, Français, Deutsch, Español, Italian, 简体中文, Português Brazilian
