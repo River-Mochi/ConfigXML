@@ -10,7 +10,7 @@ namespace ConfigXML
     {
         private static bool TryPatchProcessingCompanyProcess(PrefabBase prefab, PrefabXml prefabConfig, ComponentBase component)
         {
-            // We key off the name so Config.xml can target "IndustrialProcess" even though it's a struct inside ProcessingCompany.
+            // Key off the name so Config.xml can target "IndustrialProcess" even though it's a struct inside ProcessingCompany.
             if (component.GetType().Name != "ProcessingCompany")
             {
                 return false;
@@ -22,7 +22,7 @@ namespace ConfigXML
             }
 
             // IMPORTANT: this is the prefab ComponentBase type, not the ECS IComponentData type.
-            if (!(component is ProcessingCompany comp))
+            if (!(component is Game.Prefabs.ProcessingCompany comp))
             {
                 return false;
             }

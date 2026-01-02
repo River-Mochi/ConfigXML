@@ -3,34 +3,30 @@
 
 namespace ConfigXML
 {
-    using Game.Prefabs;              // PrefabSystem, PrefabBase, ComponentBase, PrefabID
-    using System;                    // Exception
+    using Game.Prefabs;               // PrefabSystem, PrefabBase, ComponentBase, PrefabID
+    using System;                     // Exception
     using System.Collections.Generic; // HashSet
-    using System.Globalization;      // CultureInfo
-    using System.IO;                 // File, FileInfo
-    using System.Threading;          // Interlocked
-    using Unity.Entities;            // Entity, EntityManager, World
+    using System.Globalization;       // CultureInfo
+    using System.IO;                  // File, FileInfo
+    using System.Threading;           // Interlocked
+    using Unity.Entities;             // Entity, EntityManager, World
 
     public static partial class ConfigTool
     {
-        // Enables late-prefab patch logic (if used elsewhere).
         public static bool isLatePrefabsActive = false;
 
         private static PrefabSystem? m_PrefabSystem;
         private static EntityManager m_EntityManager;
 
-        // Prevent re-entrant apply (UI toggles / bindings can double-trigger).
         private static int s_IsApplying;
 
-        // Deduplicate back-to-back applies of the same config file (same mode + same file stamp).
+        // Dedupe back-to-back applies of the same config file (same mode + same file stamp).
         private static string? s_LastApplySignature;
-        private static bool s_LastApplyWasLocal;
+        private static bool s_LastApplyWasCustom;
 
-        // "Warn once" store.
         private static readonly object s_WarnLock = new object();
         private static readonly HashSet<string> s_WarnedKeys = new HashSet<string>();
 
-        // Per-apply counters (kept small; do not allocate big lists here).
         private static int s_FieldsChangedThisApply;
         private static int s_ComponentsPatchedThisApply;
         private static int s_PrefabsPatchedThisApply;
@@ -51,6 +47,7 @@ namespace ConfigXML
             }
         }
 
+        // File stamp string used only for dedupe: "size|LastWriteTimeUtcTicks"
         private static string BuildFileSignature(string path)
         {
             try
@@ -70,19 +67,16 @@ namespace ConfigXML
             }
         }
 
-        private static bool ShouldSkipApply(bool useLocal, string signature)
+        private static bool ShouldSkipApply(bool isCustomMode, string signature)
         {
             if (string.IsNullOrEmpty(signature) || signature == "missing" || signature == "unknown")
             {
                 return false;
             }
 
-            return s_LastApplySignature == signature && s_LastApplyWasLocal == useLocal;
+            return s_LastApplySignature == signature && s_LastApplyWasCustom == isCustomMode;
         }
 
-        // -----------------------------------------
-        // CORE: configure prefab + components
-        // -----------------------------------------
         private static void ConfigurePrefab(PrefabBase prefab, PrefabXml prefabConfig, Entity entity)
         {
             bool prefabPatched = false;
@@ -114,9 +108,6 @@ namespace ConfigXML
             }
         }
 
-        // -----------------------------------------
-        // APPLY: load config and patch PrefabSystem
-        // -----------------------------------------
         public static void ReadAndApply()
         {
             if (Interlocked.Exchange(ref s_IsApplying, 1) == 1)
@@ -134,22 +125,22 @@ namespace ConfigXML
                 s_UnsupportedSkipsThisApply = 0;
 
                 string assetPath = Mod.GetAssetPathSafe();
-                bool useLocal = Mod.setting != null && Mod.setting.UseLocalConfig;
+                bool isCustom = Mod.setting != null && Mod.setting.UseLocalConfig;
 
-                // IMPORTANT: signature is built from the actual resolved path used (preset may fall back to local).
-                string configPathUsed = useLocal
-                    ? ConfigToolXml.GetLocalConfigPathResolved(assetPath)
+                // “Signature block”: build a stamp from the actual file path we will use.
+                string configPathUsed = isCustom
+                    ? ConfigToolXml.GetCustomConfigPathResolved(assetPath)
                     : ConfigToolXml.GetPresetConfigPathResolved(assetPath);
 
                 string sig = BuildFileSignature(configPathUsed);
 
-                if (ShouldSkipApply(useLocal, sig))
+                if (ShouldSkipApply(isCustom, sig))
                 {
-                    Mod.Log($"{Mod.ModTag} Apply skipped (no changes): {(useLocal ? "LOCAL" : "PRESET")} config unchanged.");
+                    Mod.Log($"{Mod.ModTag} Apply skipped (no changes): {(isCustom ? "CUSTOM" : "PRESETS")} unchanged.");
                     return;
                 }
 
-                ConfigurationXml? config = useLocal
+                ConfigurationXml? config = isCustom
                     ? ConfigToolXml.LoadLocalConfig(assetPath)
                     : ConfigToolXml.LoadPresetConfig(assetPath);
 
@@ -159,9 +150,9 @@ namespace ConfigXML
                     return;
                 }
 
-                Mod.Log(useLocal
-                    ? $"{Mod.ModTag} Apply LOCAL Config.xml (ModsData/ConfigXML)."
-                    : $"{Mod.ModTag} Apply PRESET Config.xml (shipped mod defaults).");
+                Mod.Log(isCustom
+                    ? $"{Mod.ModTag} Apply CUSTOM Config.xml (ModsData)."
+                    : $"{Mod.ModTag} Apply PRESETS Config.xml (mod folder).");
 
                 World? world = World.DefaultGameObjectInjectionWorld;
                 if (world == null)
@@ -201,7 +192,7 @@ namespace ConfigXML
                 }
 
                 s_LastApplySignature = BuildFileSignature(configPathUsed);
-                s_LastApplyWasLocal = useLocal;
+                s_LastApplyWasCustom = isCustom;
 
                 Mod.Log($"{Mod.ModTag} Apply done. OK={ok}, Missing/NoEntity={missingOrNoEntity}, PrefabsPatched={s_PrefabsPatchedThisApply}, ComponentsPatched={s_ComponentsPatchedThisApply}, FieldsChanged={s_FieldsChangedThisApply}");
             }

@@ -3,7 +3,7 @@
 
 namespace ConfigXML
 {
-    using System.IO;     // Path, Directory
+    using System.IO;     // Path, Directory, File
     using UnityEngine;   // Application.persistentDataPath
 
     public static partial class ConfigToolXml
@@ -29,8 +29,6 @@ namespace ConfigXML
 
         private static string GetConfigDirectory()
         {
-            // Equivalent to EnvPath.kUserDataPath but without needing Colossal.PSI:
-            //   C:\Users\<user>\AppData\LocalLow\Colossal Order\Cities Skylines II
             var root = Application.persistentDataPath;
             var dir = Path.Combine(root, "ModsData", Mod.ModId);
             Directory.CreateDirectory(dir);
@@ -65,29 +63,34 @@ namespace ConfigXML
         // Resolved path helpers (match load behavior)
         // --------------------------------------------
 
-        internal static string GetLocalConfigPathResolved(string assetPath)
+        internal static string GetCustomConfigPathResolved(string assetPath)
         {
             EnsureModsDataSeeded(assetPath);
             return GetConfigFilePath();
         }
 
+        // Back-compat name (older code used “local” to mean ModsData CUSTOM).
+        internal static string GetLocalConfigPathResolved(string assetPath)
+        {
+            return GetCustomConfigPathResolved(assetPath);
+        }
+
         internal static string GetPresetConfigPathResolved(string assetPath)
         {
-            // Mirrors LoadPresetConfig(): if we can't find shipped, we fall back to local.
+            // Mirrors LoadPresetConfig(): if we can't find shipped, we fall back to CUSTOM.
             var assetDir = GetAssetDirectorySafe(assetPath);
             if (string.IsNullOrEmpty(assetDir))
             {
-                return GetLocalConfigPathResolved(assetPath);
+                return GetCustomConfigPathResolved(assetPath);
             }
 
             var shippedPath = Path.Combine(assetDir, _configFileName);
             if (!File.Exists(shippedPath))
             {
-                return GetLocalConfigPathResolved(assetPath);
+                return GetCustomConfigPathResolved(assetPath);
             }
 
             return shippedPath;
         }
-
     }
 }

@@ -6,9 +6,9 @@ namespace ConfigXML
     using Colossal.IO.AssetDatabase; // ModSetting, FileLocation
     using Game.Modding;              // IMod
     using Game.Settings;             // Settings attributes
-    using System;                    // Exception
+    using System;                    // Exception, StringComparison
     using System.IO;                 // Path, Directory
-    using UnityEngine;               // Application.OpenURL
+    using UnityEngine;               // Application
 
     [FileLocation("ModsSettings/ConfigXML/ConfigSettings")]
     [SettingsUITabOrder(
@@ -70,15 +70,6 @@ namespace ConfigXML
             get; set;
         }
 
-        // Back-compat only: keep the property so older settings files deserialize cleanly.
-        // This is intentionally inert and never shown.
-        [SettingsUIHidden]
-        public bool VerboseLogs
-        {
-            get => false;
-            set { /* ignored */ }
-        }
-
         // --------------------
         // Actions tab: Options
         // --------------------
@@ -103,7 +94,7 @@ namespace ConfigXML
                     return;
                 }
 
-                // Presets on => local custom off.
+                // Presets on => custom off.
                 m_UseLocalConfig = false;
 
                 if (!changed)
@@ -143,7 +134,7 @@ namespace ConfigXML
                     return;
                 }
 
-                // Local custom on => presets off.
+                // Custom on => presets off.
                 m_UseModPresets = false;
 
                 if (!changed)
@@ -270,17 +261,7 @@ namespace ConfigXML
         public string NameDisplay => Mod.ModName;
 
         [SettingsUISection(kDebugSection, kInfoGroup)]
-        public string VersionDisplay
-        {
-            get
-            {
-#if DEBUG
-                return Mod.ModVersion + " +DEBUG";
-#else
-                return Mod.ModVersion;
-#endif
-            }
-        }
+        public string VersionDisplay => Mod.ModVersion;
 
         [SettingsUIButtonGroup("SocialLinks")]
         [SettingsUIButton]
@@ -354,6 +335,13 @@ namespace ConfigXML
                 }
             }
         }
+#else
+        // Release placeholder so Locale*.cs can reference nameof(Setting.DumpComponentFields) safely.
+        [SettingsUIHidden]
+        public bool DumpComponentFields
+        {
+            set { }
+        }
 #endif
 
         [SettingsUIButton]
@@ -371,6 +359,22 @@ namespace ConfigXML
                 ResetLocalConfigInternal();
             }
         }
+
+        // VerboseLogs: DEBUG-only UI; hidden/no-op in Release (keeps locale keys stable).
+#if DEBUG
+        [SettingsUISection(kDebugSection, kDebugGroup)]
+        public bool VerboseLogs
+        {
+            get; set;
+        }
+#else
+        [SettingsUIHidden]
+        public bool VerboseLogs
+        {
+            get => false;
+            set { }
+        }
+#endif
 
         // -------------------------------
         // Helpers
@@ -416,9 +420,11 @@ namespace ConfigXML
         {
             _Hidden = true;
 
-            // Default behavior: shipped presets (no local custom file).
+            // Default behavior: PRESETS (no CUSTOM ModsData file).
             m_UseModPresets = true;
             m_UseLocalConfig = false;
+
+            VerboseLogs = false;
         }
     }
 }

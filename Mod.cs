@@ -26,11 +26,7 @@ namespace ConfigXML
             LogManager.GetLogger(ModId).SetShowsErrorsInUI(false);
 
         public static Mod? instance { get; private set; }
-
-        // Nullable: resolution can fail depending on load context.
         public static ExecutableAsset? modAsset { get; private set; }
-
-        // Nullable to avoid null-forgiving patterns.
         public static Setting? setting { get; private set; }
 
         private static bool s_BannerLogged;
@@ -39,7 +35,7 @@ namespace ConfigXML
         {
             instance = this;
 
-            if (!s_BannerLogged) // one-time banner
+            if (!s_BannerLogged)
             {
                 s_BannerLogged = true;
                 s_Log.Info($"{ModName} {ModTag} v{ModVersion} OnLoad");
@@ -52,7 +48,6 @@ namespace ConfigXML
                 return;
             }
 
-            // Resolve mod asset path (helps locate shipped Config.xml / README).
             try
             {
                 if (gameManager.modManager.TryGetExecutableAsset(this, out ExecutableAsset resolved))
@@ -65,7 +60,6 @@ namespace ConfigXML
                 }
                 else
                 {
-                    // Not fatal: ConfigToolXml can fall back to assembly location.
                     s_Log.Warn("Failed to resolve mod ExecutableAsset; falling back to assembly location for shipped files.");
                 }
             }
@@ -74,7 +68,6 @@ namespace ConfigXML
                 s_Log.Warn($"TryGetExecutableAsset failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-            // Create settings before locales so localized UI resolves correctly.
             var s = new Setting(this);
             setting = s;
 
@@ -89,17 +82,12 @@ namespace ConfigXML
             AddLocaleSource("pt-BR", new LocalePT_BR(s));
             AddLocaleSource("zh-HANS", new LocaleZH_CN(s));
             AddLocaleSource("zh-HANT", new LocaleZH_HANT(s));
-            // AddLocaleSource("vi-VN", new LocaleVI(s));
 
-            // Load persisted settings (or defaults on first run).
             AssetDatabase.global.LoadSettings("ConfigSettings", s, new Setting(this));
-
             s.RegisterInOptionsUI();
 
-            // Force settings file creation even when all visible options are defaults.
             s._Hidden = false;
 
-            // Seed ModsData (Config.xml + README). Method handles migration + repairs.
             try
             {
                 ConfigToolXml.EnsureModsDataSeeded(GetAssetPathSafe());
@@ -109,7 +97,6 @@ namespace ConfigXML
                 s_Log.Warn($"EnsureModsDataSeeded failed: {ex.GetType().Name}: {ex.Message}");
             }
 
-            // Apply-on-load.
             ConfigTool.ReadAndApply();
         }
 
@@ -131,10 +118,6 @@ namespace ConfigXML
         // Helpers
         // -----------------------------------------------------------------
 
-        /// <summary>
-        /// Returns the installed mod folder path (ExecutableAsset.path) when available.
-        /// Returns empty string when path not resolved (caller may fallback).
-        /// </summary>
         public static string GetAssetPathSafe()
         {
             if (modAsset != null && !string.IsNullOrEmpty(modAsset.path))
@@ -145,38 +128,6 @@ namespace ConfigXML
             return string.Empty;
         }
 
-        /// <summary>
-        /// Debug helper: logs fields + properties of an object via reflection.
-        /// </summary>
-        public static void DumpObjectData(object? objectToDump)
-        {
-            if (objectToDump == null)
-            {
-                SafeLogInfo("Object: <null>");
-                return;
-            }
-
-            SafeLogInfo("Object: " + objectToDump);
-
-            Type type = objectToDump.GetType();
-
-            FieldInfo[] fields = type.GetFields(
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            foreach (FieldInfo field in fields)
-            {
-                SafeLogInfo(" " + field.Name + ": " + field.GetValue(objectToDump));
-            }
-
-            PropertyInfo[] properties = type.GetProperties(
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            foreach (PropertyInfo property in properties)
-            {
-                SafeLogInfo(" " + property.Name + ": " + property.GetValue(objectToDump));
-            }
-        }
-
         // --------------------------------------------------------------
         // Log Helpers
         // --------------------------------------------------------------
@@ -184,6 +135,14 @@ namespace ConfigXML
         public static void Log(string message)
         {
             SafeLogInfo(message);
+        }
+
+        // Verbose is permanently disabled (buttons + files are the approved “deep dump” mechanism).
+        public static bool IsVerboseEnabled => false;
+
+        public static void LogIfVerbose(string message)
+        {
+            // Intentionally a no-op. prevents accidental huge dumps.
         }
 
         private static void SafeLogInfo(string message)
