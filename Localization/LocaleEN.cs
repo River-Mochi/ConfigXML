@@ -150,7 +150,7 @@ namespace ConfigXML
                 {
                     m_Setting.GetOptionDescLocaleID(nameof(Setting.DumpPrefabStatus)),
                     "POWER USERS\n" +
-                    "• One-time check: logs whether each prefab in Config.xml is OK or Missing.\n" +
+                    "• One-time checks: logs whether each prefab in Config.xml is OK or Missing.\n" +
                     "• Useful after patches to see which entries no longer match.\n" +
                     "• Missing prefabs from DLC you don’t own is normal.\n\n" +
                     "• Output file: <ModsData/ConfigXML/PrefabStatus_PRESETS.txt> or <PrefabStatus_CUSTOM.txt>"

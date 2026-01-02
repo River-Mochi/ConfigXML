@@ -49,9 +49,8 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
   in Services buildings and does other small adjustments. I encourage contribution to the mod and PRs on GitHub with proposed changes and rationale.
 
 ### 11 Languages
-* English, Français French, Deutsch German, Español, Italian
-* 简体中文 Simplified Chinese, Português Brazilian, Polski Polish
-* 한국어 Korean, 日本語 Japanese, 繁體中文 Traditional Chinese
+* English, Français, Deutsch, Español, Italian, 简体中文, Português Brazilian
+* Polski, 한국어, 日本語, 繁體中文
 
 ### CREDITS
 - River-Mochi author
@@ -87,8 +86,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 - added Japanese 日本語, 繁體中文 Traditional Chinese, and Italian
 - New README file added next to Config.xml with updated usage notes.
 - Renamed to **Config-XML**. One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
-- Refactor: improved Config.xml safety: auto repairs missing files with valid config, 
-improved "Dump Status" button output, verbose log toggle not available in Release build. 
+- Refactor: improved Config.xml safety, improved "Dump Status" button output, verbose log toggle not available in Release build. 
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
