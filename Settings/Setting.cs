@@ -104,7 +104,6 @@ namespace ConfigXML
 
                 try
                 {
-                    Mod.Log("UseModPresets enabled; applying shipped preset configuration.");
                     ConfigTool.ReadAndApply();
                 }
                 catch (Exception ex)
@@ -144,7 +143,6 @@ namespace ConfigXML
 
                 try
                 {
-                    Mod.Log("Custom enabled; applying local custom file.");
                     ConfigTool.ReadAndApply();
                 }
                 catch (Exception ex)
@@ -336,7 +334,7 @@ namespace ConfigXML
             }
         }
 #else
-        // Release placeholder so Locale*.cs can reference nameof(Setting.DumpComponentFields) safely.
+        // Release build placeholder so Locale*.cs can reference nameof(Setting.DumpComponentFields) safely.
         [SettingsUIHidden]
         public bool DumpComponentFields
         {

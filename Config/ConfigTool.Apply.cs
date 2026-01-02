@@ -8,6 +8,7 @@ namespace ConfigXML
     using System.Collections.Generic; // HashSet
     using System.Globalization;       // CultureInfo
     using System.IO;                  // File, FileInfo
+    using System.Text;                // StringBuilder
     using System.Threading;           // Interlocked
     using Unity.Entities;             // Entity, EntityManager, World
 
@@ -20,9 +21,8 @@ namespace ConfigXML
 
         private static int s_IsApplying;
 
-        // Dedupe back-to-back applies of the same config file (same mode + same file stamp).
         private static string? s_LastApplySignature;
-        private static bool s_LastApplyWasCustom;
+        private static bool s_LastApplyWasLocal; // True = CUSTOM, False = PRESETS
 
         private static readonly object s_WarnLock = new object();
         private static readonly HashSet<string> s_WarnedKeys = new HashSet<string>();
@@ -47,7 +47,6 @@ namespace ConfigXML
             }
         }
 
-        // File stamp string used only for dedupe: "size|LastWriteTimeUtcTicks"
         private static string BuildFileSignature(string path)
         {
             try
@@ -67,14 +66,14 @@ namespace ConfigXML
             }
         }
 
-        private static bool ShouldSkipApply(bool isCustomMode, string signature)
+        private static bool ShouldSkipApply(bool useCustom, string signature)
         {
             if (string.IsNullOrEmpty(signature) || signature == "missing" || signature == "unknown")
             {
                 return false;
             }
 
-            return s_LastApplySignature == signature && s_LastApplyWasCustom == isCustomMode;
+            return s_LastApplySignature == signature && s_LastApplyWasLocal == useCustom;
         }
 
         private static void ConfigurePrefab(PrefabBase prefab, PrefabXml prefabConfig, Entity entity)
@@ -108,11 +107,43 @@ namespace ConfigXML
             }
         }
 
+        private static string BuildApplyDoneLine(int ok, int missingOrNoEntity)
+        {
+            // Base is always shown.
+            var sb = new StringBuilder(128);
+            sb.Append(Mod.ModTag);
+            sb.Append(" Apply done. OK=");
+            sb.Append(ok);
+            sb.Append(", Missing/NoEntity=");
+            sb.Append(missingOrNoEntity);
+
+            // Only show patch counters when they actually change something.
+            if (s_PrefabsPatchedThisApply != 0)
+            {
+                sb.Append(", PrefabsPatched=");
+                sb.Append(s_PrefabsPatchedThisApply);
+            }
+
+            if (s_ComponentsPatchedThisApply != 0)
+            {
+                sb.Append(", ComponentsPatched=");
+                sb.Append(s_ComponentsPatchedThisApply);
+            }
+
+            if (s_FieldsChangedThisApply != 0)
+            {
+                sb.Append(", FieldsChanged=");
+                sb.Append(s_FieldsChangedThisApply);
+            }
+
+            return sb.ToString();
+        }
+
         public static void ReadAndApply()
         {
+            // Silent guard prevents accidental extra log lines from UI double-trigger.
             if (Interlocked.Exchange(ref s_IsApplying, 1) == 1)
             {
-                Mod.Warn($"{Mod.ModTag} Apply already running; skipping.");
                 return;
             }
 
@@ -125,22 +156,21 @@ namespace ConfigXML
                 s_UnsupportedSkipsThisApply = 0;
 
                 string assetPath = Mod.GetAssetPathSafe();
-                bool isCustom = Mod.setting != null && Mod.setting.UseLocalConfig;
+                bool useCustom = Mod.setting != null && Mod.setting.UseLocalConfig;
 
-                // “Signature block”: build a stamp from the actual file path we will use.
-                string configPathUsed = isCustom
-                    ? ConfigToolXml.GetCustomConfigPathResolved(assetPath)
+                // Signature is built from the actual resolved path used (preset may fall back to custom).
+                string configPathUsed = useCustom
+                    ? ConfigToolXml.GetLocalConfigPathResolved(assetPath)
                     : ConfigToolXml.GetPresetConfigPathResolved(assetPath);
 
                 string sig = BuildFileSignature(configPathUsed);
 
-                if (ShouldSkipApply(isCustom, sig))
+                if (ShouldSkipApply(useCustom, sig))
                 {
-                    Mod.Log($"{Mod.ModTag} Apply skipped (no changes): {(isCustom ? "CUSTOM" : "PRESETS")} unchanged.");
                     return;
                 }
 
-                ConfigurationXml? config = isCustom
+                ConfigurationXml? config = useCustom
                     ? ConfigToolXml.LoadLocalConfig(assetPath)
                     : ConfigToolXml.LoadPresetConfig(assetPath);
 
@@ -150,9 +180,10 @@ namespace ConfigXML
                     return;
                 }
 
-                Mod.Log(isCustom
+                // Line 1 of 2 (exact wording you requested)
+                Mod.Log(useCustom
                     ? $"{Mod.ModTag} Apply CUSTOM Config.xml (ModsData)."
-                    : $"{Mod.ModTag} Apply PRESETS Config.xml (mod folder).");
+                    : $"{Mod.ModTag} Apply PRESETS Config.xml (DLL folder).");
 
                 World? world = World.DefaultGameObjectInjectionWorld;
                 if (world == null)
@@ -192,9 +223,10 @@ namespace ConfigXML
                 }
 
                 s_LastApplySignature = BuildFileSignature(configPathUsed);
-                s_LastApplyWasCustom = isCustom;
+                s_LastApplyWasLocal = useCustom;
 
-                Mod.Log($"{Mod.ModTag} Apply done. OK={ok}, Missing/NoEntity={missingOrNoEntity}, PrefabsPatched={s_PrefabsPatchedThisApply}, ComponentsPatched={s_ComponentsPatchedThisApply}, FieldsChanged={s_FieldsChangedThisApply}");
+                // Line 2 of 2 (counters only when non-zero)
+                Mod.Log(BuildApplyDoneLine(ok, missingOrNoEntity));
             }
             finally
             {
