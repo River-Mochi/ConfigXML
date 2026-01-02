@@ -9,25 +9,26 @@
 	<LongDescription>
 **Config-XML**
 
-Tweak and modify Service buildings to your liking. By default, you could just install this mod and use it as-is with no configuration. 
-Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is included).
+- This mod potentially allows for virtually any change to Service buildings.
+- At the moment, it mainly increases number of workers in Services buildings and other small adjustments (see below for details).
+- You could just install it as-is with no custom edits.
+- Think of this mod as a simple text-like file that players can edit (or not since a nice preset file is included).
+- Prefab info is applied before any city is loaded, so no game system required (means essentially no performance impact).
+
+Number of **preset** buildings and extensions: **222**.
 
 ### Quick-Start
 
 - ✅ Just select "PRESETS" and done.
-- Curated presets increase the **number of workers** and a few other small adjustments (details below).
-- Wages are scaled up/down automatically by the game (we tweak worker counts).
-- Change is applied before any city is loaded, so there is no performance impact.
-
-Number of **preset** buildings and extensions: **222**.
+- Curated presets increase the **number of workers** and other small adjustments (details below).
+- Wages are scaled up/down (game senses worker change and auto adjusts).
 
 ### Details - Curated Presets
-- All buildings have more workers. The required education level for jobs is adjusted in 'some' buildings, and other allowed tweaks.
+- All buildings have more workers. Required education level for jobs is adjusted in 'some' buildings, and other allowed tweaks.
 - Presets design: some have only a few more workers, and some have many.
 - Better utilize large buildings that previously had few workers, and may help reduce unemployment.
 - Example: University is normally 170 workers, this mod preset increases it to 400 as this is a big campus for 15,000 students.
-- Existing buildings need to be rebuilt to see new config changes.
-
+- Rebuild existing buildings to see new config changes.
 - Add these companion mods to also <a href="https://mods.paradoxplaza.com/mods/123887/Windows">Increase Students</a> or <a href="https://mods.paradoxplaza.com/mods/123738/Windows">Transit Passengers</a>
 - See Power Users if you want to adjust the presets yourself.
 

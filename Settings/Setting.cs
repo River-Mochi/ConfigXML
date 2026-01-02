@@ -62,8 +62,7 @@ namespace ConfigXML
             SetDefaults();
         }
 
-        // Used to force saving of ModSettings even if all visible options are defaults
-        // (otherwise the settings file may not be created).
+        // Used to force saving of ModSettings even if all selected options are defaults
         [SettingsUIHidden]
         public bool _Hidden
         {
@@ -108,7 +107,7 @@ namespace ConfigXML
                 }
                 catch (Exception ex)
                 {
-                    Mod.Log($"UseModPresets apply failed: {ex.GetType().Name}: {ex.Message}");
+                    Mod.Log($"Use Presets apply failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
@@ -161,7 +160,7 @@ namespace ConfigXML
         [SettingsUIButton]
         [SettingsUISection(kSection, kButtonGroup)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(UseLocalConfig), true)]
-        public bool OpenConfigFile
+        public bool OpenConfigFile      // opens folder
         {
             set
             {
@@ -189,7 +188,7 @@ namespace ConfigXML
                 }
                 catch (Exception ex)
                 {
-                    Mod.Log($"OpenConfigFile failed: {ex.GetType().Name}: {ex.Message}");
+                    Mod.Log($"OpenConfig folder failed: {ex.GetType().Name}: {ex.Message}");
                 }
             }
         }
@@ -416,13 +415,12 @@ namespace ConfigXML
 
         public override void SetDefaults()
         {
-            _Hidden = true;
-
-            // Default behavior: PRESETS (no CUSTOM ModsData file).
-            m_UseModPresets = true;
+            _Hidden = true;         // always make settings file even if not needed
+            // Default: PRESETS (no CUSTOM ModsData file).
+            m_UseModPresets = true; 
             m_UseLocalConfig = false;
 
-            VerboseLogs = false;
+            VerboseLogs = false;   // currently disabled for all.
         }
     }
 }
