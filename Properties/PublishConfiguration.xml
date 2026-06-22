@@ -1,4 +1,4 @@
-﻿<Publish>
+<Publish>
 	<!--Id must be set in order to update existed mod. it is not required for publishing mod for the first time-->
 	<ModId Value="125675" />
 	<!--Name of the mod to display to players-->
@@ -86,10 +86,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- added Japanese 日本語, 繁體中文 Traditional Chinese, and Italian
-- New README file added next to Config.xml with updated usage notes.
-- Renamed to **Config-XML**. One-time migration of any old **RealCity Config.xml** to the new **ConfigXML** folder.
-- Refactor: improved Config.xml safety, improved "Dump Status" button output, verbose log toggle not available in Release build. 
+- Update for game patch 1.6 
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />

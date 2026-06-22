@@ -1,4 +1,4 @@
-﻿# Config-XML Mod
+# Config-XML Mod
 
 - This mod allows for virtually any changes to Service buildings.
 - At the moment, it mainly **increases number of workers in City Services buildings** and does other small adjustments (see below for details).

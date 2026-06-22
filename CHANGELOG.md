@@ -1,4 +1,4 @@
-﻿## Changelog
+## Changelog
 
 - v0.7.0 (2026-01-01)
   - Renamed mod to **Config-XML**.
