@@ -49,11 +49,10 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 - <a href="https://mods.paradoxplaza.com/mods/123497/Windows">Magic Hearse</a> and <a href="https://mods.paradoxplaza.com/mods/121256/Windows">Achievement Fixer</a> also works with this.
 - Pretty much any mod that doesn't also adjust worker numbers should be good.
 - Technically, this mod allows for virtually any changes to Service buildings. At the moment, it mainly increases number of workers
-  in Services buildings and other small adjustments. I encourage contribution to the mod and PRs on GitHub to expand the mod config abilities.
+in Services buildings and other small adjustments. I encourage contribution to the mod and PRs on GitHub to expand the mod config abilities.
 
 ### 11 Languages
-* English, Français, Deutsch, Español, Italian, 简体中文, Português Brazilian
-* Polski, 한국어, 日本語, 繁體中文
+- Hello, Bonjour, Hallo, Hola, Ciao, こんにちは, 안녕하세요, 你好, 你好, Cześć, Olá
 
 ### CREDITS
 - River-Mochi author
@@ -61,7 +60,7 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 - Fans of the mod who kept hope alive
 - BugsyG, Dorin - testing
 
-	</LongDescription>
+</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail10.jpg" />
 	<!--Screenshot, can be set multiple times-->
@@ -78,16 +77,16 @@ It does not add any per-frame systems, so it essentially has no impact on perfor
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/config-xml.1878625/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.7.0" />
+	<ModVersion Value="0.7.1" />
 	<!--Recommended version of the base game to use the mod-->
-	<GameVersion Value="1.5.*" />
+	<GameVersion Value="1.6.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
 - Update for game patch 1.6 
-	</ChangeLog>
+</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
 	<ExternalLink Type="github" Url="https://github.com/River-Mochi/ConfigXML" />

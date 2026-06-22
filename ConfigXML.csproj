@@ -93,7 +93,7 @@
 	</ItemGroup>
 
 	<!-- AUTO UPDATE PublishConfiguration.xml ModVersion + nested mod.json "version" from $(Version). -->
-	<Target Name="UpdatePublishConfigVersion" BeforeTargets="Build" Condition="Exists('$(PublishConfigScript)') AND Exists('$(MSBuildProjectDirectory)\$(PublishConfigurationPath)')">
+	<Target Name="UpdatePublishConfigVersion" BeforeTargets="PrepareForBuild" Condition="Exists('$(PublishConfigScript)') AND Exists('$(MSBuildProjectDirectory)\$(PublishConfigurationPath)')">
 
 		<Message Text="$(AssemblyTitle) PublishConfig: syncing ModVersion + normalizing EOL/BOM + left-aligning blocks..." Importance="high" />
 
