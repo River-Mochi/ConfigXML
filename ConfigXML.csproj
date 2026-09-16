@@ -4,7 +4,7 @@
     <Configurations>Debug;Release</Configurations>
 
     <!-- Single source of truth for version number -->
-    <Version>0.7.1</Version>
+    <Version>0.7.2</Version>
     <GameVersion>1.6.*</GameVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <FileVersion>$(Version).0</FileVersion>

@@ -77,7 +77,7 @@ in Services buildings and other small adjustments. I encourage contribution to t
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/config-xml.1878625/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.7.1" />
+	<ModVersion Value="0.7.2" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.6.*" />
 	<!--Dependency for the mod, can be set multiple times-->
@@ -85,7 +85,7 @@ in Services buildings and other small adjustments. I encourage contribution to t
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--ChangeLog Value="" /-->
 	<ChangeLog>
-- Update for game patch 1.6 
+- Update for game patch 1.6.2
 </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
